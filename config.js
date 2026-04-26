@@ -152,6 +152,151 @@ const LONA_CONFIG = {
       isShared:  true, // Oba agenta dobita XP
       state:     "available",
     },
+    // ── VARNOST & PRVA POMOČ ───────────────────────────────
+    prva_pomoc: {
+      id: "prva_pomoc", label: "Prva Pomoč", icon: "🩹",
+      baseXp: 35, cooldownHrs: 168, location: "indoor", duration: "medium",
+      category: "safety", state: "available",
+    },
+    klic_112: {
+      id: "klic_112", label: "Klic 112", icon: "📞",
+      baseXp: 30, cooldownHrs: 168, location: "indoor", duration: "short",
+      category: "safety", state: "available",
+    },
+    pozar_vaja: {
+      id: "pozar_vaja", label: "Požarna Vaja", icon: "🔥",
+      baseXp: 25, cooldownHrs: 168, location: "indoor", duration: "short",
+      category: "safety", state: "available",
+    },
+    varnost_ulica: {
+      id: "varnost_ulica", label: "Varnost na Ulici", icon: "🚦",
+      baseXp: 20, cooldownHrs: 72, location: "outdoor", duration: "short",
+      category: "safety", state: "available",
+    },
+    naslov_napamet: {
+      id: "naslov_napamet", label: "Naslov na Pamet", icon: "🏠",
+      baseXp: 20, cooldownHrs: 168, location: "indoor", duration: "short",
+      category: "safety", state: "available",
+    },
+
+    // ── DENAR & EKONOMIJA ───────────────────────────────────
+    stej_denar: {
+      id: "stej_denar", label: "Preštej Drobiž", icon: "🪙",
+      baseXp: 15, cooldownHrs: 72, location: "indoor", duration: "short",
+      category: "money", state: "available",
+    },
+    nakup_sam: {
+      id: "nakup_sam", label: "Sam Kupi v Trgovini", icon: "🛍️",
+      baseXp: 35, cooldownHrs: 72, location: "outdoor", duration: "medium",
+      category: "money", state: "available",
+    },
+    varčevanje: {
+      id: "varcevanje", label: "Varčevalna Skrinjica", icon: "🐷",
+      baseXp: 20, cooldownHrs: 168, location: "indoor", duration: "short",
+      category: "money", state: "available",
+    },
+    cena_primerjava: {
+      id: "cena_primerjava", label: "Primerjaj Cene", icon: "🏷️",
+      baseXp: 25, cooldownHrs: 72, location: "outdoor", duration: "short",
+      category: "money", state: "available",
+    },
+    zasluzek: {
+      id: "zasluzek", label: "Zasluži XP z delom", icon: "💼",
+      baseXp: 40, cooldownHrs: 168, location: "indoor", duration: "medium",
+      category: "money", state: "available",
+    },
+
+    // ── SOCIALNE VEŠČINE ────────────────────────────────────
+    predstavi_se: {
+      id: "predstavi_se", label: "Predstavi Se", icon: "👋",
+      baseXp: 20, cooldownHrs: 48, location: "outdoor", duration: "short",
+      category: "social", state: "available",
+    },
+    zahvala: {
+      id: "zahvala", label: "Iskrena Zahvala", icon: "🙏",
+      baseXp: 15, cooldownHrs: 48, location: "indoor", duration: "short",
+      category: "social", state: "available",
+    },
+    kompliment: {
+      id: "kompliment", label: "Daj Kompliment", icon: "💬",
+      baseXp: 15, cooldownHrs: 24, location: "indoor", duration: "short",
+      category: "social", state: "available",
+    },
+    opravicilo: {
+      id: "opravicilo", label: "Iskreno Opravičilo", icon: "🤝",
+      baseXp: 25, cooldownHrs: 48, location: "indoor", duration: "short",
+      category: "social", state: "available",
+    },
+    telefon_klic: {
+      id: "telefon_klic", label: "Sam Pokliči", icon: "📱",
+      baseXp: 30, cooldownHrs: 72, location: "indoor", duration: "short",
+      category: "social", state: "available",
+    },
+    prijazen_tujec: {
+      id: "prijazen_tujec", label: "Pomagaj Neznancu", icon: "🌟",
+      baseXp: 35, cooldownHrs: 168, location: "outdoor", duration: "short",
+      category: "social", state: "available",
+    },
+
+    // ── USTVARJALNOST & UM ──────────────────────────────────
+    dnevnik: {
+      id: "dnevnik", label: "Piši Dnevnik", icon: "📓",
+      baseXp: 15, cooldownHrs: 24, location: "indoor", duration: "short",
+      category: "creativity", state: "available",
+    },
+    risba: {
+      id: "risba", label: "Nariši Spomin", icon: "🎨",
+      baseXp: 15, cooldownHrs: 48, location: "indoor", duration: "medium",
+      category: "creativity", state: "available",
+    },
+    izum: {
+      id: "izum", label: "Izmisli Si Izum", icon: "💡",
+      baseXp: 25, cooldownHrs: 72, location: "indoor", duration: "medium",
+      category: "creativity", state: "available",
+    },
+    uganka: {
+      id: "uganka", label: "Reši Uganko", icon: "🧩",
+      baseXp: 20, cooldownHrs: 48, location: "indoor", duration: "medium",
+      category: "creativity", state: "available",
+    },
+    zgodba: {
+      id: "zgodba", label: "Pripoveduj Zgodbo", icon: "📖",
+      baseXp: 25, cooldownHrs: 72, location: "indoor", duration: "medium",
+      category: "creativity", state: "available",
+    },
+
+    // ── TELO & GIBANJE ──────────────────────────────────────
+    raztezanje: {
+      id: "raztezanje", label: "Jutranje Raztezanje", icon: "🧘",
+      baseXp: 10, cooldownHrs: 24, location: "indoor", duration: "short",
+      category: "body", state: "available",
+    },
+    tek: {
+      id: "tek", label: "10 Minut Teka", icon: "🏃",
+      baseXp: 20, cooldownHrs: 24, location: "outdoor", duration: "short",
+      category: "body", state: "available",
+    },
+    sklece: {
+      id: "sklece", label: "10 Skleč", icon: "💪",
+      baseXp: 15, cooldownHrs: 24, location: "indoor", duration: "short",
+      category: "body", state: "available",
+    },
+    ples: {
+      id: "ples", label: "Zaplesaj 3 Minute", icon: "💃",
+      baseXp: 15, cooldownHrs: 24, location: "indoor", duration: "short",
+      category: "body", state: "available",
+    },
+    kolesarjenje: {
+      id: "kolesarjenje", label: "Kolesarjenje", icon: "🚲",
+      baseXp: 25, cooldownHrs: 48, location: "outdoor", duration: "medium",
+      category: "body", state: "available",
+    },
+    sprehod: {
+      id: "sprehod", label: "30 Min Sprehod", icon: "🚶",
+      baseXp: 20, cooldownHrs: 24, location: "outdoor", duration: "medium",
+      category: "body", state: "available",
+    },
+
     // ── SITUACIJSKE MISIJE ─────────────────────────────────
     // Aktivirajo se glede na situacijo — starš izbere situacijo
     cakanje_restavracija: {

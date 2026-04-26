@@ -97,6 +97,71 @@ const MISSION_MODIFIERS = {
     { icon:"🤫", label:"Tiha ekipa",       text:"Nobenih besed — samo geste!" },
   ],
   skrivna_wc: [],
+  // Varnost
+  prva_pomoc: [
+    { icon:"🩹", label:"Detektiv ran",    text:"Poišči vse v prvi pomoči in povej za kaj je." },
+    { icon:"🎭", label:"Igranje vlog",    text:"Starš se pretvarja da je poškodovan — ti pomagaš." },
+    { icon:"⏱️", label:"Na čas",          text:"Koliko časa rabiš za povoj?" },
+  ],
+  klic_112: [
+    { icon:"🎭", label:"Vaja klic",       text:"Zaigrajta scenarij — ti kličeš, starš je dispečer." },
+    { icon:"📍", label:"Naslov agent",    text:"Povej točen naslov iz glave — brez gledanja." },
+    { icon:"🧠", label:"Kaj poveš?",      text:"Naštej vse informacije ki jih moraš povedati." },
+  ],
+  varnost_ulica: [
+    { icon:"🚦", label:"Zelena svetloba", text:"Prehod — poglej levo, desno, levo." },
+    { icon:"🕵️", label:"Opazovalec",     text:"Poišči 3 potencialno nevarne situacije." },
+    { icon:"🤝", label:"Varni odrasli",  text:"Kateri odrasli so varni za pomoč?" },
+  ],
+
+  // Denar
+  stej_denar: [
+    { icon:"🪙", label:"Hitrost",         text:"Preštej mešanico kovancev v 30 sekundah." },
+    { icon:"💶", label:"Znesek",          text:"Sestavi točen znesek iz kovancev." },
+    { icon:"🧮", label:"Drobiž nazaj",    text:"Starš da preveč — koliko vrneš nazaj?" },
+  ],
+  nakup_sam: [
+    { icon:"🥷", label:"Nindža nakup",    text:"Sam plačaj brez pomoči — niti besede od starša." },
+    { icon:"📝", label:"Seznam agent",    text:"Zapomni si 3 stvari brez zapiskov." },
+    { icon:"💰", label:"Najcenejše",      text:"Najdi najcenejšo varianto na polici." },
+  ],
+
+  // Socialne
+  predstavi_se: [
+    { icon:"🎯", label:"3 dejstva",       text:"Povej ime, starost in eno posebno stvar o sebi." },
+    { icon:"👁️", label:"Očesni stik",    text:"Med pogovorom vzdržuj očesni stik." },
+    { icon:"🤝", label:"Rokovanje",       text:"Trden stisk roke + nasmeh." },
+  ],
+  telefon_klic: [
+    { icon:"🎭", label:"Vaja doma",       text:"Najprej z mano poigraj scenarij." },
+    { icon:"🥷", label:"Sam pokliči",     text:"Pokliči zobozdravnika/frizerja — sam naroči termin." },
+    { icon:"📝", label:"Beležka",         text:"Med klicem napiši vse pomembne info." },
+  ],
+
+  // Ustvarjalnost
+  izum: [
+    { icon:"⏱️", label:"5 minut",         text:"Imaš 5 minut in 3 predmete — kaj narediš?" },
+    { icon:"🌍", label:"Problem sveta",   text:"Reši en problem ki ga vidiš doma." },
+    { icon:"🎨", label:"Nariši izum",     text:"Skiciraj in razloži kako deluje." },
+  ],
+  zgodba: [
+    { icon:"🎭", label:"Brez konca",      text:"Začni zgodbo — starš jo nadaljuje — ti zaključiš." },
+    { icon:"🎲", label:"3 besede",        text:"Starš da 3 besede — ti naredis zgodbo iz njih." },
+    { icon:"😂", label:"Smešna zgodba",   text:"Zgodba mora vsebovati vsaj 2 šali." },
+  ],
+
+  // Telo
+  raztezanje: [
+    { icon:"🧘", label:"Yoga jutro",      text:"5 joga položajev — drži vsak 30 sekund." },
+    { icon:"💨", label:"Dihanje",         text:"4-7-8 tehnika: vdih 4s, zadrži 7s, izdih 8s." },
+    { icon:"🌅", label:"Sončni pozdrav",  text:"Naredi 3 sončne pozdrave zapored." },
+  ],
+  tek: [
+    { icon:"⏱️", label:"Sprint",          text:"3x 30-sekundni sprint z odmorom." },
+    { icon:"🌿", label:"Narava tek",      text:"Bosi po travi — 5 minut." },
+    { icon:"🎵", label:"Ritem",           text:"Teci v ritmu pesmi ki jo brenčiš." },
+  ],
+
   listi: [
     { icon:"🔍", label:"Detektiv",      text:"Poišči 5 RAZLIČNIH listov — oblika, barva, velikost." },
     { icon:"🎨", label:"Umetnik",       text:"Nariši vsak list ki ga najdeš." },
@@ -566,6 +631,178 @@ function updateMissionsBadge() {
 }
 
 // ── INIT ───────────────────────────────────────────────────
+// ── MISSIONS GRID RENDER ─────────────────────────────────────
+
+const CAT_LABELS = {
+  all: "⭐ Vse Misije", hygiene: "🧼 Higiena", kitchen: "🍳 Kuhinja",
+  cleaning: "🧹 Čiščenje", organisation: "📦 Organizacija", care: "🤲 Skrb za Druge",
+  outdoor: "🌿 Outdoor", body: "💪 Telo & Gibanje", safety: "🛡️ Varnost",
+  money: "💰 Denar", social: "👥 Socialne", creativity: "🎨 Ustvarjalnost",
+  eq: "🧠 EQ Operacije", fear: "🌙 Strah Protokol",
+  independence: "🎯 Samostojnost", custom: "✏️ Moje Misije",
+};
+
+const CAT_COLORS = {
+  hygiene: "#34C759", kitchen: "#FF9500", cleaning: "#007AFF",
+  organisation: "#AF52DE", care: "#FF2D55", outdoor: "#2DB84B",
+  body: "#FF3B30", safety: "#FF3B30", money: "#FFD60A",
+  social: "#5AC8FA", creativity: "#FF9500", eq: "#FF6B35",
+  fear: "#AF52DE", independence: "#007AFF", custom: "#AF52DE",
+};
+
+let currentCat = "all";
+
+function renderMissionsGrid(cat) {
+  const grid     = document.getElementById("missions-grid");
+  const titleEl  = document.getElementById("missions-cat-title");
+  const badgeEl  = document.getElementById("missions-badge");
+  if (!grid) return;
+
+  currentCat = cat || "all";
+  const agentId  = getCurrentAgent();
+  const allMissions = { ...LONA_CONFIG.missions };
+
+  // Dodaj custom misije
+  if (typeof customLoad === "function") {
+    customLoad().forEach(m => { allMissions[m.id] = m; });
+  }
+
+  // Filtriraj po kategoriji
+  let filtered = Object.values(allMissions).filter(m => {
+    if (m.isHidden) return false;
+    if (currentCat === "all") return true;
+    if (currentCat === "eq") return m.isEq;
+    if (currentCat === "fear") return m.category === "fear";
+    if (currentCat === "independence") return m.category === "independence";
+    if (currentCat === "outdoor") return m.location === "outdoor" && !m.isEq && !m.isProgressive && !m.situation;
+    if (currentCat === "custom") return m.category === "custom";
+    return m.category === currentCat;
+  });
+
+  // Naslov
+  if (titleEl) titleEl.textContent = CAT_LABELS[currentCat] || currentCat;
+  if (badgeEl) {
+    const avail = filtered.filter(m => !isOnCooldown(m.id)).length;
+    badgeEl.textContent = avail + " razpoložljive";
+    badgeEl.style.background = avail > 0 ? "var(--green)" : "var(--ink-4)";
+  }
+
+  // Animacija
+  grid.classList.remove("missions-grid--switching");
+  void grid.offsetWidth;
+  grid.classList.add("missions-grid--switching");
+
+  // Render
+  grid.innerHTML = filtered.map(m => {
+    return buildMissionBtn(m, agentId);
+  }).join("");
+
+  // Event listenerji
+  grid.querySelectorAll(".mission-btn[data-mission]").forEach(btn => {
+    btn.addEventListener("click", (e) => { addRipple(btn, e); popBtn(btn); onMissionClick(btn); });
+  });
+}
+
+function buildMissionBtn(mission, agentId) {
+  const mId       = mission.id;
+  const onCooldown = typeof isOnCooldown === "function" && isOnCooldown(mId);
+  const xp        = mission.baseXp || 0;
+
+  let cls = "mission-btn";
+  let innerStyle = "";
+  let afterBg    = "";
+  const color = CAT_COLORS[mission.category] || CAT_COLORS[mission.location] || "#34C759";
+
+  if (onCooldown) {
+    cls += " mission-btn--locked";
+    innerStyle = "background:linear-gradient(160deg,#C7C7CC,#A8A8B0);border-color:rgba(255,255,255,.2)";
+    afterBg    = "#6E6E76";
+  } else if (mission.isProgressive) {
+    const level = typeof getProgLevel === "function" ? getProgLevel(agentId, mId) : 0;
+    const total = mission.levels?.length || 3;
+    const done  = level >= total;
+    innerStyle  = done
+      ? "background:linear-gradient(160deg,#5AC8FA,#34C759);border-color:rgba(255,255,255,.3)"
+      : "background:linear-gradient(160deg,#CF8FFF,#AF52DE);border-color:rgba(255,255,255,.3)";
+    afterBg     = done ? "#1A8A33" : "#7B2BAE";
+  } else if (mission.isEq) {
+    const eqColors = {
+      nevtralizator: ["#4CD964","#2DB84B","#1A8A33"],
+      debriefing:    ["#5AC8FA","#007AFF","#0055CC"],
+      intel_report:  ["#CF8FFF","#AF52DE","#7B2BAE"],
+      advokat:       ["#FFB340","#FF9500","#CC7000"],
+    };
+    const [c1,c2,c3] = eqColors[mId] || ["#CF8FFF","#AF52DE","#7B2BAE"];
+    innerStyle = `background:linear-gradient(160deg,${c1},${c2});border-color:rgba(255,255,255,.3)`;
+    afterBg    = c3;
+  } else {
+    // Barva po kategoriji
+    const gradients = {
+      hygiene:      ["#4CD964","#2DB84B","#1A8A33"],
+      kitchen:      ["#FFB340","#FF9500","#CC7000"],
+      cleaning:     ["#5AC8FA","#007AFF","#0055CC"],
+      organisation: ["#CF8FFF","#AF52DE","#7B2BAE"],
+      care:         ["#FF6B9D","#FF2D55","#CC0033"],
+      outdoor:      ["#5AC8FA","#34C759","#1A8A33"],
+      body:         ["#FF6B6B","#FF3B30","#CC1A10"],
+      safety:       ["#FF6B6B","#FF3B30","#CC1A10"],
+      money:        ["#FFE566","#FFD60A","#CCA800"],
+      social:       ["#5AC8FA","#007AFF","#0055CC"],
+      creativity:   ["#FFB340","#FF9500","#CC7000"],
+      custom:       ["#CF8FFF","#AF52DE","#7B2BAE"],
+    };
+    const [c1,c2,c3] = gradients[mission.category] || gradients.hygiene;
+    innerStyle = `background:linear-gradient(160deg,${c1},${c2});border-color:rgba(255,255,255,.3)`;
+    afterBg    = c3;
+  }
+
+  // XP prikaz
+  let xpLabel = onCooldown ? "🔒" : mission.isProgressive ? "3 stopnje" : `+${xp} XP`;
+  let subLabel = "";
+  if (mission.isEq && mId === "nevtralizator") xpLabel = "+1 🃏";
+  if (mission.duration === "short")  subLabel = "⚡ hitro";
+  if (mission.duration === "medium") subLabel = "🕐 20 min";
+  if (mission.duration === "long")   subLabel = "🏕️ 1h+";
+  if (mission.location === "outdoor" && !subLabel) subLabel = "🌿 zunaj";
+
+  // Cooldown timer
+  let cooldownHtml = "";
+  if (onCooldown && typeof getRemainingMs === "function") {
+    const ms  = getRemainingMs(mId);
+    const hrs = Math.ceil(ms / 3600000);
+    cooldownHtml = `<p class="mission-btn__cooldown">⏱ ${hrs}h</p>`;
+  }
+
+  return `<button class="${cls}" data-mission="${mId}"
+    style="background:none;border:none;padding:0">
+    <div class="mission-btn-inner" style="${innerStyle}">
+      <div class="mission-btn__top">
+        <span class="mission-btn__icon">${mission.icon || "📋"}</span>
+        ${!onCooldown ? '<span class="mission-btn__avail-dot"></span>' : ''}
+        ${onCooldown  ? '<span class="mission-btn__lock">🔒</span>' : ''}
+      </div>
+      <p class="mission-btn__name">${mission.label}</p>
+      <p class="mission-btn__xp">${xpLabel}</p>
+      ${subLabel ? `<p class="mission-btn__sub" style="color:rgba(255,255,255,.7)">${subLabel}</p>` : ""}
+      ${cooldownHtml}
+    </div>
+  </button>`;
+}
+
+// Kategorija klik
+function initCategoryFilter() {
+  document.querySelectorAll(".cat-pill").forEach(pill => {
+    pill.addEventListener("click", () => {
+      document.querySelectorAll(".cat-pill").forEach(p => p.classList.remove("cat-pill--active"));
+      pill.classList.add("cat-pill--active");
+      renderMissionsGrid(pill.dataset.cat);
+      // Scroll pill v view
+      pill.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      if (navigator.vibrate) navigator.vibrate(15);
+    });
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   try {
     if (typeof initGatekeeper === "function") initGatekeeper();
@@ -595,6 +832,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typeof initStreak === "function") initStreak();
     checkOnboarding();
     if (typeof initCustomMissions === 'function') initCustomMissions();
+    initCategoryFilter();
+    renderMissionsGrid('all');
     if (typeof initAttributes === "function") initAttributes();
   } catch(e) {
     console.error("Init error:", e);
@@ -984,10 +1223,31 @@ function initDoubleXpButton() {
 
 // ── COMMANDER PANEL ─────────────────────────────────────────
 function renderCmdAgents() {
-  const el = document.getElementById("cmd-agents");
+  // Podpora za oba elementa
+  const section = document.getElementById("cmd-panel-section");
+  let el = document.getElementById("cmd-agents");
+
+  // Če je section brez cmd-agents, ustvari strukturo
+  if (section && !el) {
+    section.innerHTML = `<div class="cmd-panel">
+      <div id="streak-display" class="streak-display"></div>
+      <div class="cmd-agents" id="cmd-agents"></div>
+      <div class="cmd-attrs"><p class="cmd-bonus__label" style="margin-bottom:6px">Atributi</p>
+        <div id="attrs-mini" class="attrs-mini-grid"></div></div>
+      <div class="cmd-bonus">
+        <p class="cmd-bonus__label">Ročni bonus</p>
+        <div class="cmd-bonus__btns">
+          <button class="cmd-bonus__btn" onclick="grantManualBonus(10)">+10</button>
+          <button class="cmd-bonus__btn" onclick="grantManualBonus(25)">+25</button>
+          <button class="cmd-bonus__btn cmd-bonus__btn--special" onclick="showSituationPicker()">📍</button>
+          <button class="cmd-bonus__btn" onclick="showProposals()">📬</button>
+        </div>
+      </div>
+    </div>`;
+    el = document.getElementById("cmd-agents");
+  }
   if (!el) return;
 
-  // Prikaži samo current agenta
   const currentId = getCurrentAgent();
   el.innerHTML = LONA_CONFIG.agents.filter(a => a.id === currentId).map(a => {
     const xp      = getXp(a.id);

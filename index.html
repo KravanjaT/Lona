@@ -38,373 +38,51 @@
 
   <main class="main-scroll">
 
-    <!-- ── COMMANDER PANEL ─────────────────────────────────── -->
-    <section class="cmd-panel" id="agent-hero">
+  <!-- COMMANDER PANEL -->
+  <section id="cmd-panel-section">
+    <!-- Generira renderCmdAgents() -->
+  </section>
 
-      <!-- Oba agenta — velik prikaz -->
-      <div class="cmd-agents" id="cmd-agents">
-        <!-- Generira JS -->
-      </div>
-
-      <!-- Streak + Combo -->
-      <div id="streak-display" class="streak-display"></div>
-
-      <!-- Atributi mini -->
-      <div class="cmd-attrs">
-        <p class="cmd-bonus__label" style="margin-bottom:6px">Atributi</p>
-        <div id="attrs-mini" class="attrs-mini-grid"></div>
-      </div>
-
-      <!-- Ročni bonus -->
-      <div class="cmd-bonus">
-        <p class="cmd-bonus__label">Ročni bonus</p>
-        <div class="cmd-bonus__btns">
-          <button class="cmd-bonus__btn" data-bonus="5"  onclick="giveBonus(5)">+5 XP</button>
-          <button class="cmd-bonus__btn" data-bonus="10" onclick="giveBonus(10)">+10 XP</button>
-          <button class="cmd-bonus__btn" data-bonus="20" onclick="giveBonus(20)">+20 XP</button>
-          <button class="cmd-bonus__btn cmd-bonus__btn--special" onclick="activateDoubleXp(15)">⚡ 2×XP</button>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- ── TEDENSKA SEZONA ─────────────────────────────────── -->
-    <div class="season-panel" id="season-panel">
-      <!-- Generira season.js -->
+  <!-- KATEGORIJE — horizontal scroll -->
+  <div class="cat-scroll-wrap">
+    <div class="cat-scroll" id="cat-scroll">
+      <button class="cat-pill cat-pill--active" data-cat="all">⭐ Vse</button>
+      <button class="cat-pill" data-cat="hygiene">🧼 Higiena</button>
+      <button class="cat-pill" data-cat="kitchen">🍳 Kuhinja</button>
+      <button class="cat-pill" data-cat="cleaning">🧹 Čiščenje</button>
+      <button class="cat-pill" data-cat="organisation">📦 Organiz.</button>
+      <button class="cat-pill" data-cat="care">🤲 Skrb</button>
+      <button class="cat-pill" data-cat="outdoor">🌿 Outdoor</button>
+      <button class="cat-pill" data-cat="body">💪 Telo</button>
+      <button class="cat-pill" data-cat="safety">🛡️ Varnost</button>
+      <button class="cat-pill" data-cat="money">💰 Denar</button>
+      <button class="cat-pill" data-cat="social">👥 Socialne</button>
+      <button class="cat-pill" data-cat="creativity">🎨 Um</button>
+      <button class="cat-pill" data-cat="eq">🧠 EQ</button>
+      <button class="cat-pill" data-cat="fear">🌙 Strah</button>
+      <button class="cat-pill" data-cat="independence">🎯 Samostojnost</button>
+      <button class="cat-pill" data-cat="custom">✏️ Moje</button>
     </div>
+  </div>
 
+  <!-- HEADER misij -->
+  <div class="section-header" style="margin-bottom:0">
+    <h3 class="section-header__title" id="missions-cat-title">⭐ Vse Misije</h3>
+    <div style="display:flex;gap:6px;align-items:center">
+      <button onclick="shuffleMissions()"
+        style="padding:5px 10px;border-radius:20px;background:#007AFF;color:white;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:900;border:none;cursor:pointer;box-shadow:0 2px 0 rgba(0,122,255,.4)">↻</button>
+      <button onclick="showSituationPicker()"
+        style="padding:5px 10px;border-radius:20px;background:#FF9500;color:white;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:900;border:none;cursor:pointer;box-shadow:0 2px 0 rgba(255,149,0,.4)">📍</button>
+      <span class="section-header__badge" id="missions-badge">0</span>
+    </div>
+  </div>
 
+  <!-- MISSIONS GRID — dinamično -->
+  <section class="missions-wrapper">
+    <div class="missions-grid" id="missions-grid"></div>
+  </section>
 
-    <!-- ── ZAKLADNICA ─────────────────────────────────────────── -->
-    <section>
-      <div class="section-header">
-        <h3 class="section-header__title">🎁 Zakladnica</h3>
-      </div>
-      <div class="treasury" id="treasury">
-        <!-- Generira JS -->
-        <div style="text-align:center;padding:20px;color:#8A8480;font-size:.85rem">Nalaganje...</div>
-      </div>
-    </section>
-
-    <!-- ── OUTDOOR MISIJE ─────────────────────────────────── -->
-    <section>
-      <div class="section-header">
-        <h3 class="section-header__title">🌿 Outdoor Misije</h3>
-        <span class="section-header__badge" style="background:#FF9500">Zunaj</span>
-      </div>
-      <div class="missions-grid">
-
-        <button class="mission-btn" data-mission="listi"
-          style="background:#EDFFF3;border-color:#34C759;border-width:3px;box-shadow:0 5px 0 rgba(52,199,89,.3)">
-          <div class="mission-btn-inner">
-          <div class="mission-btn__top">
-            <span class="mission-btn__icon">🍃</span>
-            <span class="mission-btn__avail-dot"></span>
-          </div>
-          <p class="mission-btn__name">List Detektiv</p>
-          <p class="mission-btn__xp" style="color:#34C759">+20 XP</p>
-          <p class="mission-btn__sub">⚡ 5-10 min · zunaj</p>
-                  </div>
-        </button>
-
-        <button class="mission-btn" data-mission="pot"
-          style="background:#FFF4E6;border-color:#FF9500;border-width:3px;box-shadow:0 5px 0 rgba(255,149,0,.25)">
-          <div class="mission-btn-inner">
-          <div class="mission-btn__top">
-            <span class="mission-btn__icon">🧹</span>
-            <span class="mission-btn__avail-dot"></span>
-          </div>
-          <p class="mission-btn__name">Počisti Pot</p>
-          <p class="mission-btn__xp" style="color:#FF9500">+25 XP</p>
-          <p class="mission-btn__sub">⚡ 10 min · zunaj</p>
-                  </div>
-        </button>
-
-        <button class="mission-btn" data-mission="vrt"
-          style="background:#EDFFF3;border-color:#34C759;border-width:3px;box-shadow:0 5px 0 rgba(52,199,89,.3)">
-          <div class="mission-btn-inner">
-          <div class="mission-btn__top">
-            <span class="mission-btn__icon">🌱</span>
-            <span class="mission-btn__avail-dot"></span>
-          </div>
-          <p class="mission-btn__name">Vrtnar</p>
-          <p class="mission-btn__xp" style="color:#34C759">+35 XP</p>
-          <p class="mission-btn__sub">🕐 20 min · zunaj</p>
-                  </div>
-        </button>
-
-        <button class="mission-btn" data-mission="narava_foto"
-          style="background:#EFF6FF;border-color:#007AFF;border-width:3px;box-shadow:0 5px 0 rgba(0,122,255,.25)">
-          <div class="mission-btn-inner">
-          <div class="mission-btn__top">
-            <span class="mission-btn__icon">📸</span>
-            <span class="mission-btn__avail-dot"></span>
-          </div>
-          <p class="mission-btn__name">Narava Foto</p>
-          <p class="mission-btn__xp" style="color:#007AFF">+30 XP</p>
-          <p class="mission-btn__sub">🕐 15 min · zunaj</p>
-                  </div>
-        </button>
-
-        <button class="mission-btn" data-mission="orientacija_out"
-          style="background:#FFF4E6;border-color:#FF9500;border-width:3px;box-shadow:0 5px 0 rgba(255,149,0,.25)">
-          <div class="mission-btn-inner">
-          <div class="mission-btn__top">
-            <span class="mission-btn__icon">🧭</span>
-            <span class="mission-btn__avail-dot"></span>
-          </div>
-          <p class="mission-btn__name">Orientacija</p>
-          <p class="mission-btn__xp" style="color:#FF9500">+40 XP</p>
-          <p class="mission-btn__sub">🕐 30 min · zunaj</p>
-                  </div>
-        </button>
-
-        <button class="mission-btn" data-mission="taborisce"
-          style="background:#FFF0EE;border-color:#FF3B30;border-width:3px;box-shadow:0 5px 0 rgba(255,59,48,.25)">
-          <div class="mission-btn-inner">
-          <div class="mission-btn__top">
-            <span class="mission-btn__icon">🏕️</span>
-            <span class="mission-btn__avail-dot"></span>
-          </div>
-          <p class="mission-btn__name">Vzpostavi Taborišče</p>
-          <p class="mission-btn__xp" style="color:#FF3B30">+50 XP</p>
-          <p class="mission-btn__sub">🏕️ 1h+ · zunaj</p>
-                  </div>
-        </button>
-
-      </div>
-    </section>
-
-    <!-- ── STRAH PROTOKOL ──────────────────────────────────── -->
-    <section>
-      <div class="section-header">
-        <h3 class="section-header__title">🌙 Strah Protokol</h3>
-        <span class="section-header__badge" style="background:#AF52DE">3 stopnje</span>
-      </div>
-      <div id="fear-missions" class="prog-grid"></div>
-    </section>
-
-    <!-- ── SAMOSTOJNOST ──────────────────────────────────────── -->
-    <section>
-      <div class="section-header">
-        <h3 class="section-header__title">🎯 Samostojnost</h3>
-        <span class="section-header__badge" style="background:#007AFF">3 stopnje</span>
-      </div>
-      <div id="independence-missions" class="prog-grid"></div>
-    </section>
-
-    <!-- ── LASTNE MISIJE ───────────────────────────────────── -->
-    <section>
-      <div class="section-header">
-        <h3 class="section-header__title">✏️ Lastne Misije</h3>
-        <div style="display:flex;gap:6px">
-          <button onclick="showProposals()" id="proposals-btn"
-            style="padding:5px 10px;border-radius:20px;background:#FF9500;color:white;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:900;border:none;cursor:pointer;box-shadow:0 2px 0 rgba(255,149,0,.4);display:none">
-            📬 Predlogi
-          </button>
-          <button onclick="showAddMissionDialog('commander')"
-            style="padding:5px 10px;border-radius:20px;background:#AF52DE;color:white;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:900;border:none;cursor:pointer;box-shadow:0 2px 0 rgba(175,82,222,.4)">
-            + Dodaj
-          </button>
-        </div>
-      </div>
-      <div class="missions-grid" id="custom-missions-grid">
-        <div style="grid-column:1/-1;text-align:center;padding:20px;color:#8E8E93;font-size:.82rem;font-style:italic">Še ni lastnih misij</div>
-      </div>
-
-      <!-- Otrok predlaga -->
-      <button onclick="showAddMissionDialog('agent')"
-        style="width:100%;margin-top:10px;padding:12px;border-radius:16px;
-        background:rgba(175,82,222,.08);border:2px dashed rgba(175,82,222,.3);
-        font-family:'Nunito',sans-serif;font-size:.85rem;font-weight:800;
-        color:#AF52DE;cursor:pointer;transition:all 150ms"
-        onmouseover="this.style.background='rgba(175,82,222,.15)'"
-        onmouseout="this.style.background='rgba(175,82,222,.08)'">
-        💡 Predlagaj misijo (agent)
-      </button>
-    </section>
-
-    <!-- ── BANKA LONA ─────────────────────────────────────── -->
-    <section class="card" style="border-color:rgba(255,214,10,.4)">
-      <div id="bank-panel"><!-- Generira bank.js --></div>
-    </section>
-
-    <!-- ── EQ OPERACIJE ─────────────────────────────────────── -->
-    <section>
-      <div class="section-header">
-        <h3 class="section-header__title">🧠 EQ Operacije</h3>
-      </div>
-      <div class="missions-grid">
-
-        <button class="mission-btn" data-mission="nevtralizator"
-          style="background:#EDFFF3;border-color:#34C759;border-width:3px;box-shadow:0 5px 0 rgba(52,199,89,.3)">
-          <div class="mission-btn-inner">
-          <div class="mission-btn__top">
-            <span class="mission-btn__icon">🧘</span>
-            <span class="mission-btn__avail-dot"></span>
-          </div>
-          <p class="mission-btn__name">Nevtralizator</p>
-          <p class="mission-btn__xp" style="color:#34C759">+1 Joker</p>
-          <p class="mission-btn__sub">obvladal jezo</p>
-                  </div>
-        </button>
-
-        <button class="mission-btn" data-mission="debriefing"
-          style="background:#EFF6FF;border-color:#007AFF;border-width:3px;box-shadow:0 5px 0 rgba(0,122,255,.25)">
-          <div class="mission-btn-inner">
-          <div class="mission-btn__top">
-            <span class="mission-btn__icon">📋</span>
-            <span class="mission-btn__avail-dot"></span>
-          </div>
-          <p class="mission-btn__name">Debriefing</p>
-          <p class="mission-btn__xp" style="color:#007AFF">+25 XP</p>
-          <p class="mission-btn__sub">analiza napake</p>
-                  </div>
-        </button>
-
-        <button class="mission-btn" data-mission="intel_report"
-          style="background:#F5EEFF;border-color:#AF52DE;border-width:3px;box-shadow:0 5px 0 rgba(175,82,222,.25)">
-          <div class="mission-btn-inner">
-          <div class="mission-btn__top">
-            <span class="mission-btn__icon">🤝</span>
-            <span class="mission-btn__avail-dot"></span>
-          </div>
-          <p class="mission-btn__name">Intel Report</p>
-          <p class="mission-btn__xp" style="color:#AF52DE">+20 XP</p>
-          <p class="mission-btn__sub">1x na teden</p>
-                  </div>
-        </button>
-
-        <button class="mission-btn" data-mission="advokat"
-          style="background:#FFF4E6;border-color:#FF9500;border-width:3px;box-shadow:0 5px 0 rgba(255,149,0,.25)">
-          <div class="mission-btn-inner">
-          <div class="mission-btn__top">
-            <span class="mission-btn__icon">⚖️</span>
-            <span class="mission-btn__avail-dot"></span>
-          </div>
-          <p class="mission-btn__name">Advokat</p>
-          <p class="mission-btn__xp" style="color:#FF9500">+30 XP</p>
-          <p class="mission-btn__sub">sestanek poveljstva</p>
-                  </div>
-        </button>
-
-      </div>
-    </section>
-
-    <!-- ── MISSIONS ─────────────────────────────────────── -->
-    <section aria-label="Misije">
-      <div class="section-header">
-        <h3 class="section-header__title">🚀 Misije</h3>
-        <span class="section-header__badge">3 razpoložljive</span>
-      </div>
-
-      <div class="missions-wrapper" style="position:relative"><div class="missions-grid">
-
-        <!-- LOCKED -->
-        <button class="mission-btn mission-btn--locked" data-mission="sesanje" disabled aria-label="Sesanje – zaklenjeno">
-          <div class="mission-btn-inner">
-          <div class="mission-btn__top">
-            <span class="mission-btn__icon">🌬️</span>
-            <span class="mission-btn__lock">🔒</span>
-          </div>
-          <p class="mission-btn__name">Sesanje</p>
-          <p class="mission-btn__xp">+25 XP</p>
-          <p class="mission-btn__cooldown">⏱ 72h Cooldown</p>
-          <!-- Joker unlock option -->
-          <span class="mission-btn__joker-hint">🃏 Joker?</span>
-                  </div>
-        </button>
-
-        <!-- AVAILABLE -->
-        <button class="mission-btn mission-btn--available" data-mission="posoda" aria-label="Pomivalni Stroj">
-          <div class="mission-btn-inner">
-          <div class="mission-btn__top">
-            <span class="mission-btn__icon">🍽️</span>
-            <span class="mission-btn__avail-dot" aria-hidden="true"></span>
-          </div>
-          <p class="mission-btn__name">Pomivalni Stroj</p>
-          <p class="mission-btn__xp">+15 XP</p>
-          <p class="mission-btn__sub">Pritisni za potrditev</p>
-                  </div>
-        </button>
-
-        <!-- SPECIAL / SCOUT BONUS -->
-        <button class="mission-btn mission-btn--special" data-mission="perilo" aria-label="Gora Perila">
-          <div class="mission-btn-inner">
-          <div class="mission-btn__top">
-            <span class="mission-btn__icon">🧺</span>
-            <span class="mission-btn__lightning">⚡</span>
-          </div>
-          <p class="mission-btn__name">Gora Perila</p>
-          <p class="mission-btn__xp">+30 XP</p>
-          <p class="mission-btn__sub">Pritisni za potrditev</p>
-                  </div>
-        </button>
-
-        <button class="mission-btn mission-btn--available" data-mission="kuhanje" aria-label="Kuhanje">
-          <div class="mission-btn-inner">
-          <div class="mission-btn__top">
-            <span class="mission-btn__icon">🍳</span>
-            <span class="mission-btn__avail-dot"></span>
-          </div>
-          <p class="mission-btn__name">Kuhanje</p>
-          <p class="mission-btn__xp">+40 XP</p>
-          <p class="mission-btn__sub">Pritisni za potrditev</p>
-                  </div>
-        </button>
-
-        <button class="mission-btn mission-btn--available" data-mission="wc" aria-label="WC Čiščenje">
-          <div class="mission-btn-inner">
-          <div class="mission-btn__top">
-            <span class="mission-btn__icon">🚽</span>
-            <span class="mission-btn__avail-dot"></span>
-          </div>
-          <p class="mission-btn__name">WC Čiščenje</p>
-          <p class="mission-btn__xp">+20 XP</p>
-          <p class="mission-btn__sub">Pritisni za potrditev</p>
-                  </div>
-        </button>
-
-        <button class="mission-btn mission-btn--available" data-mission="izvidnik" aria-label="Izvidniški bonus" style="border-color:rgba(196,125,26,.3);background:#FDF3E3">
-          <div class="mission-btn-inner">
-          <div class="mission-btn__top">
-            <span class="mission-btn__icon">👁️</span>
-            <span class="mission-btn__avail-dot"></span>
-          </div>
-          <p class="mission-btn__name">Izvidnik</p>
-          <p class="mission-btn__xp" style="color:#C47D1A">? XP</p>
-          <p class="mission-btn__sub" style="color:#C47D1A;font-weight:600">sam je opazil</p>
-                  </div>
-        </button>
-
-        <button class="mission-btn mission-btn--available" data-mission="skupna" aria-label="Skupna misija" style="border-color:rgba(37,99,235,.3);background:#EEF3FD">
-          <div class="mission-btn-inner">
-          <div class="mission-btn__top">
-            <span class="mission-btn__icon">🤝</span>
-            <span class="mission-btn__avail-dot"></span>
-          </div>
-          <p class="mission-btn__name">Skupna misija</p>
-          <p class="mission-btn__xp" style="color:#2563EB">+30 XP</p>
-          <p class="mission-btn__sub" style="color:#2563EB;font-weight:600">oba dobita XP</p>
-                  </div>
-        </button>
-
-        <button class="mission-btn mission-btn--available" data-mission="skrivna_wc" aria-label="Skrivna misija">
-          <div class="mission-btn-inner">
-          <div class="mission-btn__top">
-            <span class="mission-btn__icon">🎲</span>
-            <span class="mission-btn__avail-dot"></span>
-          </div>
-          <p class="mission-btn__name">Skrivna misija</p>
-          <p class="mission-btn__xp">? XP</p>
-          <p class="mission-btn__sub" style="color:#C47D1A;font-weight:600">naključna misija</p>
-                  </div>
-        </button>
-
-      </div></div>
-    </section>
-
-  </main>
+</main>
 
   <!-- ── BOTTOM NAV ───────────────────────────────────────── -->
   <nav class="bottom-nav" aria-label="Navigacija">
