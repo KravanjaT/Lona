@@ -707,38 +707,68 @@ function renderMissionsGrid(cat) {
   initDragScroll(grid);
 }
 
-// ── MOUSE DRAG SCROLL ────────────────────────────────────────
+// ── MOUSE DRAG SCROLL z inercijo ─────────────────────────────
 function initDragScroll(el) {
   if (!el) return;
-  let isDown  = false;
-  let startX  = 0;
-  let scrollL = 0;
+
+  let isDown   = false;
+  let startX   = 0;
+  let scrollL  = 0;
+  let velX     = 0;
+  let lastX    = 0;
+  let lastT    = 0;
+  let rafId    = null;
+  let moved    = false;
+
+  // Inercija — teče naprej po spustu
+  function momentum() {
+    if (Math.abs(velX) < 0.5) return;
+    el.scrollLeft -= velX;
+    velX *= 0.92; // Trenje
+    rafId = requestAnimationFrame(momentum);
+  }
 
   el.addEventListener("mousedown", e => {
     isDown  = true;
-    startX  = e.pageX - el.offsetLeft;
+    moved   = false;
+    startX  = e.pageX;
     scrollL = el.scrollLeft;
+    lastX   = e.pageX;
+    lastT   = Date.now();
+    velX    = 0;
+    cancelAnimationFrame(rafId);
     el.style.cursor = "grabbing";
-    el.style.userSelect = "none";
   });
 
-  el.addEventListener("mouseleave", () => {
-    isDown = false;
-    el.style.cursor = "grab";
-  });
-
-  el.addEventListener("mouseup", () => {
-    isDown = false;
-    el.style.cursor = "grab";
-  });
-
-  el.addEventListener("mousemove", e => {
+  window.addEventListener("mouseup", () => {
     if (!isDown) return;
-    e.preventDefault();
-    const x    = e.pageX - el.offsetLeft;
-    const walk = (x - startX) * 1.5;
-    el.scrollLeft = scrollL - walk;
+    isDown = false;
+    el.style.cursor = "grab";
+    // Zaženi inercijo
+    rafId = requestAnimationFrame(momentum);
   });
+
+  window.addEventListener("mousemove", e => {
+    if (!isDown) return;
+    const dx = e.pageX - startX;
+    if (Math.abs(dx) > 5) moved = true;
+    if (!moved) return;
+
+    // Hitrost
+    const now = Date.now();
+    const dt  = now - lastT || 1;
+    velX = (lastX - e.pageX) / dt * 12;
+    lastX = e.pageX;
+    lastT = now;
+
+    el.scrollLeft = scrollL - dx;
+    e.preventDefault();
+  });
+
+  // Blokiraj click če je bil drag
+  el.addEventListener("click", e => {
+    if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; }
+  }, true);
 
   el.style.cursor = "grab";
 }
