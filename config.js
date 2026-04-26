@@ -92,7 +92,7 @@ const LONA_CONFIG = {
     sesanje: {
       id:           "sesanje",
       label:        "Sesanje",
-      icon:         "ph-wind",
+      icon:         "🌬️",
       baseXp:       25,
       cooldownHrs:  72,
       state:        "locked",
@@ -101,7 +101,7 @@ const LONA_CONFIG = {
     posoda: {
       id:      "posoda",
       label:   "Pomivalni Stroj",
-      icon:    "ph-bowl-food",
+      icon: "🍽️",
       baseXp:       15,
       cooldownHrs:  72,
       state:        "available",
@@ -109,7 +109,7 @@ const LONA_CONFIG = {
     perilo: {
       id:              "perilo",
       label:           "Gora Perila",
-      icon:            "ph-stack",
+      icon:            "🧺",
       baseXp:          30,
       cooldownHrs:     72,
       isScoutBonus:    true,  // Agent sam opazi → XP × scoutMultiplier
@@ -121,7 +121,7 @@ const LONA_CONFIG = {
       location:    "indoor",
       duration:    "short",
       label:       "WC Čiščenje",
-      icon:        "ph-toilet",
+      icon:        "🚽",
       baseXp:      20,
       cooldownHrs: 72,
       state:       "available",
@@ -129,7 +129,7 @@ const LONA_CONFIG = {
     kuhanje: {
       id:             "kuhanje",
       label:          "Kuhanje",
-      icon:           "ph-cooking-pot",
+      icon:           "🍳",
       baseXp:         40,
       cooldownHrs:    72,
       hasMastery:     true,
@@ -139,7 +139,7 @@ const LONA_CONFIG = {
     izvidnik: {
       id:        "izvidnik",
       label:     "Izvidniški Bonus",
-      icon:      "ph-eye",
+      icon:      "👁️",
       baseXp:    0,
       isScout:   true,
       state:     "available",

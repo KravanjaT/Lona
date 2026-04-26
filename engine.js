@@ -797,12 +797,8 @@ function buildMissionBtn(mission, agentId) {
 
   // XP prikaz
   let xpLabel = onCooldown ? "🔒" : mission.isProgressive ? "3 stopnje" : `+${xp} XP`;
-  let subLabel = "";
   if (mission.isEq && mId === "nevtralizator") xpLabel = "+1 🃏";
-  if (mission.duration === "short")  subLabel = "⚡ hitro";
-  if (mission.duration === "medium") subLabel = "🕐 20 min";
-  if (mission.duration === "long")   subLabel = "🏕️ 1h+";
-  if (mission.location === "outdoor" && !subLabel) subLabel = "🌿 zunaj";
+  const subLabel = "";  // Odstranjen — preveč šuma na karticah
 
   // Cooldown timer
   let cooldownHtml = "";
@@ -822,7 +818,6 @@ function buildMissionBtn(mission, agentId) {
       </div>
       <p class="mission-btn__name">${mission.label}</p>
       <p class="mission-btn__xp">${xpLabel}</p>
-      ${subLabel ? `<p class="mission-btn__sub" style="color:rgba(255,255,255,.7)">${subLabel}</p>` : ""}
       ${cooldownHtml}
     </div>
   </button>`;
@@ -1271,9 +1266,7 @@ function renderCmdAgents() {
     section.innerHTML = `<div class="cmd-panel">
       <div id="streak-display" class="streak-display"></div>
       <div class="cmd-agents" id="cmd-agents"></div>
-      <div class="cmd-attrs"><p class="cmd-bonus__label" style="margin-bottom:6px">Atributi</p>
-        <div id="attrs-mini" class="attrs-mini-grid"></div></div>
-      <div class="cmd-bonus">
+<div class="cmd-bonus">
         <p class="cmd-bonus__label">Ročni bonus</p>
         <div class="cmd-bonus__btns">
           <button class="cmd-bonus__btn" onclick="grantManualBonus(10)">+10</button>

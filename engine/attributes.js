@@ -110,8 +110,7 @@ function renderAttributes(agentId) {
 
 /** Renderira mini attribute hexagon na indexu */
 function renderAttrsMini(agentId) {
-  const el = document.getElementById("attrs-mini");
-  if (!el) return;
+  return; // Atributi so samo na profilu
 
   const attrs = LONA_CONFIG.attributes;
   el.innerHTML = Object.values(attrs).map(attr => {
