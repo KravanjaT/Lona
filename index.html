@@ -45,6 +45,12 @@
         <!-- Generira JS -->
       </div>
 
+      <!-- Atributi mini -->
+      <div class="cmd-attrs">
+        <p class="cmd-bonus__label" style="margin-bottom:6px">Atributi</p>
+        <div id="attrs-mini" class="attrs-mini-grid"></div>
+      </div>
+
       <!-- Ročni bonus -->
       <div class="cmd-bonus">
         <p class="cmd-bonus__label">Ročni bonus</p>
@@ -63,37 +69,7 @@
       <!-- Generira season.js -->
     </div>
 
-    <!-- ── GATEKEEPER ──────────────────────────────────── -->
-    <section class="card card--gatekeeper" aria-label="Standard 0">
-      <div class="card__header">
-        🛡️
-        <div>
-          <p class="card__eyebrow">Dnevni Protokol</p>
-          <h2 class="card__title">STANDARD 0: ODOBRENO</h2>
-        </div>
-        <label class="toggle" aria-label="Aktiviraj Standard 0">
-          <input type="checkbox" class="toggle__input" id="gatekeeper-toggle" />
-          <span class="toggle__track"><span class="toggle__thumb"></span></span>
-        </label>
-      </div>
-      <div class="checklist">
-        <label class="checklist__item">
-          <input type="checkbox" class="checklist__cb" />
-          <span class="checklist__box">✓</span>
-          <span class="checklist__label">Zobje</span>
-        </label>
-        <label class="checklist__item">
-          <input type="checkbox" class="checklist__cb" />
-          <span class="checklist__box">✓</span>
-          <span class="checklist__label">Pižama</span>
-        </label>
-        <label class="checklist__item">
-          <input type="checkbox" class="checklist__cb" />
-          <span class="checklist__box">✓</span>
-          <span class="checklist__label">Miza</span>
-        </label>
-      </div>
-    </section>
+
 
     <!-- ── ZAKLADNICA ─────────────────────────────────────────── -->
     <section>
@@ -103,6 +79,83 @@
       <div class="treasury" id="treasury">
         <!-- Generira JS -->
         <div style="text-align:center;padding:20px;color:#8A8480;font-size:.85rem">Nalaganje...</div>
+      </div>
+    </section>
+
+    <!-- ── OUTDOOR MISIJE ─────────────────────────────────── -->
+    <section>
+      <div class="section-header">
+        <h3 class="section-header__title">🌿 Outdoor Misije</h3>
+        <span class="section-header__badge" style="background:#FF9500">Zunaj</span>
+      </div>
+      <div class="missions-grid">
+
+        <button class="mission-btn" data-mission="listi"
+          style="background:#EDFFF3;border-color:#34C759;border-width:3px;box-shadow:0 5px 0 rgba(52,199,89,.3)">
+          <div class="mission-btn__top">
+            <span class="mission-btn__icon">🍃</span>
+            <span class="mission-btn__avail-dot"></span>
+          </div>
+          <p class="mission-btn__name">List Detektiv</p>
+          <p class="mission-btn__xp" style="color:#34C759">+20 XP</p>
+          <p class="mission-btn__sub">⚡ 5-10 min · zunaj</p>
+        </button>
+
+        <button class="mission-btn" data-mission="pot"
+          style="background:#FFF4E6;border-color:#FF9500;border-width:3px;box-shadow:0 5px 0 rgba(255,149,0,.25)">
+          <div class="mission-btn__top">
+            <span class="mission-btn__icon">🧹</span>
+            <span class="mission-btn__avail-dot"></span>
+          </div>
+          <p class="mission-btn__name">Počisti Pot</p>
+          <p class="mission-btn__xp" style="color:#FF9500">+25 XP</p>
+          <p class="mission-btn__sub">⚡ 10 min · zunaj</p>
+        </button>
+
+        <button class="mission-btn" data-mission="vrt"
+          style="background:#EDFFF3;border-color:#34C759;border-width:3px;box-shadow:0 5px 0 rgba(52,199,89,.3)">
+          <div class="mission-btn__top">
+            <span class="mission-btn__icon">🌱</span>
+            <span class="mission-btn__avail-dot"></span>
+          </div>
+          <p class="mission-btn__name">Vrtnar</p>
+          <p class="mission-btn__xp" style="color:#34C759">+35 XP</p>
+          <p class="mission-btn__sub">🕐 20 min · zunaj</p>
+        </button>
+
+        <button class="mission-btn" data-mission="narava_foto"
+          style="background:#EFF6FF;border-color:#007AFF;border-width:3px;box-shadow:0 5px 0 rgba(0,122,255,.25)">
+          <div class="mission-btn__top">
+            <span class="mission-btn__icon">📸</span>
+            <span class="mission-btn__avail-dot"></span>
+          </div>
+          <p class="mission-btn__name">Narava Foto</p>
+          <p class="mission-btn__xp" style="color:#007AFF">+30 XP</p>
+          <p class="mission-btn__sub">🕐 15 min · zunaj</p>
+        </button>
+
+        <button class="mission-btn" data-mission="orientacija_out"
+          style="background:#FFF4E6;border-color:#FF9500;border-width:3px;box-shadow:0 5px 0 rgba(255,149,0,.25)">
+          <div class="mission-btn__top">
+            <span class="mission-btn__icon">🧭</span>
+            <span class="mission-btn__avail-dot"></span>
+          </div>
+          <p class="mission-btn__name">Orientacija</p>
+          <p class="mission-btn__xp" style="color:#FF9500">+40 XP</p>
+          <p class="mission-btn__sub">🕐 30 min · zunaj</p>
+        </button>
+
+        <button class="mission-btn" data-mission="taborisce"
+          style="background:#FFF0EE;border-color:#FF3B30;border-width:3px;box-shadow:0 5px 0 rgba(255,59,48,.25)">
+          <div class="mission-btn__top">
+            <span class="mission-btn__icon">🏕️</span>
+            <span class="mission-btn__avail-dot"></span>
+          </div>
+          <p class="mission-btn__name">Vzpostavi Taborišče</p>
+          <p class="mission-btn__xp" style="color:#FF3B30">+50 XP</p>
+          <p class="mission-btn__sub">🏕️ 1h+ · zunaj</p>
+        </button>
+
       </div>
     </section>
 
@@ -298,6 +351,7 @@
   <script src="engine/equipment.js"></script>
   <script src="engine/eq.js"></script>
   <script src="engine/bank.js"></script>
+  <script src="engine/attributes.js"></script>
   <script src="engine/scholar.js"></script>
   <script src="engine.js"></script>
 

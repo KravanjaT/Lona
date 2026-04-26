@@ -155,9 +155,9 @@
 
   <!-- Hero -->
   <div class="hub-hero">
-    <p class="hub-hero__eyebrow">Poveljniški štab</p>
+    <p class="hub-hero__eyebrow">Samo za Poveljnike</p>
     <h1 class="hub-hero__title">Globalni Hub</h1>
-    <p class="hub-hero__sub">Tukaj planiraš teden. Lea in Nejc tega ne vidita.</p>
+    <p class="hub-hero__sub">Kulturne operacije · Tedenski brifing · Misijska banka</p>
     <div class="hub-hero__stats">
       <div class="hub-stat">
         <span class="hub-stat__val" id="hub-total-xp">0</span>
@@ -168,34 +168,79 @@
         <span class="hub-stat__lbl">Misij ta teden</span>
       </div>
       <div class="hub-stat">
-        <span class="hub-stat__val" id="hub-days-active">0</span>
-        <span class="hub-stat__lbl">Aktivnih dni</span>
+        <span class="hub-stat__val" id="hub-season-xp">0</span>
+        <span class="hub-stat__lbl">Sezonski XP</span>
       </div>
     </div>
   </div>
 
-  <!-- Tedenska sezona -->
-  <div class="season-teaser">
-    <span class="season-teaser__icon">🏆</span>
-    <div class="season-teaser__info">
-      <p class="season-teaser__title" id="hub-season-label">Sezona 1</p>
-      <p class="season-teaser__sub" id="hub-season-lead">Vodilni: —</p>
+  <!-- Tabs -->
+  <div class="hub-tabs" id="hub-tabs">
+    <button class="hub-tab hub-tab--active" data-tab="cultural">🌍 Kulturne Ops</button>
+    <button class="hub-tab" data-tab="weekly">📅 Tedenski Brifing</button>
+    <button class="hub-tab" data-tab="bank">🗄️ Misijska Banka</button>
+  </div>
+
+  <!-- TAB: Kulturne Operacije -->
+  <div class="hub-tab-content" id="tab-cultural">
+
+    <div class="cultural-sector">
+      <div class="cultural-sector__header">
+        <span class="cultural-sector__flag">🇯🇵</span>
+        <div>
+          <p class="cultural-sector__name">Japonski Sektor</p>
+          <p class="cultural-sector__sub">Fina motorika · Potrpežljivost · Fokus</p>
+        </div>
+      </div>
+      <div class="cultural-missions" id="sector-japan"></div>
+    </div>
+
+    <div class="cultural-sector">
+      <div class="cultural-sector__header">
+        <span class="cultural-sector__flag">🇸🇮</span>
+        <div>
+          <p class="cultural-sector__name">Slovenski Sektor</p>
+          <p class="cultural-sector__sub">Alpinizem · Iznajdljivost · Narava</p>
+        </div>
+      </div>
+      <div class="cultural-missions" id="sector-slo"></div>
+    </div>
+
+    <div class="cultural-sector">
+      <div class="cultural-sector__header">
+        <span class="cultural-sector__flag">🇸🇪</span>
+        <div>
+          <p class="cultural-sector__name">Skandinavski Sektor</p>
+          <p class="cultural-sector__sub">Friluftsliv · Odpornost · Zunanji svet</p>
+        </div>
+      </div>
+      <div class="cultural-missions" id="sector-scan"></div>
+    </div>
+
+  </div>
+
+  <!-- TAB: Tedenski Brifing -->
+  <div class="hub-tab-content" id="tab-weekly" style="display:none">
+    <div class="weekly-plan">
+      <p class="weekly-plan__title">📅 Tedenski urnik</p>
+      <div id="weekly-schedule"></div>
+      <button class="briefing-btn" style="margin-top:14px" onclick="lockWeeklyPlan()">
+        🔒 Zakleni urnik za ta teden
+      </button>
+    </div>
+    <div class="mission-bank">
+      <p class="mission-bank__title">🗄️ Dodaj misijo v urnik</p>
+      <div class="bank-grid" id="mission-bank"></div>
     </div>
   </div>
 
-  <!-- Tedenski urnik -->
-  <div class="weekly-plan">
-    <p class="weekly-plan__title">📅 Tedenski urnik</p>
-    <div id="weekly-schedule"><!-- Generira JS --></div>
-    <button class="briefing-btn" style="margin-top:14px" onclick="lockWeeklyPlan()">
-      🔒 Zakleni urnik za ta teden
-    </button>
-  </div>
-
-  <!-- Misija banka -->
-  <div class="mission-bank">
-    <p class="mission-bank__title">🗄️ Banka misij</p>
-    <div class="bank-grid" id="mission-bank"><!-- Generira JS --></div>
+  <!-- TAB: Misijska Banka -->
+  <div class="hub-tab-content" id="tab-bank" style="display:none">
+    <div class="hub-bank-info" style="background:#fff;border:2.5px solid rgba(0,0,0,.07);border-radius:22px;padding:18px;box-shadow:0 4px 0 rgba(0,0,0,.08)">
+      <p style="font-family:'Nunito',sans-serif;font-size:1rem;font-weight:900;color:#1C1C1E;margin-bottom:4px">📊 Arhiv misij</p>
+      <p style="font-size:.78rem;font-weight:600;color:#8E8E93;margin-bottom:14px">Vse opravljene misije obeh agentov</p>
+      <div id="hub-mission-log"></div>
+    </div>
   </div>
 
 </main>
@@ -223,174 +268,246 @@
 <script src="config.js"></script>
 <script src="engine/xp.js"></script>
 <script src="engine/season.js"></script>
+<script src="engine/cooldown.js"></script>
 <script>
-const DAYS = ["Ned","Pon","Tor","Sre","Čet","Pet","Sob"];
-const LS_PLAN = "lona_weekly_plan";
 
-function getPlan() {
-  return JSON.parse(localStorage.getItem(LS_PLAN) || "{}");
+// ── KULTURNE MISIJE ─────────────────────────────────────
+const CULTURAL_MISSIONS = {
+  japan: [
+    { id:"origami",    label:"Origami Mojster",   icon:"🦢", xp:30, desc:"Zloži vsaj 3 origami figure brez pomoči.", stars:4.8, reviews:124 },
+    { id:"zrna",       label:"Zlaganje Zrn",       icon:"🌾", xp:20, desc:"Razporedi 100 zrn riža v 5 vrst. Brez razsula.", stars:4.6, reviews:89  },
+    { id:"calligraphy",label:"Kaligrafija",        icon:"🖋️", xp:35, desc:"Napiši svoje ime v japonskem stilu — 3x.", stars:4.9, reviews:201 },
+    { id:"bonsai",     label:"Skrb za Bonsai",     icon:"🌿", xp:25, desc:"Zalij in reži rastlino po navodilih.", stars:4.7, reviews:156 },
+  ],
+  slo: [
+    { id:"gorska",     label:"Gorska Šola",        icon:"🏔️", xp:40, desc:"Najdi smer v gozdu z le soncem in senco.", stars:4.9, reviews:67  },
+    { id:"ogenj",      label:"Zakuri Ogenj",       icon:"🔥", xp:50, desc:"Z vžigalicami in naravnimi materiali.", stars:4.8, reviews:45  },
+    { id:"zelisce",    label:"Zelišče Detektiv",   icon:"🌿", xp:30, desc:"Identificiraj 5 divjih zelišč na sprehodu.", stars:4.5, reviews:78  },
+    { id:"vreme",      label:"Vremenski Opazovalec",icon:"🌦️",xp:20, desc:"3 dni opazuj vreme in napiši poročilo.", stars:4.3, reviews:92  },
+  ],
+  scan: [
+    { id:"dez",        label:"Trojni Sloj",        icon:"🌧️", xp:30, desc:"Sam se obleci v 3 sloje in 15 min zunaj na dežju.", stars:4.7, reviews:203 },
+    { id:"mraz",       label:"Zimski Junak",       icon:"❄️", xp:40, desc:"10 min zunaj brez jakne (ko je nad 5°C).", stars:4.5, reviews:134 },
+    { id:"narava",     label:"Friluftsliv Ura",    icon:"🌲", xp:35, desc:"1 ura brez zaslona — samo narava.", stars:4.9, reviews:312 },
+    { id:"orientacija",label:"Nord Orientacija",   icon:"🧭", xp:45, desc:"Najdi sever brez kompasa — 3 metode.", stars:4.8, reviews:88  },
+  ],
+};
+
+function renderStars(n) {
+  return '★'.repeat(Math.round(n)) + '☆'.repeat(5-Math.round(n));
 }
-function savePlan(plan) {
-  localStorage.setItem(LS_PLAN, JSON.stringify(plan));
+
+function renderCulturalMissions() {
+  const sectors = {
+    japan: document.getElementById("sector-japan"),
+    slo:   document.getElementById("sector-slo"),
+    scan:  document.getElementById("sector-scan"),
+  };
+
+  Object.entries(CULTURAL_MISSIONS).forEach(([key, missions]) => {
+    const el = sectors[key];
+    if (!el) return;
+    el.innerHTML = missions.map(m => `
+      <div class="cultural-mission-card">
+        <div class="cmc-top">
+          <span class="cmc-icon">${m.icon}</span>
+          <div class="cmc-info">
+            <p class="cmc-name">${m.label}</p>
+            <p class="cmc-stars" style="color:#FF9500">${renderStars(m.stars)} <span style="color:#8E8E93;font-size:.62rem">(${m.reviews})</span></p>
+          </div>
+          <span class="cmc-xp">+${m.xp} XP</span>
+        </div>
+        <p class="cmc-desc">${m.desc}</p>
+        <button class="cmc-add-btn" onclick="addCulturalMission('${key}','${m.id}')">
+          + Dodaj v urnik
+        </button>
+      </div>
+    `).join("");
+  });
 }
 
-function initHub() {
-  // Stats
-  const state  = JSON.parse(localStorage.getItem("lona_xp_state") || "{}");
-  const total  = Object.values(state).reduce((s,v) => s+v, 0);
-  const log    = JSON.parse(localStorage.getItem("lona_mission_log") || "[]");
-  const wk     = _getWeekKey();
-  const wkLog  = log.filter(e => e.week === wk);
+function addCulturalMission(sector, missionId) {
+  const m = CULTURAL_MISSIONS[sector]?.find(x => x.id === missionId);
+  if (!m) return;
 
-  document.getElementById("hub-total-xp").textContent      = total;
-  document.getElementById("hub-missions-done").textContent  = wkLog.length;
-  const days = new Set(wkLog.map(e => e.day)).size;
-  document.getElementById("hub-days-active").textContent    = days;
+  // Dodaj v weekly plan za danes
+  const plan  = JSON.parse(localStorage.getItem("lona_weekly_plan") || "{}");
+  const today = new Date().getDay();
+  if (!plan[today]) plan[today] = [];
 
-  // Season
-  const scores = JSON.parse(localStorage.getItem("lona_season") || "{}");
-  const lead   = LONA_CONFIG.agents
-    .map(a => ({ ...a, xp: scores[a.id] ?? 0 }))
-    .sort((a,b) => b.xp - a.xp)[0];
-  if (lead) document.getElementById("hub-season-lead").textContent =
-    `Vodilni: ${lead.avatar} ${lead.name} (${lead.xp} XP)`;
+  const customKey = "cultural_" + sector + "_" + missionId;
+  if (!plan[today].includes(customKey)) plan[today].push(customKey);
+  localStorage.setItem("lona_weekly_plan", JSON.stringify(plan));
 
-  renderWeeklySchedule();
-  renderMissionBank();
+  // Shrani kulturno misijo v custom missions
+  const customs = JSON.parse(localStorage.getItem("lona_custom_missions") || "{}");
+  customs[customKey] = { ...m, id: customKey, isCultural: true, sector };
+  localStorage.setItem("lona_custom_missions", JSON.stringify(customs));
+
+  // Feedback
+  const btn = event.target;
+  btn.textContent = "✓ Dodano!";
+  btn.style.background = "#34C759";
+  btn.style.color = "#fff";
+  setTimeout(() => {
+    btn.textContent = "+ Dodaj v urnik";
+    btn.style.background = "";
+    btn.style.color = "";
+  }, 2000);
+}
+
+// ── TABS ────────────────────────────────────────────────
+document.querySelectorAll(".hub-tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".hub-tab").forEach(t => t.classList.remove("hub-tab--active"));
+    document.querySelectorAll(".hub-tab-content").forEach(c => c.style.display = "none");
+    tab.classList.add("hub-tab--active");
+    document.getElementById("tab-" + tab.dataset.tab).style.display = "block";
+  });
+});
+
+// ── WEEKLY SCHEDULE ────────────────────────────────────
+const DAYS_FULL = ["Nedelja","Ponedeljek","Torek","Sreda","Četrtek","Petek","Sobota"];
+const DAYS_SHORT = ["Ned","Pon","Tor","Sre","Čet","Pet","Sob"];
+
+function getMissionLabel(id) {
+  const custom = JSON.parse(localStorage.getItem("lona_custom_missions") || "{}");
+  if (custom[id]) return custom[id].icon + " " + custom[id].label;
+  const m = LONA_CONFIG.missions[id];
+  return m?.label || id;
 }
 
 function renderWeeklySchedule() {
   const el   = document.getElementById("weekly-schedule");
-  const plan = getPlan();
+  if (!el) return;
+  const plan  = JSON.parse(localStorage.getItem("lona_weekly_plan") || "{}");
   const today = new Date().getDay();
-  const days  = [1,2,3,4,5,6,0]; // Pon-Ned
+  const days  = [1,2,3,4,5,6,0];
 
   el.innerHTML = days.map(d => {
-    const name     = DAYS[d];
     const missions = plan[d] || [];
     const isToday  = d === today;
-
-    const chips = missions.map(mId => {
-      const m = LONA_CONFIG.missions[mId];
-      return `<span class="day-mission-chip"
-        onclick="removeMissionFromDay(${d},'${mId}')">${m?.label || mId} ×</span>`;
-    }).join("");
-
+    const chips = missions.map(mId =>
+      `<span class="day-mission-chip" onclick="removeMissionFromDay(${d},'${mId}')">${getMissionLabel(mId)} ×</span>`
+    ).join("");
     return `<div class="day-row">
-      <span class="day-row__name ${isToday ? 'day-row__name--today' : ''}">${name}${isToday ? ' ·' : ''}</span>
+      <span class="day-row__name ${isToday ? 'day-row__name--today' : ''}">${DAYS_SHORT[d]}</span>
       <div class="day-row__missions">${chips}</div>
-      <span class="day-row__add" onclick="showAddMission(${d})">+ dodaj</span>
+      <span class="day-row__add" onclick="showAddMission(${d})">+</span>
     </div>`;
   }).join("");
 }
 
+function showAddMission(day) {
+  const missions = Object.values(LONA_CONFIG.missions).filter(m => !m.isHidden);
+  const d = document.createElement("div");
+  d.className = "joker-dialog";
+  const mBtns = missions.map(m =>
+    `<button class="funnel-btn" onclick="addMissionToDay(${day},'${m.id}');this.closest('.joker-dialog').remove()">
+      ${m.label} (+${m.baseXp} XP)
+    </button>`
+  ).join("");
+  d.innerHTML = `<div class="joker-dialog__box">
+    <p class="joker-dialog__title">Dodaj — ${DAYS_FULL[day]}</p>
+    <div class="funnel-grid" style="max-height:300px;overflow-y:auto">${mBtns}</div>
+    <button class="joker-dialog__cancel" style="margin-top:8px;width:100%" onclick="this.closest('.joker-dialog').remove()">Prekliči</button>
+  </div>`;
+  document.body.appendChild(d);
+}
+
+function addMissionToDay(day, missionId) {
+  const plan = JSON.parse(localStorage.getItem("lona_weekly_plan") || "{}");
+  if (!plan[day]) plan[day] = [];
+  if (!plan[day].includes(missionId)) plan[day].push(missionId);
+  localStorage.setItem("lona_weekly_plan", JSON.stringify(plan));
+  renderWeeklySchedule();
+}
+
+function removeMissionFromDay(day, missionId) {
+  const plan = JSON.parse(localStorage.getItem("lona_weekly_plan") || "{}");
+  if (!plan[day]) return;
+  plan[day] = plan[day].filter(m => m !== missionId);
+  localStorage.setItem("lona_weekly_plan", JSON.stringify(plan));
+  renderWeeklySchedule();
+}
+
+function lockWeeklyPlan() {
+  const plan  = JSON.parse(localStorage.getItem("lona_weekly_plan") || "{}");
+  const total = Object.values(plan).flat().length;
+  if (total === 0) { alert("Dodaj vsaj eno misijo!"); return; }
+  localStorage.setItem("lona_weekly_locked", "1");
+  alert("✓ Urnik zaklenjen! " + total + " misij za ta teden.");
+}
+
 function renderMissionBank() {
   const el = document.getElementById("mission-bank");
-  const missions = Object.values(LONA_CONFIG.missions).filter(m => !m.isHidden);
-
-  el.innerHTML = missions.map(m => `
-    <div class="bank-item" onclick="showAddMission(null, '${m.id}')">
-      <span class="bank-item__icon">${getMissionEmoji(m.id)}</span>
+  if (!el) return;
+  const icons = {sesanje:"🌬️",posoda:"🍽️",perilo:"🧺",wc:"🚽",kuhanje:"🍳",izvidnik:"👁️",skupna:"🤝",skrivna_wc:"🎲"};
+  el.innerHTML = Object.values(LONA_CONFIG.missions).filter(m => !m.isHidden).map(m => `
+    <div class="bank-item" onclick="showAddMission(new Date().getDay())">
+      <span class="bank-item__icon">${icons[m.id]||"📋"}</span>
       <div class="bank-item__info">
         <p class="bank-item__name">${m.label}</p>
-        <p class="bank-item__xp">+${m.baseXp} XP${m.cooldownHrs ? ' · 72h cooldown' : ''}</p>
+        <p class="bank-item__xp">+${m.baseXp} XP</p>
       </div>
       <span class="bank-item__add">+</span>
     </div>
   `).join("");
 }
 
-function getMissionEmoji(id) {
-  const map = {
-    sesanje: "🌬️", posoda: "🍽️", perilo: "🧺",
-    wc: "🚽", kuhanje: "🍳", izvidnik: "👁️",
-    skupna: "🤝", skrivna_wc: "🎲"
-  };
-  return map[id] || "📋";
-}
-
-function showAddMission(day, missionId) {
-  const missions = Object.values(LONA_CONFIG.missions).filter(m => !m.isHidden);
-  const d = document.createElement("div");
-  d.className = "joker-dialog";
-
-  if (missionId && day === null) {
-    // Izberi dan
-    const DAYS_FULL = ["Nedelja","Ponedeljek","Torek","Sreda","Četrtek","Petek","Sobota"];
-    const dayBtns = [1,2,3,4,5,6,0].map(i =>
-      `<button class="funnel-btn" onclick="addMissionToDay(${i},'${missionId}');this.closest('.joker-dialog').remove()">
-        ${DAYS_FULL[i]}
-      </button>`
-    ).join("");
-    const m = LONA_CONFIG.missions[missionId];
-    d.innerHTML = `<div class="joker-dialog__box">
-      <div class="joker-dialog__icon">${getMissionEmoji(missionId)}</div>
-      <p class="joker-dialog__title">${m?.label}</p>
-      <p class="joker-dialog__body">Kateri dan?</p>
-      <div class="funnel-grid">${dayBtns}</div>
-      <button class="joker-dialog__cancel" style="margin-top:8px;width:100%" onclick="this.closest('.joker-dialog').remove()">Prekliči</button>
+// ── MISSION LOG ────────────────────────────────────────
+function renderMissionLog() {
+  const el  = document.getElementById("hub-mission-log");
+  if (!el) return;
+  const log = JSON.parse(localStorage.getItem("lona_mission_log") || "[]").reverse().slice(0, 30);
+  if (!log.length) { el.innerHTML = '<p style="color:#8E8E93;font-size:.82rem;text-align:center;padding:16px">Še ni opravljenih misij.</p>'; return; }
+  el.innerHTML = log.map(e => {
+    const agent = LONA_CONFIG.agents.find(a => a.id === e.agentId);
+    const date  = new Date(e.date).toLocaleDateString("sl-SI", {month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"});
+    return `<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #F2F2F7">
+      <span style="font-size:1.1rem">${agent?.avatar||"?"}</span>
+      <div style="flex:1">
+        <p style="font-size:.8rem;font-weight:800;color:#1C1C1E">${e.missionId}</p>
+        <p style="font-size:.65rem;color:#8E8E93">${date}</p>
+      </div>
+      <span style="font-family:'Nunito',sans-serif;font-size:.88rem;font-weight:900;color:${e.compromised?'#FF3B30':'#34C759'}">+${e.xp} XP</span>
     </div>`;
-  } else {
-    // Izberi misijo za ta dan
-    const DAYS_FULL = ["Nedelja","Ponedeljek","Torek","Sreda","Četrtek","Petek","Sobota"];
-    const mBtns = missions.map(m =>
-      `<button class="funnel-btn" onclick="addMissionToDay(${day},'${m.id}');this.closest('.joker-dialog').remove()">
-        ${getMissionEmoji(m.id)} ${m.label} (+${m.baseXp} XP)
-      </button>`
-    ).join("");
-    d.innerHTML = `<div class="joker-dialog__box">
-      <p class="joker-dialog__title">Dodaj misijo — ${DAYS_FULL[day]}</p>
-      <div class="funnel-grid" style="max-height:300px;overflow-y:auto">${mBtns}</div>
-      <button class="joker-dialog__cancel" style="margin-top:8px;width:100%" onclick="this.closest('.joker-dialog').remove()">Prekliči</button>
-    </div>`;
-  }
-  document.body.appendChild(d);
+  }).join("");
 }
 
-function addMissionToDay(day, missionId) {
-  const plan = getPlan();
-  if (!plan[day]) plan[day] = [];
-  if (!plan[day].includes(missionId)) plan[day].push(missionId);
-  savePlan(plan);
+// ── STATS ───────────────────────────────────────────────
+function initHubStats() {
+  const state = JSON.parse(localStorage.getItem("lona_xp_state") || "{}");
+  const total = Object.values(state).reduce((s,v) => s+v, 0);
+  const log   = JSON.parse(localStorage.getItem("lona_mission_log") || "[]");
+
+  const now  = new Date();
+  const jan1 = new Date(now.getFullYear(),0,1);
+  const wk   = Math.ceil(((now-jan1)/86400000+jan1.getDay()+1)/7);
+  const key  = now.getFullYear()+"-W"+wk;
+  const wkLog = log.filter(e => e.week === key);
+
+  const seasonXp = LONA_CONFIG.agents.reduce((s,a) => {
+    const sState = JSON.parse(localStorage.getItem("lona_season_xp")||"{}");
+    return s + (sState[a.id]||0);
+  }, 0);
+
+  const el1 = document.getElementById("hub-total-xp");
+  const el2 = document.getElementById("hub-missions-done");
+  const el3 = document.getElementById("hub-season-xp");
+  if (el1) el1.textContent = total;
+  if (el2) el2.textContent = wkLog.length;
+  if (el3) el3.textContent = seasonXp;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initHubStats();
+  renderCulturalMissions();
   renderWeeklySchedule();
-}
-
-function removeMissionFromDay(day, missionId) {
-  const plan = getPlan();
-  if (!plan[day]) return;
-  plan[day] = plan[day].filter(m => m !== missionId);
-  savePlan(plan);
-  renderWeeklySchedule();
-}
-
-function lockWeeklyPlan() {
-  const plan = getPlan();
-  const total = Object.values(plan).flat().length;
-  if (total === 0) {
-    alert("Dodaj vsaj eno misijo preden zakleneš urnik.");
-    return;
-  }
-  localStorage.setItem("lona_weekly_locked", "1");
-  const d = document.createElement("div");
-  d.className = "joker-dialog";
-  d.innerHTML = `<div class="joker-dialog__box">
-    <div class="joker-dialog__icon">🔒</div>
-    <p class="joker-dialog__title">Urnik zaklenjen!</p>
-    <p class="joker-dialog__body">${total} misij načrtovanih za ta teden.</p>
-    <button class="joker-dialog__confirm" style="width:100%" onclick="this.closest('.joker-dialog').remove();location.href='index.html'">Pojdi na bazo →</button>
-  </div>`;
-  document.body.appendChild(d);
-}
-
-// Prikaže danes načrtovane misije na dashboardu (kliče engine.js)
-function getTodayMissions() {
-  const plan  = getPlan();
-  const today = new Date().getDay();
-  return plan[today] || [];
-}
-
-document.addEventListener("DOMContentLoaded", initHub);
-</script>
+  renderMissionBank();
+  renderMissionLog();
+});
+</script>>
 
 <script>
   if ('serviceWorker' in navigator) {

@@ -97,6 +97,36 @@ const MISSION_MODIFIERS = {
     { icon:"🤫", label:"Tiha ekipa",       text:"Nobenih besed — samo geste!" },
   ],
   skrivna_wc: [],
+  listi: [
+    { icon:"🔍", label:"Detektiv",      text:"Poišči 5 RAZLIČNIH listov — oblika, barva, velikost." },
+    { icon:"🎨", label:"Umetnik",       text:"Nariši vsak list ki ga najdeš." },
+    { icon:"⚡", label:"Hitrostni lov", text:"2 minuti — kdo najde več vrst?" },
+  ],
+  pot: [
+    { icon:"🥷", label:"Nindža čiščenje", text:"Brez hrupa, brez opomina." },
+    { icon:"⏱️", label:"Hitrostni rekord", text:"Izmeri čas — poraziš rekord?" },
+    { icon:"📋", label:"Inspektor",        text:"Preveri vsak centimeter. Starš oceni 1-10." },
+  ],
+  vrt: [
+    { icon:"🌱", label:"Botanik",    text:"Identificiraj 3 rastline ki rasteš." },
+    { icon:"💧", label:"Vodovod",    text:"Zalij NATANČNO — ne preveč, ne premalo." },
+    { icon:"🔬", label:"Opazovalec", text:"Poišči žuželko in jo opisuj 1 minuto." },
+  ],
+  narava_foto: [
+    { icon:"🎯", label:"Tema: Simetrija",  text:"Najdi 3 simetrične objekte v naravi." },
+    { icon:"🌈", label:"Tema: Barve",      text:"Vsaka barva mavrice — ena fotografija." },
+    { icon:"🔍", label:"Makro izziv",      text:"Fotografiraj kar je manjše od tvoje roke." },
+  ],
+  orientacija_out: [
+    { icon:"☀️", label:"Sončna metoda",  text:"Najdi sever samo s senco in palico." },
+    { icon:"⭐", label:"Zvezde",          text:"Ponoči poišči Severnico." },
+    { icon:"🗺️", label:"Brez kompasa",   text:"Navigiraj 100m samo z opazovanjem." },
+  ],
+  taborisce: [
+    { icon:"⚡", label:"Speed Camp",    text:"Postavi taborišče v 10 minutah." },
+    { icon:"🌧️", label:"Mokri izziv",   text:"Postavi taborišče ki bo suho tudi v dežju." },
+    { icon:"🌙", label:"Nočni tabor",   text:"Zvečer — vse postaviti pred temo." },
+  ],
   wc: [
     { icon:"🥷", label:"Nindža čiščenje",  text:"Preden te kdo opazi — hitro in tiho." },
     { icon:"⚡", label:"Turbo",            text:"5 minut — vse mora sijati." },
@@ -345,6 +375,7 @@ function onMissionClick(btn) {
           return;
         }
         spendJoker(agentId);
+        showJokerFly();
         localStorage.removeItem("lona_cooldown_" + missionId);
         renderCooldown(missionId);
         lonaToast("Joker porabljen — misija odklenjena! 🃏", "gold");
@@ -535,7 +566,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typeof initCooldownTicker === "function") initCooldownTicker();
 
     document.querySelectorAll(".mission-btn[data-mission]").forEach(btn => {
-      btn.addEventListener("click", (e) => { addRipple(btn, e); onMissionClick(btn); });
+      btn.addEventListener("click", (e) => { addRipple(btn, e); popBtn(btn); onMissionClick(btn); });
     });
 
     if (typeof initMastery === "function") initMastery();
@@ -549,6 +580,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typeof initSeason === "function") initSeason();
     if (typeof initEquipment === "function") initEquipment();
     if (typeof initBank === "function") initBank();
+    if (typeof initAttributes === "function") initAttributes();
   } catch(e) {
     console.error("Init error:", e);
   }
@@ -756,6 +788,7 @@ function claimRpgReward(el) {
     } else {
       addXp(agentId, -cost);
     }
+    showTreasureParticles();
     lonaToast(`${reward.label} — uživaj! 🎁`, "gold");
     setTimeout(renderTreasury, 300);
   });
@@ -1035,4 +1068,70 @@ function showScrollBurn(missionLabel, xp) {
   `;
   document.body.appendChild(overlay);
   setTimeout(() => overlay.remove(), 1800);
+}
+
+// ══════════════════════════════════════════════════════════
+//  JUICE ANIMACIJE v2
+// ══════════════════════════════════════════════════════════
+
+/** Joker karta poleti čez zaslon */
+function showJokerFly() {
+  const el = document.createElement("div");
+  el.className = "joker-fly";
+  el.textContent = "🃏";
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 800);
+}
+
+/** Screen flash ob rank up */
+function showScreenFlash() {
+  const el = document.createElement("div");
+  el.className = "screen-flash";
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 600);
+}
+
+/** Mission complete dim */
+function showMissionDim(duration) {
+  const el = document.createElement("div");
+  el.className = "mission-dim";
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), duration || 1500);
+}
+
+/** Treasure particle eksplozija */
+function showTreasureParticles(x, y) {
+  const emojis = ["⭐","✨","💫","🌟","💛","🟡"];
+  for (let i = 0; i < 10; i++) {
+    const el  = document.createElement("div");
+    el.className = "treasure-particle";
+    const angle = (i / 10) * 360;
+    const dist  = 80 + Math.random() * 60;
+    const tx    = `translate(${Math.cos(angle*Math.PI/180)*dist}px, ${Math.sin(angle*Math.PI/180)*dist - 80}px)`;
+    el.style.cssText = `left:${x||window.innerWidth/2}px;top:${y||window.innerHeight/2}px;
+      --tx:${tx};--rot:${Math.random()*360}deg;
+      animation-duration:${.6+Math.random()*.4}s;
+      animation-delay:${i*.03}s;`;
+    el.textContent = emojis[i % emojis.length];
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1200);
+  }
+}
+
+/** XP bar bounce animacija */
+function animateXpBar(barEl) {
+  if (!barEl) return;
+  barEl.classList.remove("xp-bar-animate");
+  void barEl.offsetWidth; // reflow
+  barEl.classList.add("xp-bar-animate");
+  setTimeout(() => barEl.classList.remove("xp-bar-animate"), 800);
+}
+
+/** Btn pop animacija */
+function popBtn(btn) {
+  if (!btn) return;
+  btn.classList.remove("mission-btn--pop");
+  void btn.offsetWidth;
+  btn.classList.add("mission-btn--pop");
+  setTimeout(() => btn.classList.remove("mission-btn--pop"), 400);
 }

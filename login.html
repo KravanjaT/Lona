@@ -153,6 +153,73 @@ body {
   position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
   background: rgba(255,255,255,.05);
 }
+.gk-checks {
+  display: flex; flex-direction: column; gap: 10px;
+  width: 100%; margin-bottom: 16px;
+}
+.gk-check-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 18px; border-radius: 16px;
+  background: rgba(255,255,255,.04);
+  border: 2px solid rgba(255,255,255,.08);
+  cursor: pointer; transition: all 200ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.gk-check-item--done {
+  background: rgba(52,199,89,.12);
+  border-color: rgba(52,199,89,.4);
+}
+.gk-check-item__box {
+  width: 28px; height: 28px; border-radius: 8px;
+  border: 2.5px solid rgba(255,255,255,.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0; transition: all 200ms ease;
+  background: rgba(255,255,255,.05);
+}
+.gk-check-item--done .gk-check-item__box {
+  background: #34C759; border-color: #34C759;
+  animation: checkbox-bounce .3s cubic-bezier(.17,.67,.35,1.5);
+}
+@keyframes checkbox-bounce {
+  0%  { transform: scale(0.5); }
+  60% { transform: scale(1.2); }
+  100%{ transform: scale(1); }
+}
+.gk-check-item__label {
+  font-size: .95rem; font-weight: 700; color: rgba(247,244,239,.7);
+  transition: color 200ms ease;
+}
+.gk-check-item--done .gk-check-item__label {
+  color: #5AAF7A; text-decoration: line-through;
+}
+.gk-confirm-btn {
+  width: 100%; padding: 16px; border-radius: 16px;
+  font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 900;
+  background: rgba(255,255,255,.06); color: rgba(247,244,239,.4);
+  border: 2px solid rgba(255,255,255,.08);
+  transition: all 250ms ease; cursor: not-allowed;
+}
+.gk-confirm-btn--ready {
+  background: #34C759 !important; color: white !important;
+  border-color: #34C759 !important; cursor: pointer !important;
+  box-shadow: 0 5px 0 rgba(52,199,89,.4);
+  animation: btn-ready .4s ease;
+}
+@keyframes btn-ready {
+  0%  { transform: scale(.95); }
+  60% { transform: scale(1.03); }
+  100%{ transform: scale(1); }
+}
+.gk-confirm-btn--ready:hover { transform: translateY(-2px); box-shadow: 0 7px 0 rgba(52,199,89,.4); }
+.gk-confirm-btn--ready:active { transform: translateY(2px); box-shadow: none; }
+
+/* Step transitions */
+@keyframes step-in {
+  from { opacity: 0; transform: translateY(20px) scale(.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.step-animate { animation: step-in .35s cubic-bezier(.17,.67,.35,1.1) forwards; }
+
 .agent-card__bar-fill {
   height: 100%; background: #5AAF7A;
   transition: width .6s ease;
@@ -214,7 +281,58 @@ body {
 
 <script src="config.js"></script>
 <script>
-// Delci v ozadju
+// ── GATEKEEPER ──────────────────────────────────────────────
+const GK_KEY = "lona_gatekeeper_date";
+function gkTodayStr() { return new Date().toISOString().slice(0,10); }
+function isGkApproved() { return localStorage.getItem(GK_KEY) === gkTodayStr(); }
+
+function initGatekeeperLogin() {
+  const checks   = LONA_CONFIG.gatekeeper.checks;
+  const el       = document.getElementById("gk-checks");
+  const confirmBtn = document.getElementById("gk-confirm");
+  const state    = {};
+
+  el.innerHTML = checks.map(c => `
+    <div class="gk-check-item" id="gkc-${c.id}" onclick="toggleGkCheck('${c.id}')">
+      <div class="gk-check-item__box" id="gkbox-${c.id}"></div>
+      <span class="gk-check-item__label">${c.label}</span>
+    </div>
+  `).join("");
+
+  window.toggleGkCheck = function(id) {
+    state[id] = !state[id];
+    const item = document.getElementById("gkc-" + id);
+    const box  = document.getElementById("gkbox-" + id);
+    if (state[id]) {
+      item.classList.add("gk-check-item--done");
+      box.textContent = "✓";
+      // Vibriraj
+      if (navigator.vibrate) navigator.vibrate(30);
+    } else {
+      item.classList.remove("gk-check-item--done");
+      box.textContent = "";
+    }
+    // Preveri ali so vse odkljukane
+    const allDone = checks.every(c => state[c.id]);
+    confirmBtn.disabled = !allDone;
+    confirmBtn.classList.toggle("gk-confirm-btn--ready", allDone);
+  };
+}
+
+window.confirmGatekeeper = function() {
+  localStorage.setItem(GK_KEY, gkTodayStr());
+  // Animacija prehoda
+  const step1 = document.getElementById("step-gatekeeper");
+  const step2 = document.getElementById("step-agents");
+  step1.style.animation = "stamp-out .25s ease forwards";
+  setTimeout(() => {
+    step1.style.display = "none";
+    step2.style.display = "block";
+    step2.classList.add("step-animate");
+  }, 250);
+};
+
+// ── DELCI V OZADJU
 const container = document.getElementById("particles");
 for (let i = 0; i < 12; i++) {
   const el = document.createElement("div");

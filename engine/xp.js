@@ -60,6 +60,9 @@ function addXp(agentId, amount) {
 
   renderAgentCard(agentId);
   updateGoalBar();
+  // Animiraj XP bar
+  const bar = document.getElementById('hero-bar-fill') || document.querySelector('.agent-hero__bar-fill');
+  if (typeof animateXpBar === 'function') animateXpBar(bar);
   if (typeof renderTreasury === "function") setTimeout(renderTreasury, 100);
   if (typeof renderCmdAgents === "function") setTimeout(renderCmdAgents, 50);
 

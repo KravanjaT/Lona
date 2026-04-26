@@ -118,6 +118,8 @@ const LONA_CONFIG = {
     },
     wc: {
       id:          "wc",
+      location:    "indoor",
+      duration:    "short",
       label:       "WC Čiščenje",
       icon:        "ph-toilet",
       baseXp:      20,
@@ -150,6 +152,44 @@ const LONA_CONFIG = {
       isShared:  true, // Oba agenta dobita XP
       state:     "available",
     },
+    // ── OUTDOOR MISIJE ─────────────────────────────────────
+    listi: {
+      id: "listi", label: "List Detektiv", icon: "🍃",
+      baseXp: 20, cooldownHrs: 48,
+      location: "outdoor", duration: "short",
+      state: "available",
+    },
+    pot: {
+      id: "pot", label: "Počisti Pot", icon: "🧹",
+      baseXp: 25, cooldownHrs: 72,
+      location: "outdoor", duration: "short",
+      state: "available",
+    },
+    taborisce: {
+      id: "taborisce", label: "Vzpostavi Taborišče", icon: "🏕️",
+      baseXp: 50, cooldownHrs: 168,
+      location: "outdoor", duration: "long",
+      state: "available",
+    },
+    narava_foto: {
+      id: "narava_foto", label: "Narava Fotograf", icon: "📸",
+      baseXp: 30, cooldownHrs: 72,
+      location: "outdoor", duration: "medium",
+      state: "available",
+    },
+    vrt: {
+      id: "vrt", label: "Vrtnar", icon: "🌱",
+      baseXp: 35, cooldownHrs: 72,
+      location: "outdoor", duration: "medium",
+      state: "available",
+    },
+    orientacija_out: {
+      id: "orientacija_out", label: "Orientacija", icon: "🧭",
+      baseXp: 40, cooldownHrs: 168,
+      location: "outdoor", duration: "medium",
+      state: "available",
+    },
+
     // ── EQ OPERACIJE ──────────────────────────────────────
     nevtralizator: {
       id:        "nevtralizator",
@@ -331,6 +371,46 @@ const LONA_CONFIG = {
     { label: "Poročnik",   minXp:  800 },
     { label: "Kapitan",    minXp: 1200 },
   ],
+
+  // ── GIBALNI ATRIBUTI ────────────────────────────────────────
+  attributes: {
+    moc: {
+      id: "moc", label: "Moč", icon: "💪", color: "#FF3B30",
+      xpPerLevel: 50,
+      titles: ["Začetnik","Borec","Vojak","Junak","Jeklen"],
+      missions: ["sesanje","pot","taborisce","perilo"],
+    },
+    koordinacija: {
+      id: "koordinacija", label: "Koordinacija", icon: "🎯", color: "#007AFF",
+      xpPerLevel: 40,
+      titles: ["Neroden","Natančen","Spreten","Virtuoz","Maestro"],
+      missions: ["posoda","kuhanje","listi","narava_foto"],
+    },
+    hitrost: {
+      id: "hitrost", label: "Hitrost", icon: "⚡", color: "#FFD60A",
+      xpPerLevel: 45,
+      titles: ["Počasen","Hiter","Blic","Strela","Hitronogi"],
+      missions: ["wc","sesanje","pot"],
+    },
+    vzdrzljivost: {
+      id: "vzdrzljivost", label: "Vzdržljivost", icon: "🫁", color: "#34C759",
+      xpPerLevel: 60,
+      titles: ["Šibak","Trdoživ","Vzdržen","Železen","Maratonec"],
+      missions: ["taborisce","orientacija_out","vrt","skupna"],
+    },
+    motorika: {
+      id: "motorika", label: "Fina Motorika", icon: "🖐️", color: "#AF52DE",
+      xpPerLevel: 35,
+      titles: ["Neroden","Priden","Spreten","Artist","Mojster Rok"],
+      missions: ["posoda","kuhanje","perilo","vrt","listi"],
+    },
+    um: {
+      id: "um", label: "Um", icon: "🧠", color: "#FF9500",
+      xpPerLevel: 40,
+      titles: ["Sanjar","Mislec","Strateg","Taktik","Genij"],
+      missions: ["debriefing","advokat","intel_report","orientacija_out"],
+    },
+  },
 
   // ── OPREMA = LICENCA ────────────────────────────────────────
   // Oprema se odklene ko agent doseže določen mastery level

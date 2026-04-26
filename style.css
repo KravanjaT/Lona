@@ -784,3 +784,164 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .bank-item__xp   { font-size:.65rem; font-weight:700; color:var(--green); }
 .bank-item__add  { font-size:.85rem; font-weight:900; color:var(--ink-4); width:24px; height:24px; border-radius:50%; border:2px solid var(--ink-4); display:flex; align-items:center; justify-content:center; transition:all var(--t); }
 .bank-item:hover .bank-item__add { border-color:var(--green); color:var(--green); }
+
+/* ── GIBALNI ATRIBUTI ──────────────────────────────────────── */
+.attr-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid #F2F2F7;
+}
+.attr-row:last-child { border-bottom: none; }
+.attr-row__left  { display: flex; align-items: center; gap: 10px; width: 140px; flex-shrink: 0; }
+.attr-row__icon  { font-size: 1.3rem; flex-shrink: 0; }
+.attr-row__label { font-size: .78rem; font-weight: 800; color: #1C1C1E; }
+.attr-row__title { font-size: .62rem; font-weight: 700; }
+.attr-row__right { flex: 1; display: flex; align-items: center; gap: 8px; }
+.attr-bar {
+  flex: 1; height: 10px; background: #F2F2F7;
+  border-radius: 20px; overflow: hidden; border: 2px solid #C7C7CC;
+}
+.attr-bar__fill { height: 100%; border-radius: 20px; transition: width .8s ease; }
+.attr-row__bonus { font-size: .65rem; font-weight: 800; color: #8E8E93; white-space: nowrap; min-width: 44px; text-align: right; }
+
+/* Mini attrs v commander panelu */
+.cmd-attrs { margin-bottom: 4px; }
+.attrs-mini-grid { display: flex; gap: 8px; align-items: flex-end; height: 48px; }
+.attr-mini { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; }
+.attr-mini__bar { width: 100%; border-radius: 4px 4px 0 0; min-height: 8px; transition: height .6s ease; }
+.attr-mini__icon { font-size: .75rem; line-height: 1; }
+
+/* ══════════════════════════════════════════════════════════
+   JUICE ANIMACIJE v2 — Game Feel Package
+   ══════════════════════════════════════════════════════════ */
+
+/* ── 1. STAGGERED PAGE LOAD ────────────────────────────────── */
+@keyframes section-in {
+  from { opacity: 0; transform: translateY(24px) scale(.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.main-scroll > * {
+  animation: section-in .4s cubic-bezier(.17,.67,.35,1.1) both;
+}
+.main-scroll > *:nth-child(1) { animation-delay: .05s; }
+.main-scroll > *:nth-child(2) { animation-delay: .12s; }
+.main-scroll > *:nth-child(3) { animation-delay: .19s; }
+.main-scroll > *:nth-child(4) { animation-delay: .26s; }
+.main-scroll > *:nth-child(5) { animation-delay: .33s; }
+.main-scroll > *:nth-child(6) { animation-delay: .40s; }
+.main-scroll > *:nth-child(7) { animation-delay: .47s; }
+.main-scroll > *:nth-child(8) { animation-delay: .54s; }
+
+/* ── 2. MISSION BTN BOUNCE (Mario squish) ──────────────────── */
+.mission-btn--available:hover,
+.mission-btn--special:hover,
+.mission-btn--mastery:hover {
+  transform: translateY(-4px) scaleX(1.04) scaleY(.96) !important;
+}
+.mission-btn--available:active,
+.mission-btn--special:active,
+.mission-btn--mastery:active {
+  transform: translateY(3px) scaleX(.96) scaleY(1.04) !important;
+  box-shadow: none !important;
+}
+@keyframes btn-pop {
+  0%   { transform: scale(1); }
+  30%  { transform: scaleX(1.12) scaleY(.88); }
+  60%  { transform: scaleX(.94) scaleY(1.06); }
+  80%  { transform: scaleX(1.03) scaleY(.97); }
+  100% { transform: scale(1); }
+}
+.mission-btn--pop { animation: btn-pop .35s cubic-bezier(.17,.67,.35,1.3); }
+
+/* ── 3. XP BAR FILL ANIMACIJA ──────────────────────────────── */
+@keyframes xp-bar-bounce {
+  0%   { transform: scaleX(1); }
+  50%  { transform: scaleX(1.02); }
+  75%  { transform: scaleX(.99); }
+  100% { transform: scaleX(1); }
+}
+.xp-bar-animate {
+  animation: xp-bar-bounce .5s ease .3s;
+  transform-origin: left center;
+}
+
+/* ── 4. JOKER KARTA ČEZ ZASLON ─────────────────────────────── */
+.joker-fly {
+  position: fixed; z-index: 9800;
+  font-size: 5rem; line-height: 1;
+  pointer-events: none;
+  animation: joker-fly-anim .7s cubic-bezier(.2,.8,.3,1.2) forwards;
+}
+@keyframes joker-fly-anim {
+  0%   { bottom: -80px; left: 50%; transform: translateX(-50%) rotate(-20deg) scale(.5); opacity: 1; }
+  50%  { transform: translateX(-50%) rotate(15deg) scale(1.3); }
+  80%  { transform: translateX(-50%) rotate(-5deg) scale(1.1); opacity: 1; }
+  100% { bottom: 60%; transform: translateX(-50%) rotate(0deg) scale(1); opacity: 0; }
+}
+
+/* ── 5. LOGIN AGENT KARTE ──────────────────────────────────── */
+@keyframes card-drop {
+  0%   { opacity: 0; transform: translateY(-30px) rotate(-3deg); }
+  60%  { transform: translateY(6px) rotate(1deg); opacity: 1; }
+  80%  { transform: translateY(-3px) rotate(-.5deg); }
+  100% { transform: translateY(0) rotate(0deg); opacity: 1; }
+}
+.agent-card:nth-child(1) { animation: card-drop .5s cubic-bezier(.17,.67,.35,1.2) .1s both; }
+.agent-card:nth-child(3) { animation: card-drop .5s cubic-bezier(.17,.67,.35,1.2) .2s both; }
+
+/* ── 6. RANK UP SCREEN FLASH ───────────────────────────────── */
+.screen-flash {
+  position: fixed; inset: 0; z-index: 9400;
+  pointer-events: none;
+  animation: screen-flash-anim .5s ease forwards;
+}
+@keyframes screen-flash-anim {
+  0%   { background: rgba(255,214,10,0); }
+  20%  { background: rgba(255,214,10,.6); }
+  100% { background: rgba(255,214,10,0); }
+}
+@keyframes rankup-shake {
+  0%,100% { transform: translateX(0); }
+  20%     { transform: translateX(-8px) rotate(-1deg); }
+  40%     { transform: translateX(8px) rotate(1deg); }
+  60%     { transform: translateX(-5px); }
+  80%     { transform: translateX(5px); }
+}
+.rankup-modal__box { animation: dialog-in .3s cubic-bezier(.17,.67,.35,1.3), rankup-shake .4s ease .3s; }
+
+/* ── 7. COOLDOWN TICK ──────────────────────────────────────── */
+@keyframes tick-pulse {
+  0%,100% { opacity: 1; }
+  50%     { opacity: .4; }
+}
+.mission-btn__cooldown { animation: tick-pulse 1s ease-in-out infinite; }
+
+/* ── 8. MISSION COMPLETE DIM ───────────────────────────────── */
+.mission-dim {
+  position: fixed; inset: 0; z-index: 7500;
+  background: rgba(28,28,46,.5);
+  backdrop-filter: blur(2px);
+  pointer-events: none;
+  animation: fadeIn .2s ease forwards;
+}
+
+/* ── 9. TREASURE PARTICLES ─────────────────────────────────── */
+.treasure-particle {
+  position: fixed; z-index: 9200;
+  font-size: 1.2rem; pointer-events: none;
+  animation: particle-burst linear forwards;
+}
+@keyframes particle-burst {
+  0%   { opacity: 1; transform: translate(0,0) scale(1) rotate(0deg); }
+  100% { opacity: 0; transform: var(--tx) scale(0) rotate(var(--rot)); }
+}
+
+/* ── 10. GATEKEEPER CHECKBOX BOUNCE ────────────────────────── */
+@keyframes check-bounce {
+  0%   { transform: scale(0) rotate(-10deg); }
+  50%  { transform: scale(1.3) rotate(5deg); }
+  75%  { transform: scale(.9) rotate(-2deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+.checklist__cb:checked ~ .checklist__box {
+  animation: check-bounce .35s cubic-bezier(.17,.67,.35,1.4);
+}

@@ -355,6 +355,7 @@
 <script src="engine/actionPrompt.js"></script>
 <script src="engine/mastery.js"></script>
 <script src="engine/equipment.js"></script>
+<script src="engine/attributes.js"></script>
 <script src="engine.js"></script>
 <script>
 // ── PROFILE PAGE JS ────────────────────────────────────────
@@ -513,6 +514,7 @@ function renderAll() {
   renderLog();
   renderMasteryProfile();
   if (typeof initEquipment === 'function') initEquipment();
+  if (typeof renderAttributes === 'function') renderAttributes(currentAgentId);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
