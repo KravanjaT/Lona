@@ -702,8 +702,45 @@ function renderMissionsGrid(cat) {
     btn.addEventListener("click", (e) => { addRipple(btn, e); popBtn(btn); onMissionClick(btn); });
   });
 
-  // Carousel dots
+  // Carousel dots + drag scroll
   initCarouselDots(grid, filtered.length);
+  initDragScroll(grid);
+}
+
+// ── MOUSE DRAG SCROLL ────────────────────────────────────────
+function initDragScroll(el) {
+  if (!el) return;
+  let isDown  = false;
+  let startX  = 0;
+  let scrollL = 0;
+
+  el.addEventListener("mousedown", e => {
+    isDown  = true;
+    startX  = e.pageX - el.offsetLeft;
+    scrollL = el.scrollLeft;
+    el.style.cursor = "grabbing";
+    el.style.userSelect = "none";
+  });
+
+  el.addEventListener("mouseleave", () => {
+    isDown = false;
+    el.style.cursor = "grab";
+  });
+
+  el.addEventListener("mouseup", () => {
+    isDown = false;
+    el.style.cursor = "grab";
+  });
+
+  el.addEventListener("mousemove", e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x    = e.pageX - el.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    el.scrollLeft = scrollL - walk;
+  });
+
+  el.style.cursor = "grab";
 }
 
 function initCarouselDots(grid, total) {
