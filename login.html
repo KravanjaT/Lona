@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+<meta name="theme-color" content="#0F1A0F"/>
+<link rel="manifest" href="manifest.json"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<title>LONA OS</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #0F1A0F;
+  min-height: 100dvh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 24px;
+  position: relative; overflow: hidden;
+}
+
+/* Ozadje — živahni delci */
+.bg-particles {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  overflow: hidden;
+}
+.particle {
+  position: absolute; border-radius: 50%;
+  background: rgba(45,125,82,.15);
+  animation: float-particle linear infinite;
+}
+@keyframes float-particle {
+  0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: .3; }
+  100% { transform: translateY(-100px) scale(1); opacity: 0; }
+}
+
+/* Vsebina */
+.login-wrap {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column;
+  align-items: center; width: 100%; max-width: 340px;
+  gap: 0;
+}
+
+/* Logo */
+.logo-block { text-align: center; margin-bottom: 40px; }
+.logo-badge {
+  display: inline-block;
+  font-size: .6rem; font-weight: 700; letter-spacing: .2em;
+  text-transform: uppercase; color: rgba(90,175,122,.7);
+  border: 1px solid rgba(45,125,82,.3);
+  border-radius: 20px; padding: 4px 12px; margin-bottom: 16px;
+  background: rgba(45,125,82,.08);
+}
+.logo-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 3.2rem; color: #F7F4EF;
+  letter-spacing: .04em; line-height: 1;
+  margin-bottom: 6px;
+}
+.logo-title span { color: #5AAF7A; }
+.logo-sub {
+  font-size: .7rem; letter-spacing: .16em;
+  text-transform: uppercase; color: rgba(247,244,239,.3);
+}
+
+/* Misija briefing */
+.briefing-box {
+  width: 100%; padding: 16px 18px;
+  background: rgba(45,125,82,.08);
+  border: 1px solid rgba(45,125,82,.2);
+  border-left: 3px solid #5AAF7A;
+  border-radius: 14px; margin-bottom: 32px;
+}
+.briefing-box__label {
+  font-size: .58rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: #5AAF7A; margin-bottom: 6px;
+}
+.briefing-box__text {
+  font-size: .82rem; color: rgba(247,244,239,.7); line-height: 1.5;
+}
+
+/* Agent kartice */
+.agents { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+
+.agent-card {
+  display: flex; align-items: center; gap: 16px;
+  padding: 18px 20px; border-radius: 18px;
+  background: rgba(255,255,255,.04);
+  border: 1.5px solid rgba(255,255,255,.08);
+  cursor: pointer; transition: all 250ms ease;
+  position: relative; overflow: hidden;
+}
+.agent-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(45,125,82,.15), transparent);
+  opacity: 0; transition: opacity 250ms ease;
+}
+.agent-card:hover::before { opacity: 1; }
+.agent-card:hover {
+  border-color: rgba(90,175,122,.5);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(45,125,82,.2);
+}
+.agent-card:active { transform: scale(.97); }
+
+.agent-card__avatar {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: rgba(45,125,82,.15);
+  border: 2.5px solid rgba(90,175,122,.4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.8rem; flex-shrink: 0;
+  position: relative; z-index: 1;
+  overflow: hidden;
+  box-shadow: 0 0 0 4px rgba(45,125,82,.1), 0 4px 16px rgba(0,0,0,.3);
+}
+.agent-card__avatar img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center top;
+  border-radius: 50%;
+}
+.agent-card:hover .agent-card__avatar {
+  border-color: #5AAF7A;
+  box-shadow: 0 0 0 4px rgba(45,125,82,.2), 0 0 20px rgba(45,125,82,.3);
+}
+.agent-card__info { flex: 1; position: relative; z-index: 1; }
+.agent-card__name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.2rem; color: #F7F4EF; margin-bottom: 4px;
+}
+.agent-card__rank {
+  font-size: .6rem; font-weight: 600; letter-spacing: .1em;
+  text-transform: uppercase; color: #5AAF7A;
+}
+.agent-card__xp {
+  font-size: .78rem; font-weight: 600; color: rgba(247,244,239,.4);
+  margin-top: 1px;
+}
+.agent-card__arrow {
+  font-size: 1.1rem; color: rgba(247,244,239,.2);
+  transition: all 250ms ease; position: relative; z-index: 1;
+}
+.agent-card:hover .agent-card__arrow { color: #5AAF7A; transform: translateX(4px); }
+
+/* XP mini bar */
+.agent-card__bar {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: rgba(255,255,255,.05);
+}
+.agent-card__bar-fill {
+  height: 100%; background: #5AAF7A;
+  transition: width .6s ease;
+}
+
+/* Divider */
+.or-divider {
+  display: flex; align-items: center; gap: 12px;
+  width: 100%; padding: 4px 0;
+}
+.or-divider::before, .or-divider::after {
+  content: ''; flex: 1; height: 1px;
+  background: rgba(255,255,255,.06);
+}
+.or-divider span {
+  font-size: .62rem; color: rgba(247,244,239,.2);
+  letter-spacing: .1em; text-transform: uppercase;
+}
+
+/* Footer */
+.login-footer {
+  margin-top: 40px; text-align: center;
+  font-size: .6rem; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(247,244,239,.15);
+}
+
+/* Loading animacija */
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.agent-card { animation: card-in .4s ease forwards; opacity: 0; }
+.agent-card:nth-child(1) { animation-delay: .1s; }
+.agent-card:nth-child(3) { animation-delay: .2s; }
+</style>
+</head>
+<body>
+
+<div class="bg-particles" id="particles"></div>
+
+<div class="login-wrap">
+
+  <div class="logo-block">
+    <div class="logo-badge">Poveljniški Terminal</div>
+    <h1 class="logo-title">LONA<span>_OS</span></h1>
+    <p class="logo-sub">v2.6 · Stealth Learning</p>
+  </div>
+
+  <div class="briefing-box">
+    <p class="briefing-box__label">Dnevni Brifing</p>
+    <p class="briefing-box__text" id="briefing-text">Kateri agent prevzema danes misijo?</p>
+  </div>
+
+  <div class="agents" id="agents-list"></div>
+
+  <p class="login-footer">LONA OS · Sezona 1</p>
+
+</div>
+
+<script src="config.js"></script>
+<script>
+// Delci v ozadju
+const container = document.getElementById("particles");
+for (let i = 0; i < 12; i++) {
+  const el = document.createElement("div");
+  el.className = "particle";
+  const size = 4 + Math.random() * 20;
+  el.style.cssText = `
+    width:${size}px; height:${size}px;
+    left:${Math.random()*100}%;
+    animation-duration:${8 + Math.random()*12}s;
+    animation-delay:${Math.random()*8}s;
+  `;
+  container.appendChild(el);
+}
+
+// Dinamični brifing glede na uro
+const h = new Date().getHours();
+const briefings = [
+  [6,  "Jutro, Agent. Standard 0 čaka na potrditev."],
+  [10, "Dopoldne. Baza je aktivna. Misije so odprte."],
+  [14, "Popoldanski sektor. Čas za akcijo."],
+  [18, "Večerni brifing. Preveri zakladnico."],
+  [21, "Nočna izmena. Zaključi dan z odliko."],
+];
+const msg = briefings.reverse().find(([t]) => h >= t)?.[1] || "Baza je aktivna. Misije čakajo.";
+document.getElementById("briefing-text").textContent = msg;
+
+// Rang iz XP
+function getRank(xp) {
+  const ranks = [...LONA_CONFIG.ranks].reverse();
+  return ranks.find(r => xp >= r.minXp)?.label || LONA_CONFIG.ranks[0].label;
+}
+
+function getXp(agentId) {
+  const s = localStorage.getItem("lona_xp_state");
+  if (s) return JSON.parse(s)[agentId] ?? 0;
+  return LONA_CONFIG.agents.find(a => a.id === agentId)?.xp ?? 0;
+}
+
+function getMaxXp(agentId) {
+  const s = localStorage.getItem("lona_rank_state");
+  if (s) return JSON.parse(s)[agentId] ?? getXp(agentId);
+  return getXp(agentId);
+}
+
+// Izračun XP bara
+function xpPct(agentId) {
+  const xp    = getMaxXp(agentId);
+  const ranks = LONA_CONFIG.ranks;
+  const ci    = ranks.findIndex(r => r.minXp > xp);
+  const lo    = ranks[Math.max(0,ci-1)]?.minXp ?? 0;
+  const hi    = ranks[ci]?.minXp ?? lo + 300;
+  return Math.min(100, Math.round(((xp-lo)/(hi-lo))*100));
+}
+
+// Misij ta teden
+function weekMissions(agentId) {
+  const log = JSON.parse(localStorage.getItem("lona_mission_log") || "[]");
+  const now  = new Date();
+  const jan1 = new Date(now.getFullYear(), 0, 1);
+  const wk   = Math.ceil(((now-jan1)/86400000 + jan1.getDay()+1)/7);
+  const key  = now.getFullYear() + "-W" + wk;
+  return log.filter(e => e.agentId === agentId && e.week === key).length;
+}
+
+const list = document.getElementById("agents-list");
+
+LONA_CONFIG.agents.forEach((agent, i) => {
+  if (i > 0) {
+    const div = document.createElement("div");
+    div.className = "or-divider";
+    div.innerHTML = "<span>ali</span>";
+    list.appendChild(div);
+  }
+
+  const xp    = getXp(agent.id);
+  const rank  = getRank(getMaxXp(agent.id));
+  const pct   = xpPct(agent.id);
+  const wkMis = weekMissions(agent.id);
+
+  const card = document.createElement("button");
+  card.className = "agent-card";
+  card.innerHTML = `
+    <div class="agent-card__avatar">${agent.avatar}</div>
+    <div class="agent-card__info">
+      <p class="agent-card__name">${agent.name}</p>
+      <p class="agent-card__rank">${rank}</p>
+      <p class="agent-card__xp">${xp} XP · ${wkMis} misij ta teden</p>
+    </div>
+    <span class="agent-card__arrow">→</span>
+    <div class="agent-card__bar">
+      <div class="agent-card__bar-fill" style="width:${pct}%"></div>
+    </div>
+  `;
+  card.addEventListener("click", () => {
+    localStorage.setItem("lona_current_agent", agent.id);
+    // Tap animacija
+    card.style.transform = "scale(.95)";
+    card.style.opacity   = ".7";
+    setTimeout(() => { location.href = "index.html"; }, 180);
+  });
+  list.appendChild(card);
+});
+</script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  }
+</script>
+</body>
+</html>

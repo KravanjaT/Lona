@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
+
+<title>LONA OS — Profil</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="style.css"/>
+<style>
+/* ── PROFILE PAGE ─────────────────────────────────────────── */
+
+/* Agent switcher */
+.agent-switcher {
+  display: flex;
+  gap: 8px;
+  padding: 4px;
+  background: var(--bg-card);
+  border: var(--border-card);
+  border-radius: var(--r-lg);
+  margin-bottom: 16px;
+}
+.agent-switcher__btn {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  gap: 8px; padding: 10px 12px;
+  border-radius: calc(var(--r-lg) - 4px);
+  font-family: var(--font-display); font-size: .88rem; font-weight: 700;
+  letter-spacing: .06em; color: var(--text-secondary);
+  transition: all var(--t-fast);
+}
+.agent-switcher__btn--active {
+  background: rgba(0,212,255,.12);
+  border: 1px solid rgba(0,212,255,.3);
+  color: #2563EB;
+  box-shadow: var(--glow-cyan);
+}
+.agent-switcher__avatar { font-size: 1.2rem; }
+
+/* Hero card */
+.profile-hero {
+  background: var(--bg-card);
+  border: var(--border-card);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  position: relative; overflow: hidden;
+}
+.profile-hero::after {
+  content: '';
+  position: absolute; top: -40px; right: -40px;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,212,255,.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.profile-hero__top {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 16px;
+}
+.profile-hero__avatar {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: rgba(0,212,255,.08);
+  border: 2px solid rgba(0,212,255,.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; flex-shrink: 0;
+  box-shadow: var(--glow-cyan);
+}
+.profile-hero__name {
+  font-family: var(--font-display); font-size: 1.6rem;
+  font-weight: 700; letter-spacing: .08em;
+  color: var(--text-primary);
+}
+.profile-hero__rank {
+  font-size: .7rem; font-weight: 600; letter-spacing: .14em;
+  text-transform: uppercase; color: #2563EB;
+  text-shadow: var(--glow-cyan);
+}
+.profile-hero__xp {
+  margin-left: auto; text-align: right;
+}
+.profile-hero__xp-val {
+  font-family: var(--font-display); font-size: 2rem; font-weight: 700;
+  color: #2D7D52; text-shadow: none; line-height: 1;
+}
+.profile-hero__xp-lbl {
+  font-size: .65rem; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--text-dim);
+}
+
+/* XP bar hero */
+.profile-hero__bar-track {
+  height: 8px; background: rgba(255,255,255,.06);
+  border-radius: 4px; overflow: hidden; margin-bottom: 6px;
+}
+.profile-hero__bar-fill {
+  height: 100%; border-radius: 4px;
+  background: linear-gradient(90deg, #2D7D52, var(--neon-cyan));
+  box-shadow: none;
+  transition: width .8s ease;
+}
+.profile-hero__bar-meta {
+  display: flex; justify-content: space-between;
+  font-size: .68rem; color: var(--text-dim);
+}
+.profile-hero__bar-meta span:last-child { color: var(--text-secondary); }
+
+/* Stats row */
+.profile-stats {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 8px; margin-top: 14px;
+}
+.stat-chip {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 10px 6px;
+  background: var(--bg-base);
+  border: var(--border-subtle);
+  border-radius: var(--r-md);
+}
+.stat-chip__val {
+  font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;
+  color: var(--text-primary);
+}
+.stat-chip__lbl {
+  font-size: .6rem; font-weight: 500; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--text-dim);
+  text-align: center;
+}
+.stat-chip--joker .stat-chip__val { color: var(--neon-gold); text-shadow: var(--glow-gold); }
+.stat-chip--missions .stat-chip__val { color: #2563EB; }
+.stat-chip--streak .stat-chip__val { color: #2D7D52; }
+
+/* Nagrade section */
+.rewards-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.reward-card {
+  background: var(--bg-card);
+  border: var(--border-card);
+  border-radius: var(--r-md);
+  padding: 12px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.reward-card__eyebrow {
+  font-size: .58rem; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--text-dim); margin-bottom: 2px;
+}
+.reward-card--personal { border-color: rgba(0,255,135,.15); }
+.reward-card--shared   { border-color: rgba(0,212,255,.15); }
+
+.reward-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 8px;
+  border-radius: var(--r-sm);
+  border: 1px solid rgba(255,255,255,.05);
+  background: rgba(255,255,255,.02);
+  cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast);
+}
+.reward-row:hover { background: rgba(255,255,255,.04); }
+.reward-row--unlocked {
+  border-color: rgba(255,209,102,.3);
+  background: rgba(255,209,102,.06);
+}
+.reward-row__icon { font-size: .95rem; }
+.reward-row__name { flex: 1; font-size: .75rem; font-weight: 500; color: var(--text-secondary); }
+.reward-row--unlocked .reward-row__name { color: var(--text-primary); }
+.reward-row__cost {
+  font-family: var(--font-display); font-size: .72rem; font-weight: 700;
+  color: var(--text-dim);
+}
+.reward-row--personal .reward-row__cost { color: #2D7D52; }
+.reward-row--shared   .reward-row__cost { color: #2563EB; }
+.reward-row--unlocked .reward-row__cost { color: var(--neon-gold); text-shadow: var(--glow-gold); }
+
+/* Misija log */
+.mission-log {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.log-entry {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
+  background: var(--bg-card);
+  border: var(--border-card);
+  border-radius: var(--r-md);
+  border-left: 3px solid rgba(0,255,135,.3);
+}
+.log-entry--compromised { border-left-color: rgba(255,60,90,.4); }
+.log-entry__icon { font-size: 1.1rem; flex-shrink: 0; }
+.log-entry__body { flex: 1; min-width: 0; }
+.log-entry__mission { font-size: .8rem; font-weight: 600; color: var(--text-primary); }
+.log-entry__mod { font-size: .68rem; color: var(--text-secondary); }
+.log-entry__right { text-align: right; flex-shrink: 0; }
+.log-entry__xp {
+  font-family: var(--font-display); font-size: .85rem; font-weight: 700;
+  color: #2D7D52;
+}
+.log-entry--compromised .log-entry__xp { color: var(--neon-red); }
+.log-entry__date { font-size: .62rem; color: var(--text-dim); }
+
+.log-empty {
+  text-align: center; padding: 24px;
+  color: var(--text-dim); font-size: .82rem;
+}
+</style>
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+  <meta name="apple-mobile-web-app-title" content="LONA OS"/>
+  <meta name="theme-color" content="#F7F4EF"/>
+</head>
+<body>
+
+<div class="scanlines" aria-hidden="true"></div>
+
+<header class="top-bar">
+  <button class="top-bar__alert" onclick="location.href='index.html'" aria-label="Nazaj" style="margin-right:4px">
+    <i class="ph-bold ph-arrow-left"></i>
+  </button>
+  <div class="top-bar__logo">
+    <span class="logo-bracket">[</span>LONA<span class="logo-accent">_OS</span><span class="logo-bracket">]</span>
+  </div>
+  <div class="top-bar__meta">
+    <span class="status-dot"></span>
+    <span class="top-bar__title">Profil Agenta</span>
+  </div>
+  <button class="top-bar__alert" aria-label="Obvestila">
+    <i class="ph-bold ph-bell"></i>
+  </button>
+</header>
+
+<main class="main-scroll">
+
+  <!-- Agent switcher -->
+  <div class="agent-switcher" id="agent-switcher">
+    <!-- Generira JS -->
+  </div>
+
+  <!-- Hero -->
+  <div class="profile-hero" id="profile-hero">
+    <div class="profile-hero__top">
+      <div class="profile-hero__avatar" id="hero-avatar">⚡</div>
+      <div>
+        <p class="profile-hero__name" id="hero-name">—</p>
+        <p class="profile-hero__rank" id="hero-rank">—</p>
+      </div>
+      <div class="profile-hero__xp">
+        <p class="profile-hero__xp-val" id="hero-xp">0</p>
+        <p class="profile-hero__xp-lbl">XP skupaj</p>
+      </div>
+    </div>
+    <div class="profile-hero__bar-track">
+      <div class="profile-hero__bar-fill" id="hero-bar" style="width:0%"></div>
+    </div>
+    <div class="profile-hero__bar-meta">
+      <span id="hero-bar-lo">0</span>
+      <span id="hero-bar-next">Naslednji rang</span>
+      <span id="hero-bar-hi">—</span>
+    </div>
+    <div class="profile-stats">
+      <div class="stat-chip stat-chip--missions">
+        <span class="stat-chip__val" id="stat-missions">0</span>
+        <span class="stat-chip__lbl">Misij</span>
+      </div>
+      <div class="stat-chip stat-chip--joker">
+        <span class="stat-chip__val" id="stat-jokers">0</span>
+        <span class="stat-chip__lbl">Jokerji</span>
+      </div>
+      <div class="stat-chip stat-chip--streak">
+        <span class="stat-chip__val" id="stat-books">0</span>
+        <span class="stat-chip__lbl">Knjige</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nagrade -->
+  <div class="section-header">
+    <h3 class="section-header__title"><i class="ph-bold ph-trophy"></i> Nagrade</h3>
+  </div>
+  <div class="rewards-grid">
+    <div class="reward-card reward-card--personal">
+      <p class="reward-card__eyebrow">Osebno</p>
+      <div class="reward-row reward-row--personal" data-cost="20">
+        <span class="reward-row__icon">🍫</span>
+        <span class="reward-row__name">Čokolada</span>
+        <span class="reward-row__cost">20 XP</span>
+      </div>
+      <div class="reward-row reward-row--personal" data-cost="40">
+        <span class="reward-row__icon">🍦</span>
+        <span class="reward-row__name">Sladoled</span>
+        <span class="reward-row__cost">40 XP</span>
+      </div>
+      <div class="reward-row reward-row--personal" data-cost="80">
+        <span class="reward-row__icon">🛒</span>
+        <span class="reward-row__name">Izbira v trgovini</span>
+        <span class="reward-row__cost">80 XP</span>
+      </div>
+    </div>
+    <div class="reward-card reward-card--shared">
+      <p class="reward-card__eyebrow">Skupaj</p>
+      <div class="reward-row reward-row--shared" data-cost="40" data-shared="true">
+        <span class="reward-row__icon">📺</span>
+        <span class="reward-row__name">Risanka</span>
+        <span class="reward-row__cost">40 XP</span>
+      </div>
+      <div class="reward-row reward-row--shared" data-cost="150" data-shared="true">
+        <span class="reward-row__icon">🏕️</span>
+        <span class="reward-row__name">Tabor doma</span>
+        <span class="reward-row__cost">150 XP</span>
+      </div>
+      <div class="reward-row reward-row--shared" data-cost="500" data-shared="true">
+        <span class="reward-row__icon">🎬</span>
+        <span class="reward-row__name">Kino večer</span>
+        <span class="reward-row__cost">500 XP</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Misija log -->
+  <div class="section-header" style="margin-top:4px">
+    <h3 class="section-header__title"><i class="ph-bold ph-clock-counter-clockwise"></i> Zgodovina</h3>
+    <span class="section-header__badge" id="log-count">0 misij</span>
+  </div>
+  <div class="mission-log" id="mission-log">
+    <div class="log-empty">Še ni opravljenih misij.</div>
+  </div>
+
+</main>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="bottom-nav__item" onclick="location.href='index.html'">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+    Baza
+  </button>
+  <button class="bottom-nav__item" onclick="location.href='hub.html'">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+    Hub
+  </button>
+  <button class="bottom-nav__item" onclick="location.href='library.html'">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+    Knjižnica
+  </button>
+  <button class="bottom-nav__item bottom-nav__item--active" aria-current="page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    Profil
+  </button>
+</nav>
+
+<script src="config.js"></script>
+<script src="engine/gatekeeper.js"></script>
+<script src="engine/xp.js"></script>
+<script src="engine/cooldown.js"></script>
+<script src="engine/joker.js"></script>
+<script src="engine/actionPrompt.js"></script>
+<script src="engine/mastery.js"></script>
+<script src="engine/equipment.js"></script>
+<script src="engine.js"></script>
+<script>
+// ── PROFILE PAGE JS ────────────────────────────────────────
+
+const LS_LOG = "lona_mission_log";
+
+function getMissionLog() {
+  return JSON.parse(localStorage.getItem(LS_LOG) || "[]");
+}
+
+// Prioriteta: URL param → localStorage → prvi agent
+function _resolveAgent() {
+  const urlAgent = new URLSearchParams(location.search).get("agent");
+  if (urlAgent && LONA_CONFIG.agents.find(a => a.id === urlAgent)) return urlAgent;
+  const stored = localStorage.getItem("lona_current_agent");
+  if (stored && LONA_CONFIG.agents.find(a => a.id === stored)) return stored;
+  return LONA_CONFIG.agents[0].id;
+}
+
+let currentAgentId = _resolveAgent();
+
+function renderSwitcher() {
+  const sw = document.getElementById("agent-switcher");
+  sw.innerHTML = LONA_CONFIG.agents.map(a => `
+    <button class="agent-switcher__btn ${a.id === currentAgentId ? 'agent-switcher__btn--active' : ''}"
+      data-id="${a.id}">
+      <span class="agent-switcher__avatar">${a.avatar}</span>
+      ${a.name}
+    </button>
+  `).join("");
+  sw.querySelectorAll(".agent-switcher__btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      currentAgentId = btn.dataset.id;
+      localStorage.setItem("lona_current_agent", currentAgentId);
+      renderAll();
+      sw.querySelectorAll(".agent-switcher__btn").forEach(b =>
+        b.classList.toggle("agent-switcher__btn--active", b.dataset.id === currentAgentId)
+      );
+    });
+  });
+}
+
+function renderHero() {
+  const agentCfg = LONA_CONFIG.agents.find(a => a.id === currentAgentId);
+  const xp       = getXp(currentAgentId);
+  const rank     = getRank(xp);
+  const jokers   = getJokers(currentAgentId);
+
+  document.getElementById("hero-avatar").textContent = agentCfg.avatar;
+  document.getElementById("hero-name").textContent   = agentCfg.name;
+  document.getElementById("hero-rank").textContent   = rank;
+  document.getElementById("hero-xp").textContent     = xp;
+  document.getElementById("stat-jokers").textContent = jokers;
+
+  // XP bar
+  const ranks = LONA_CONFIG.ranks;
+  const ci    = ranks.findIndex(r => r.minXp > xp);
+  const lo    = ranks[Math.max(0, ci - 1)]?.minXp ?? 0;
+  const hi    = ranks[ci]?.minXp ?? lo + 300;
+  const pct   = Math.min(100, Math.round(((xp - lo) / (hi - lo)) * 100));
+  document.getElementById("hero-bar").style.width = pct + "%";
+  document.getElementById("hero-bar-lo").textContent   = lo;
+  document.getElementById("hero-bar-hi").textContent   = hi;
+  document.getElementById("hero-bar-next").textContent = ranks[ci]?.label ?? "Kapitan ✓";
+}
+
+function renderRewards() {
+  const xp    = getXp(currentAgentId);
+  const allXp = Object.values(JSON.parse(localStorage.getItem("lona_xp_state") || "{}"))
+                       .reduce((s,v) => s+v, 0);
+
+  document.querySelectorAll(".reward-row").forEach(row => {
+    const cost   = parseInt(row.dataset.cost);
+    const shared = row.dataset.shared === "true";
+    const avail  = shared ? allXp >= cost : xp >= cost;
+    row.classList.toggle("reward-row--unlocked", avail);
+    row.style.cursor = "pointer";
+    // Odstrani star listener, dodaj novega
+    row.onclick = () => {
+      if (typeof claimReward === "function") {
+        claimReward(row);
+        setTimeout(renderRewards, 300);
+      }
+    };
+  });
+}
+
+function renderLog() {
+  const log     = getMissionLog().filter(e => e.agentId === currentAgentId).reverse();
+  const logEl   = document.getElementById("mission-log");
+  const countEl = document.getElementById("log-count");
+
+  document.getElementById("stat-missions").textContent = log.length;
+  countEl.textContent = log.length + " misij";
+
+  // Knjige iz scholar
+  const sessions = JSON.parse(localStorage.getItem("lona_scholar_sessions") || "[]")
+    .filter(s => s.agentId === currentAgentId);
+  document.getElementById("stat-books").textContent = sessions.length;
+
+  if (log.length === 0) {
+    logEl.innerHTML = '<div class="log-empty">Še ni opravljenih misij.</div>';
+    return;
+  }
+
+  const icons = { sesanje:"🌬️", posoda:"🍽️", perilo:"🧺", kuhanje:"🍳", skrivna_wc:"🚽" };
+
+  logEl.innerHTML = log.slice(0, 20).map(e => {
+    const mLabel = LONA_CONFIG.missions[e.missionId]?.label || e.missionId;
+    const date   = new Date(e.date).toLocaleDateString("sl-SI", { day:"numeric", month:"short" });
+    const icon   = icons[e.missionId] || "⚡";
+    return `
+      <div class="log-entry ${e.compromised ? 'log-entry--compromised' : ''}">
+        <span class="log-entry__icon">${icon}</span>
+        <div class="log-entry__body">
+          <p class="log-entry__mission">${mLabel}</p>
+          <p class="log-entry__mod">${e.modifier || '—'} ${e.compromised ? '⚠️ Površno' : ''}</p>
+        </div>
+        <div class="log-entry__right">
+          <p class="log-entry__xp">${e.compromised ? '' : '+'}${e.xp} XP</p>
+          <p class="log-entry__date">${date}</p>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderMasteryProfile() {
+  const el = document.getElementById("profile-mastery");
+  if (!el) return;
+  const skills = LONA_CONFIG.masterySkills;
+  el.innerHTML = Object.values(skills).map(skill => {
+    const level = typeof getMasteryLevel === "function"
+      ? getMasteryLevel(currentAgentId, skill.id) : 0;
+    const lvlDef = skill.levels[level];
+    const pct    = Math.round((level / (skill.levels.length - 1)) * 100);
+    return `<div style="background:#fff;border:1px solid #C4BFB8;border-radius:14px;padding:12px 14px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+        <span style="font-size:1.4rem">${skill.icon}</span>
+        <div style="flex:1">
+          <p style="font-family:'DM Serif Display',serif;font-size:.9rem;color:#1A1714">${skill.label}</p>
+          <p style="font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#8A8480">${lvlDef.icon} ${lvlDef.label}</p>
+        </div>
+        <span style="font-size:.75rem;font-weight:700;color:${level===2?'#C47D1A':'#2D7D52'}">${level}/2</span>
+      </div>
+      <div style="height:5px;background:#F0EDE7;border-radius:3px;overflow:hidden">
+        <div style="height:100%;width:${pct}%;background:${level===2?'#C47D1A':'#2D7D52'};border-radius:3px;transition:width .6s ease"></div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function renderAll() {
+  renderHero();
+  renderRewards();
+  renderLog();
+  renderMasteryProfile();
+  if (typeof initEquipment === 'function') initEquipment();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderSwitcher();
+  renderAll();
+});
+</script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    }
+  </script>
+</body>
+</html>

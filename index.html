@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="sl" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#F7F4EF" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>LONA OS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+  <meta name="apple-mobile-web-app-title" content="LONA OS"/>
+  <meta name="theme-color" content="#F7F4EF"/>
+</head>
+<body>
+
+
+  <!-- ── HEADER ──────────────────────────────────────────── -->
+  <header class="top-bar">
+    <div class="top-bar__logo">
+      <span class="logo-bracket">[</span>LONA<span class="logo-accent">_OS</span><span class="logo-bracket">]</span>
+    </div>
+    <div class="top-bar__meta">
+      <span class="status-dot" aria-label="Online"></span>
+      <span class="top-bar__title">Poveljniški Center</span>
+    </div>
+    <button class="top-bar__alert" aria-label="Zamenjaj agenta" onclick="location.href='login.html'" title="Zamenjaj agenta">
+      ⇄
+    </button>
+  </header>
+
+  <main class="main-scroll">
+
+    <!-- ── COMMANDER PANEL ─────────────────────────────────── -->
+    <section class="cmd-panel" id="agent-hero">
+
+      <!-- Oba agenta — velik prikaz -->
+      <div class="cmd-agents" id="cmd-agents">
+        <!-- Generira JS -->
+      </div>
+
+      <!-- Ročni bonus -->
+      <div class="cmd-bonus">
+        <p class="cmd-bonus__label">Ročni bonus</p>
+        <div class="cmd-bonus__btns">
+          <button class="cmd-bonus__btn" data-bonus="5"  onclick="giveBonus(5)">+5 XP</button>
+          <button class="cmd-bonus__btn" data-bonus="10" onclick="giveBonus(10)">+10 XP</button>
+          <button class="cmd-bonus__btn" data-bonus="20" onclick="giveBonus(20)">+20 XP</button>
+          <button class="cmd-bonus__btn cmd-bonus__btn--special" onclick="activateDoubleXp(15)">⚡ 2×XP</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ── TEDENSKA SEZONA ─────────────────────────────────── -->
+    <div class="season-panel" id="season-panel">
+      <!-- Generira season.js -->
+    </div>
+
+    <!-- ── GATEKEEPER ──────────────────────────────────── -->
+    <section class="card card--gatekeeper" aria-label="Standard 0">
+      <div class="card__header">
+        🛡️
+        <div>
+          <p class="card__eyebrow">Dnevni Protokol</p>
+          <h2 class="card__title">STANDARD 0: ODOBRENO</h2>
+        </div>
+        <label class="toggle" aria-label="Aktiviraj Standard 0">
+          <input type="checkbox" class="toggle__input" id="gatekeeper-toggle" />
+          <span class="toggle__track"><span class="toggle__thumb"></span></span>
+        </label>
+      </div>
+      <div class="checklist">
+        <label class="checklist__item">
+          <input type="checkbox" class="checklist__cb" />
+          <span class="checklist__box">✓</span>
+          <span class="checklist__label">Zobje</span>
+        </label>
+        <label class="checklist__item">
+          <input type="checkbox" class="checklist__cb" />
+          <span class="checklist__box">✓</span>
+          <span class="checklist__label">Pižama</span>
+        </label>
+        <label class="checklist__item">
+          <input type="checkbox" class="checklist__cb" />
+          <span class="checklist__box">✓</span>
+          <span class="checklist__label">Miza</span>
+        </label>
+      </div>
+    </section>
+
+    <!-- ── ZAKLADNICA ─────────────────────────────────────────── -->
+    <section>
+      <div class="section-header">
+        <h3 class="section-header__title">🎁 Zakladnica</h3>
+      </div>
+      <div class="treasury" id="treasury">
+        <!-- Generira JS -->
+        <div style="text-align:center;padding:20px;color:#8A8480;font-size:.85rem">Nalaganje...</div>
+      </div>
+    </section>
+
+    <!-- ── MISSIONS ─────────────────────────────────────── -->
+    <section aria-label="Misije">
+      <div class="section-header">
+        <h3 class="section-header__title">🚀 Misije</h3>
+        <span class="section-header__badge">3 razpoložljive</span>
+      </div>
+
+      <div class="missions-wrapper" style="position:relative"><div class="missions-grid">
+
+        <!-- LOCKED -->
+        <button class="mission-btn mission-btn--locked" data-mission="sesanje" disabled aria-label="Sesanje – zaklenjeno">
+          <div class="mission-btn__top">
+            <span class="mission-btn__icon">🌬️</span>
+            <span class="mission-btn__lock">🔒</span>
+          </div>
+          <p class="mission-btn__name">Sesanje</p>
+          <p class="mission-btn__xp">+25 XP</p>
+          <p class="mission-btn__cooldown">⏱ 72h Cooldown</p>
+          <!-- Joker unlock option -->
+          <span class="mission-btn__joker-hint">🃏 Joker?</span>
+        </button>
+
+        <!-- AVAILABLE -->
+        <button class="mission-btn mission-btn--available" data-mission="posoda" aria-label="Pomivalni Stroj">
+          <div class="mission-btn__top">
+            <span class="mission-btn__icon">🍽️</span>
+            <span class="mission-btn__avail-dot" aria-hidden="true"></span>
+          </div>
+          <p class="mission-btn__name">Pomivalni Stroj</p>
+          <p class="mission-btn__xp">+15 XP</p>
+          <p class="mission-btn__sub">Pritisni za potrditev</p>
+        </button>
+
+        <!-- SPECIAL / SCOUT BONUS -->
+        <button class="mission-btn mission-btn--special" data-mission="perilo" aria-label="Gora Perila">
+          <div class="mission-btn__top">
+            <span class="mission-btn__icon">🧺</span>
+            <span class="mission-btn__lightning">⚡</span>
+          </div>
+          <p class="mission-btn__name">Gora Perila</p>
+          <p class="mission-btn__xp">+30 XP</p>
+          <p class="mission-btn__sub">Pritisni za potrditev</p>
+        </button>
+
+        <button class="mission-btn mission-btn--available" data-mission="kuhanje" aria-label="Kuhanje">
+          <div class="mission-btn__top">
+            <span class="mission-btn__icon">🍳</span>
+            <span class="mission-btn__avail-dot"></span>
+          </div>
+          <p class="mission-btn__name">Kuhanje</p>
+          <p class="mission-btn__xp">+40 XP</p>
+          <p class="mission-btn__sub">Pritisni za potrditev</p>
+        </button>
+
+        <button class="mission-btn mission-btn--available" data-mission="wc" aria-label="WC Čiščenje">
+          <div class="mission-btn__top">
+            <span class="mission-btn__icon">🚽</span>
+            <span class="mission-btn__avail-dot"></span>
+          </div>
+          <p class="mission-btn__name">WC Čiščenje</p>
+          <p class="mission-btn__xp">+20 XP</p>
+          <p class="mission-btn__sub">Pritisni za potrditev</p>
+        </button>
+
+        <button class="mission-btn mission-btn--available" data-mission="izvidnik" aria-label="Izvidniški bonus" style="border-color:rgba(196,125,26,.3);background:#FDF3E3">
+          <div class="mission-btn__top">
+            <span class="mission-btn__icon">👁️</span>
+            <span class="mission-btn__avail-dot"></span>
+          </div>
+          <p class="mission-btn__name">Izvidnik</p>
+          <p class="mission-btn__xp" style="color:#C47D1A">? XP</p>
+          <p class="mission-btn__sub" style="color:#C47D1A;font-weight:600">sam je opazil</p>
+        </button>
+
+        <button class="mission-btn mission-btn--available" data-mission="skupna" aria-label="Skupna misija" style="border-color:rgba(37,99,235,.3);background:#EEF3FD">
+          <div class="mission-btn__top">
+            <span class="mission-btn__icon">🤝</span>
+            <span class="mission-btn__avail-dot"></span>
+          </div>
+          <p class="mission-btn__name">Skupna misija</p>
+          <p class="mission-btn__xp" style="color:#2563EB">+30 XP</p>
+          <p class="mission-btn__sub" style="color:#2563EB;font-weight:600">oba dobita XP</p>
+        </button>
+
+        <button class="mission-btn mission-btn--available" data-mission="skrivna_wc" aria-label="Skrivna misija">
+          <div class="mission-btn__top">
+            <span class="mission-btn__icon">🎲</span>
+            <span class="mission-btn__avail-dot"></span>
+          </div>
+          <p class="mission-btn__name">Skrivna misija</p>
+          <p class="mission-btn__xp">? XP</p>
+          <p class="mission-btn__sub" style="color:#C47D1A;font-weight:600">naključna misija</p>
+        </button>
+
+      </div></div>
+    </section>
+
+  </main>
+
+  <!-- ── BOTTOM NAV ───────────────────────────────────────── -->
+  <nav class="bottom-nav" aria-label="Navigacija">
+    <button class="bottom-nav__item bottom-nav__item--active" aria-current="page" onclick="location.href='index.html'">
+      🏠
+      <span>Baza</span>
+    </button>
+    <button class="bottom-nav__item" onclick="location.href='hub.html'">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      Hub
+    </button>
+    <button class="bottom-nav__item" onclick="location.href='library.html'">
+      📚
+      <span>Knjižnica</span>
+    </button>
+    <button class="bottom-nav__item" onclick="location.href='profile.html'">
+      👤
+      <span>Profil</span>
+    </button>
+  </nav>
+
+  
+  
+
+  <script src="config.js"></script>
+  <script src="engine/gatekeeper.js"></script>
+  <script src="engine/xp.js"></script>
+  <script src="engine/cooldown.js"></script>
+  <script src="engine/joker.js"></script>
+  <script src="engine/actionPrompt.js"></script>
+  <script src="engine/mastery.js"></script>
+  <script src="engine/season.js"></script>
+  <script src="engine/equipment.js"></script>
+  <script src="engine/scholar.js"></script>
+  <script src="engine.js"></script>
+
+  <!-- Settings panel -->
+  <div id="settings-panel" style="display:none;position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);align-items:center;justify-content:center">
+    <div style="background:var(--bg-card);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-lg);padding:24px 20px;max-width:320px;width:calc(100% - 32px);display:flex;flex-direction:column;gap:12px">
+      <p style="font-family:var(--font-display);font-size:1rem;font-weight:700;letter-spacing:.08em">⚙️ Nastavitve</p>
+
+      <button onclick="lonaReset()" style="padding:11px;border-radius:var(--r-md);background:rgba(255,60,90,.1);border:1px solid rgba(255,60,90,.3);color:var(--neon-red);font-size:.88rem;font-weight:600;font-family:var(--font-body)">
+        🔄 Reset vse podatke
+      </button>
+
+      <button onclick="lonaDebug();document.getElementById('settings-panel').style.display='none'" style="padding:11px;border-radius:var(--r-md);background:#EEF3FD;border:1px solid rgba(37,99,235,.2);color:#2563EB;font-size:.88rem;font-weight:600;font-family:var(--font-body)">
+        🔍 Debug (konzola)
+      </button>
+
+      <button onclick="document.getElementById('settings-panel').style.display='none'" style="padding:11px;border-radius:var(--r-md);border:1px solid rgba(255,255,255,.1);color:var(--text-secondary);font-size:.88rem;font-weight:600;font-family:var(--font-body)">
+        Zapri
+      </button>
+    </div>
+  </div>
+
+  <script>
+  // Pokaži current agenta v top baru
+  (function() {
+    const id   = localStorage.getItem("lona_current_agent") || LONA_CONFIG.agents[0].id;
+    const agent = LONA_CONFIG.agents.find(a => a.id === id);
+    const el   = document.getElementById("current-agent-name");
+    if (el && agent) el.textContent = agent.avatar + " " + agent.name;
+  })();
+
+  // Redirect na login če ni izbranega agenta
+  if (!localStorage.getItem("lona_current_agent")) {
+    location.href = "login.html";
+  }
+
+  // Settings panel — zapri ob kliku zunaj ali na gumb
+  document.getElementById("settings-panel").addEventListener("click", (e) => {
+    if (e.target === document.getElementById("settings-panel")) {
+      document.getElementById("settings-panel").style.display = "none";
+    }
+  });
+  </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    }
+  </script>
+
+  <!-- DEBUG OVERLAY za mobilni -->
+  <div id="debug-overlay" style="display:none;position:fixed;bottom:90px;left:10px;right:10px;z-index:99999;background:rgba(0,0,0,.9);color:#0f0;font-size:.7rem;font-family:monospace;padding:10px;border-radius:10px;max-height:200px;overflow-y:auto;border:1px solid #0f0"></div>
+  <script>
+  // Pokaži overlay z dvojnim tapom
+  let taps = 0;
+  document.addEventListener('touchstart', () => {
+    taps++;
+    if (taps >= 5) {
+      document.getElementById('debug-overlay').style.display = 'block';
+      taps = 0;
+    }
+    setTimeout(() => taps = 0, 1000);
+  });
+
+  // Ujemi vse napake
+  window.onerror = function(msg, src, line, col, err) {
+    const el = document.getElementById('debug-overlay');
+    el.style.display = 'block';
+    el.innerHTML += '<div style="color:#f55;margin-bottom:4px">❌ ' + msg + '<br><span style="color:#888">' + (src||'').split('/').pop() + ':' + line + '</span></div>';
+    return false;
+  };
+  window.addEventListener('unhandledrejection', e => {
+    const el = document.getElementById('debug-overlay');
+    el.style.display = 'block';
+    el.innerHTML += '<div style="color:#fa0;margin-bottom:4px">⚠️ ' + (e.reason?.message || e.reason) + '</div>';
+  });
+  </script>
+</body>
+</html>

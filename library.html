@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#F7F4EF" />
+  <title>LONA OS — Knjižnica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="library.css" />
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+  <meta name="apple-mobile-web-app-title" content="LONA OS"/>
+  <meta name="theme-color" content="#F7F4EF"/>
+</head>
+<body>
+
+
+  <!-- ── HEADER ──────────────────────────────────────────── -->
+  <header class="top-bar">
+    <div class="top-bar__logo">
+      <span class="logo-bracket">[</span>LONA<span class="logo-accent">_OS</span><span class="logo-bracket">]</span>
+    </div>
+    <div class="top-bar__meta">
+      <span class="status-dot"></span>
+      <span class="top-bar__title">Knjižnica Veščin</span>
+    </div>
+    <button class="top-bar__alert" aria-label="Obvestila">
+      <i class="ph-bold ph-bell"></i>
+    </button>
+  </header>
+
+  <main class="main-scroll">
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 1 — STOPNJE MOJSTRSTVA
+    ══════════════════════════════════════════════════════ -->
+    <section aria-label="Stopnje mojstrstva">
+      <div class="section-header">
+        <h3 class="section-header__title"><i class="ph-bold ph-medal"></i> Stopnje Mojstrstva</h3>
+        <span class="section-header__badge">3 veščine</span>
+      </div>
+
+      <!-- MASTERY SKILL CARD — Kuhanje -->
+      <!-- ── SURVIVAL MISIJE ────────────────────────────────── -->
+      <div class="section-header" style="margin-bottom:10px">
+        <h3 class="section-header__title">🆘 Preživetje</h3>
+        <span class="section-header__badge" style="color:#C4352A;background:#FDECEA;border-color:rgba(196,53,42,.2)">Survival</span>
+      </div>
+
+      <article class="mastery-card" data-skill="voda">
+        <div class="mastery-card__head mastery-card__head--toggle" role="button" tabindex="0">
+          <span class="mastery-card__emoji">💧</span>
+          <div>
+            <p class="mastery-card__title">Gospodar Vode</p>
+            <p class="mastery-card__current-level">🔍 Poišči ventil</p>
+          </div>
+          <span class="mastery-card__caret"><i class="ph-bold ph-caret-down"></i></span>
+        </div>
+        <div class="mastery-track mastery-track--hidden">
+          <div class="mastery-step mastery-step--active" data-level="0">
+            <div class="mastery-step__node">
+              <span class="mastery-step__icon">🔍</span>
+              <div class="mastery-step__connector mastery-step__connector--active"></div>
+            </div>
+            <div class="mastery-step__body">
+              <p class="mastery-step__label">Poišči ventil</p>
+              <p class="mastery-step__desc">S starším poišči glavni ventil za vodo v hiši.</p>
+              <div class="mastery-step__meta">
+                <span class="mastery-step__reward">+20 XP</span>
+                <span class="mastery-step__autonomy">skupaj</span>
+              </div>
+            </div>
+            <span class="mastery-step__pulse"></span>
+          </div>
+          <div class="mastery-step mastery-step--locked" data-level="1">
+            <div class="mastery-step__node">
+              <span class="mastery-step__icon">🔧</span>
+              <div class="mastery-step__connector mastery-step__connector--active"></div>
+            </div>
+            <div class="mastery-step__body">
+              <p class="mastery-step__label">Zapri ventil</p>
+              <p class="mastery-step__desc">Sam poišči in zapri ventil ko starš reče.</p>
+              <div class="mastery-step__meta">
+                <span class="mastery-step__reward">+30 XP</span>
+                <span class="mastery-step__autonomy">z nadzorom</span>
+              </div>
+            </div>
+            <span class="mastery-step__lock">🔒</span>
+          </div>
+          <div class="mastery-step mastery-step--locked" data-level="2">
+            <div class="mastery-step__node">
+              <span class="mastery-step__icon">⭐</span>
+            </div>
+            <div class="mastery-step__body">
+              <p class="mastery-step__label">Mojster</p>
+              <p class="mastery-step__desc">Zapri in odpri v 30 sekundah. Brez pomoči.</p>
+              <div class="mastery-step__meta">
+                <span class="mastery-step__reward">+50 XP</span>
+                <span class="mastery-step__autonomy">samostojno</span>
+              </div>
+            </div>
+            <span class="mastery-step__lock">🔒</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:14px;align-items:center">
+          <select class="mastery-agent-select" data-skill="voda" style="flex:1;padding:8px 10px;border-radius:8px;background:#F7F4EF;border:1px solid #C4BFB8;color:#1A1714;font-size:.85rem">
+            <option value="lea">⚡ Lea</option>
+            <option value="nejc">🛡️ Nejc</option>
+          </select>
+          <button class="mastery-advance-btn btn-primary" data-skill="voda" data-agent="lea" style="margin-top:0;flex:2">
+            Potrdi stopnjo ✓
+          </button>
+        </div>
+      </article>
+
+      <article class="mastery-card" data-skill="blackout">
+        <div class="mastery-card__head mastery-card__head--toggle" role="button" tabindex="0">
+          <span class="mastery-card__emoji">🔦</span>
+          <div>
+            <p class="mastery-card__title">Blackout Protokol</p>
+            <p class="mastery-card__current-level">🔦 Z lučko</p>
+          </div>
+          <span class="mastery-card__caret"><i class="ph-bold ph-caret-down"></i></span>
+        </div>
+        <div class="mastery-track mastery-track--hidden">
+          <div class="mastery-step mastery-step--active" data-level="0">
+            <div class="mastery-step__node">
+              <span class="mastery-step__icon">🔦</span>
+              <div class="mastery-step__connector mastery-step__connector--active"></div>
+            </div>
+            <div class="mastery-step__body">
+              <p class="mastery-step__label">Z lučko</p>
+              <p class="mastery-step__desc">Z naglavno lučko najdi pot do varovalke skupaj s starším.</p>
+              <div class="mastery-step__meta">
+                <span class="mastery-step__reward">+20 XP</span>
+                <span class="mastery-step__autonomy">skupaj</span>
+              </div>
+            </div>
+            <span class="mastery-step__pulse"></span>
+          </div>
+          <div class="mastery-step mastery-step--locked" data-level="1">
+            <div class="mastery-step__node">
+              <span class="mastery-step__icon">🗣️</span>
+              <div class="mastery-step__connector mastery-step__connector--active"></div>
+            </div>
+            <div class="mastery-step__body">
+              <p class="mastery-step__label">Glasovno vodenje</p>
+              <p class="mastery-step__desc">Brez lučke. Starš usmerja samo z besedami.</p>
+              <div class="mastery-step__meta">
+                <span class="mastery-step__reward">+30 XP</span>
+                <span class="mastery-step__autonomy">z vodenjem</span>
+              </div>
+            </div>
+            <span class="mastery-step__lock">🔒</span>
+          </div>
+          <div class="mastery-step mastery-step--locked" data-level="2">
+            <div class="mastery-step__node">
+              <span class="mastery-step__icon">⭐</span>
+            </div>
+            <div class="mastery-step__body">
+              <p class="mastery-step__label">Mojster</p>
+              <p class="mastery-step__desc">Sam, v temi, do varovalke in nazaj v 60 sekundah.</p>
+              <div class="mastery-step__meta">
+                <span class="mastery-step__reward">+50 XP</span>
+                <span class="mastery-step__autonomy">samostojno</span>
+              </div>
+            </div>
+            <span class="mastery-step__lock">🔒</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:14px;align-items:center">
+          <select class="mastery-agent-select" data-skill="blackout" style="flex:1;padding:8px 10px;border-radius:8px;background:#F7F4EF;border:1px solid #C4BFB8;color:#1A1714;font-size:.85rem">
+            <option value="lea">⚡ Lea</option>
+            <option value="nejc">🛡️ Nejc</option>
+          </select>
+          <button class="mastery-advance-btn btn-primary" data-skill="blackout" data-agent="lea" style="margin-top:0;flex:2">
+            Potrdi stopnjo ✓
+          </button>
+        </div>
+      </article>
+
+      <article class="mastery-card" data-skill="diplomat">
+        <div class="mastery-card__head mastery-card__head--toggle" role="button" tabindex="0">
+          <span class="mastery-card__emoji">🎩</span>
+          <div>
+            <p class="mastery-card__title">Diplomat</p>
+            <p class="mastery-card__current-level">🛒 Vprašaj v trgovini</p>
+          </div>
+          <span class="mastery-card__caret"><i class="ph-bold ph-caret-down"></i></span>
+        </div>
+        <div class="mastery-track mastery-track--hidden">
+          <div class="mastery-step mastery-step--active" data-level="0">
+            <div class="mastery-step__node">
+              <span class="mastery-step__icon">🛒</span>
+              <div class="mastery-step__connector mastery-step__connector--active"></div>
+            </div>
+            <div class="mastery-step__body">
+              <p class="mastery-step__label">Vprašaj v trgovini</p>
+              <p class="mastery-step__desc">Sam pristopi k prodajalcu in vprašaj kje je artikel.</p>
+              <div class="mastery-step__meta">
+                <span class="mastery-step__reward">+25 XP</span>
+                <span class="mastery-step__autonomy">z nadzorom</span>
+              </div>
+            </div>
+            <span class="mastery-step__pulse"></span>
+          </div>
+          <div class="mastery-step mastery-step--locked" data-level="1">
+            <div class="mastery-step__node">
+              <span class="mastery-step__icon">🍽️</span>
+              <div class="mastery-step__connector mastery-step__connector--active"></div>
+            </div>
+            <div class="mastery-step__body">
+              <p class="mastery-step__label">Naroči v restavraciji</p>
+              <p class="mastery-step__desc">Sam naroči hrano za celo mizo. Pozdrav, naročilo, hvala.</p>
+              <div class="mastery-step__meta">
+                <span class="mastery-step__reward">+35 XP</span>
+                <span class="mastery-step__autonomy">z nadzorom</span>
+              </div>
+            </div>
+            <span class="mastery-step__lock">🔒</span>
+          </div>
+          <div class="mastery-step mastery-step--locked" data-level="2">
+            <div class="mastery-step__node">
+              <span class="mastery-step__icon">⭐</span>
+            </div>
+            <div class="mastery-step__body">
+              <p class="mastery-step__label">Mojster</p>
+              <p class="mastery-step__desc">Reši problem sam — reklamacija, napaka v naročilu.</p>
+              <div class="mastery-step__meta">
+                <span class="mastery-step__reward">+50 XP</span>
+                <span class="mastery-step__autonomy">samostojno</span>
+              </div>
+            </div>
+            <span class="mastery-step__lock">🔒</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:14px;align-items:center">
+          <select class="mastery-agent-select" data-skill="diplomat" style="flex:1;padding:8px 10px;border-radius:8px;background:#F7F4EF;border:1px solid #C4BFB8;color:#1A1714;font-size:.85rem">
+            <option value="lea">⚡ Lea</option>
+            <option value="nejc">🛡️ Nejc</option>
+          </select>
+          <button class="mastery-advance-btn btn-primary" data-skill="diplomat" data-agent="lea" style="margin-top:0;flex:2">
+            Potrdi stopnjo ✓
+          </button>
+        </div>
+      </article>
+
+      <!-- ── VEŠČINE ─────────────────────────────────────────── -->
+      <div class="section-header" style="margin-bottom:10px;margin-top:8px">
+        <h3 class="section-header__title">🛠️ Veščine</h3>
+      </div>
+
+      <article class="mastery-card" data-skill="kuhanje">
+        <div class="mastery-card__head">
+          <span class="mastery-card__emoji">👨‍🍳</span>
+          <div>
+            <h4 class="mastery-card__title">Kuhanje</h4>
+            <p class="mastery-card__current-level">Trenutno: <span class="level-tag level-tag--active">Pomočnik</span></p>
+          </div>
+        </div>
+
+        <!-- Level track -->
+        <div class="mastery-track">
+
+          <!-- VAJENEC — completed -->
+          <div class="mastery-step mastery-step--done" data-level="0">
+            <div class="mastery-step__node">
+              <span class="mastery-step__icon">🌱</span>
+              <div class="mastery-step__connector mastery-step__connector--done"></div>
+            </div>
+            <div class="mastery-step__body">
+              <p class="mastery-step__label">Vajenec</p>
+              <p class="mastery-step__desc">Osnove z nadzorom starša.</p>
+              <div class="mastery-step__meta">
+                <span class="mastery-step__cost mastery-step__cost--paid">−50 XP investicija</span>
+                <span class="mastery-step__autonomy">👁 Nadzor</span>
+              </div>
+            </div>
+            <div class="mastery-step__check">✓</div>
+          </div>
+
+          <!-- POMOČNIK — active -->
+          <div class="mastery-step mastery-step--active" data-level="1">
+            <div class="mastery-step__node">
+              <span class="mastery-step__icon">🔧</span>
+              <div class="mastery-step__connector mastery-step__connector--active"></div>
+            </div>
+            <div class="mastery-step__body">
+              <p class="mastery-step__label">Pomočnik</p>
+              <p class="mastery-step__desc">Starš pasivno opazuje. Brezplačna praksa.</p>
+              <div class="mastery-step__meta">
+                <span class="mastery-step__cost">−25 XP investicija</span>
+                <span class="mastery-step__autonomy">👀 Opazovalec</span>
+              </div>
+            </div>
+            <div class="mastery-step__pulse"></div>
+          </div>
+
+          <!-- MOJSTER — locked -->
+          <div class="mastery-step mastery-step--locked" data-level="2">
+            <div class="mastery-step__node">
+              <span class="mastery-step__icon">⭐</span>
+            </div>
+            <div class="mastery-step__body">
+              <p class="mastery-step__label">Mojster</p>
+              <p class="mastery-step__desc">Polna licenca. Zdaj s to veščino zaslužuješ XP.</p>
+              <div class="mastery-step__meta">
+                <span class="mastery-step__reward">+40 XP / izvedba</span>
+                <span class="mastery-step__autonomy">🚀 Samostojno</span>
+              </div>
+            </div>
+            <div class="mastery-step__lock">🔒</div>
+          </div>
+
+        </div><!-- /mastery-track -->
+        <div style="display:flex;gap:8px;margin-top:14px;align-items:center">
+          <select class="mastery-agent-select" data-skill="kuhanje" style="flex:1;padding:8px 10px;border-radius:8px;background:#F7F4EF;border:1px solid #C4BFB8;color:#1A1714;font-size:.85rem">
+            <option value="lea">⚡ Lea</option>
+            <option value="nejc">🛡️ Nejc</option>
+          </select>
+          <button class="mastery-advance-btn btn-primary" data-skill="kuhanje" data-agent="lea" style="margin-top:0;flex:2">
+            Napreduj na naslednji nivo
+          </button>
+        </div>
+      </article>
+
+      <!-- MASTERY SKILL CARD — Mizarstvo -->
+      <article class="mastery-card" data-skill="mizarstvo">
+        <div class="mastery-card__head mastery-card__head--toggle" role="button" tabindex="0" aria-expanded="false">
+          <span class="mastery-card__emoji">🪚</span>
+          <div>
+            <h4 class="mastery-card__title">Mizarstvo</h4>
+            <p class="mastery-card__current-level">Trenutno: <span class="level-tag level-tag--locked">Zaklenjeno</span></p>
+          </div>
+          <i class="ph-bold ph-caret-down mastery-card__caret"></i>
+        </div>
+        <!-- collapsed — track hidden, expand on click via engine.js -->
+        <div class="mastery-track mastery-track--hidden">
+          <div class="mastery-step mastery-step--locked" data-level="2">
+            <div class="mastery-step__node"><span class="mastery-step__icon">🌱</span></div>
+            <div class="mastery-step__body">
+              <p class="mastery-step__label">Vajenec</p>
+              <p class="mastery-step__desc">Kladivo, žeblji. Polni nadzor starša.</p>
+              <div class="mastery-step__meta">
+                <span class="mastery-step__cost">−75 XP investicija</span>
+                <span class="mastery-step__autonomy">👁 Nadzor</span>
+              </div>
+            </div>
+            <div class="mastery-step__lock">🔒</div>
+          </div>
+          <div class="mastery-step mastery-step--locked" data-level="2">
+            <div class="mastery-step__node"><span class="mastery-step__icon">🔧</span></div>
+            <div class="mastery-step__body">
+              <p class="mastery-step__label">Pomočnik</p>
+              <p class="mastery-step__desc">Žaga in vrtalnik. Starš opazuje.</p>
+              <div class="mastery-step__meta">
+                <span class="mastery-step__cost">−25 XP investicija</span>
+                <span class="mastery-step__autonomy">👀 Opazovalec</span>
+              </div>
+            </div>
+            <div class="mastery-step__lock">🔒</div>
+          </div>
+          <div class="mastery-step mastery-step--locked" data-level="2">
+            <div class="mastery-step__node"><span class="mastery-step__icon">⭐</span></div>
+            <div class="mastery-step__body">
+              <p class="mastery-step__label">Mojster</p>
+              <p class="mastery-step__desc">Popravi sam. Polna samostojnost.</p>
+              <div class="mastery-step__meta">
+                <span class="mastery-step__reward">+50 XP / izvedba</span>
+                <span class="mastery-step__autonomy">🚀 Samostojno</span>
+              </div>
+            </div>
+            <div class="mastery-step__lock">🔒</div>
+          </div>
+        </div>
+              <div style="display:flex;gap:8px;margin-top:14px;align-items:center">
+          <select class="mastery-agent-select" data-skill="mizarstvo" style="flex:1;padding:8px 10px;border-radius:8px;background:#F7F4EF;border:1px solid #C4BFB8;color:#1A1714;font-size:.85rem">
+            <option value="lea">⚡ Lea</option>
+            <option value="nejc">🛡️ Nejc</option>
+          </select>
+          <button class="mastery-advance-btn btn-primary" data-skill="mizarstvo" data-agent="lea" style="margin-top:0;flex:2">
+            Napreduj na naslednji nivo
+          </button>
+        </div>
+      </article>
+
+      <!-- MASTERY SKILL CARD — Orientacija -->
+      
+
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 2 — KNJIŽNI MOLJ (Scholar)
+    ══════════════════════════════════════════════════════ -->
+    <section aria-label="Knjižni Molj">
+      <div class="section-header" style="margin-top: 8px;">
+        <h3 class="section-header__title"><i class="ph-bold ph-book-open"></i> Knjižni Molj</h3>
+        <span class="section-header__badge scholar">📚 Scholar</span>
+      </div>
+
+      <!-- Scholar session -->
+      <article class="card card--scholar">
+        <div class="card__header">
+          <span class="scholar-avatar">📚</span>
+          <div>
+            <p class="card__eyebrow">Nova bralna seja</p>
+            <h4 class="card__title">Izberi knjigo</h4>
+          </div>
+          <span class="scholar-xp-badge" id="scholar-xp-preview">— XP</span>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:10px;align-items:center">
+          <select class="scholar-agent-select" style="flex:1;padding:8px 10px;border-radius:var(--r-sm);background:var(--bg-base);border:1px solid rgba(255,255,255,0.1);color:var(--text-primary);font-size:.85rem">
+            <option value="lea">⚡ Lea</option>
+            <option value="nejc">🛡️ Nejc</option>
+          </select>
+          <label style="display:flex;align-items:center;gap:6px;font-size:.8rem;color:var(--text-secondary);cursor:pointer;white-space:nowrap">
+            <input type="checkbox" id="scholar-younger" style="accent-color:var(--neon-gold)"/> 👨‍👧 ×2
+          </label>
+        </div>
+        <div class="book-type-grid">
+          <button class="book-type-btn" data-book-type="slikanica">
+            <span class="book-type-btn__icon">📚</span>
+            <span class="book-type-btn__label">Slikanica</span>
+            <span class="book-type-btn__xp">+10 XP</span>
+            <span class="book-type-btn__diff">★</span>
+          </button>
+          <button class="book-type-btn" data-book-type="poglavje">
+            <span class="book-type-btn__icon">📖</span>
+            <span class="book-type-btn__label">Poglavja</span>
+            <span class="book-type-btn__xp">+20 XP</span>
+            <span class="book-type-btn__diff">★★</span>
+          </button>
+          <button class="book-type-btn" data-book-type="roman">
+            <span class="book-type-btn__icon">📕</span>
+            <span class="book-type-btn__label">Roman</span>
+            <span class="book-type-btn__xp">+40 XP</span>
+            <span class="book-type-btn__diff">★★★</span>
+          </button>
+          <button class="book-type-btn" data-book-type="literatura">
+            <span class="book-type-btn__icon">🎓</span>
+            <span class="book-type-btn__label">Literatura</span>
+            <span class="book-type-btn__xp">+60 XP</span>
+            <span class="book-type-btn__diff">★★★★</span>
+          </button>
+        </div>
+        <div class="scholar-briefing-row" style="margin-top:10px">
+          <i class="ph-bold ph-microphone"></i>
+          <p>Zaključi z <strong>ustnim brifingom</strong> s Poveljnikom za potrditev XP.</p>
+        </div>
+        <button class="btn-primary" id="scholar-finish" style="margin-top:8px">
+          <i class="ph-bold ph-check"></i> Zaključi branje
+        </button>
+        <div class="scholar-history" id="scholar-history" style="margin-top:10px"></div>
+      </article>
+
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 3 — GIBALNI MODIFIKATORJI (pregled)
+    ══════════════════════════════════════════════════════ -->
+    <section aria-label="Gibalni modifikatorji">
+      <div class="section-header" style="margin-top: 8px;">
+        <h3 class="section-header__title"><i class="ph-bold ph-person-simple-run"></i> Akcijski Izzivi</h3>
+      </div>
+      <div class="prompt-chips">
+        <span class="prompt-chip">🤸 Preval</span>
+        <span class="prompt-chip">🦩 Štorklja</span>
+        <span class="prompt-chip">🥷 Nindža</span>
+        <span class="prompt-chip">🙈 Na slepo</span>
+        <span class="prompt-chip">🎩 Diplomat</span>
+        <span class="prompt-chip prompt-chip--special">🛋️ Mir na kavču</span>
+      </div>
+      <p class="prompt-note">Pred vsako misijo sistem naključno izbere akcijo. Opravi jo, preden zahtevek odda.</p>
+    </section>
+
+    <!-- ══════════════════════════════════════════════════════
+         SECTION 4 — LONA PRO (teaser)
+    ══════════════════════════════════════════════════════ -->
+    <section aria-label="Lona Pro">
+      <article class="card card--pro-teaser">
+        <div class="pro-teaser__badge">V RAZVOJU</div>
+        <div class="card__header">
+          <span style="font-size: 1.6rem;">🔒</span>
+          <div>
+            <p class="card__eyebrow">Za odrasle</p>
+            <h4 class="card__title">LONA PRO</h4>
+          </div>
+        </div>
+        <ul class="pro-teaser__list">
+          <li><i class="ph-bold ph-hammer"></i> Heritage Skills (popravi sam, mizarstvo)</li>
+          <li><i class="ph-bold ph-brain"></i> Analogni Fokus &amp; Deep Work</li>
+          <li><i class="ph-bold ph-users-three"></i> Mentor Bonus: prenos veščin na Lona Kids</li>
+        </ul>
+      </article>
+    </section>
+
+  </main>
+
+  <!-- ── BOTTOM NAV ───────────────────────────────────────── -->
+  <nav class="bottom-nav" aria-label="Navigacija">
+    <button class="bottom-nav__item" onclick="location.href='index.html'">
+      <i class="ph-bold ph-house-simple"></i>
+      <span>Baza</span>
+    </button>
+    <button class="bottom-nav__item bottom-nav__item--active" aria-current="page">
+      <i class="ph-bold ph-books"></i>
+      <span>Knjižnica</span>
+    </button>
+    <button class="bottom-nav__item" onclick="location.href='hub.html'">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      Hub
+    </button>
+    <button class="bottom-nav__item" onclick="location.href='profile.html'">
+      <i class="ph-bold ph-user-circle"></i>
+      <span>Profil</span>
+    </button>
+  </nav>
+
+  
+  
+
+  <script src="config.js"></script>
+  <script src="engine/gatekeeper.js"></script>
+  <script src="engine/xp.js"></script>
+  <script src="engine/cooldown.js"></script>
+  <script src="engine/joker.js"></script>
+  <script src="engine/actionPrompt.js"></script>
+  <script src="engine/mastery.js"></script>
+  <script src="engine/season.js"></script>
+  <script src="engine/equipment.js"></script>
+  <script src="engine/scholar.js"></script>
+  <script src="engine.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+/* ============================================================
+   LONA OS — library.css  (v3.0)
+   Warm paper theme — consistent with style.css v3.0
+   ============================================================ */
+
+/* ── LEVEL TAGS ───────────────────────────────────────────── */
+.level-tag {
+  display: inline-block; font-size: .65rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  border-radius: 4px; padding: 2px 7px;
+}
+.level-tag--active { color: #2D7D52; background: #EAF4EE; border: 1px solid rgba(45,125,82,.25); }
+.level-tag--locked { color: #8A8480; background: #F0EDE7; border: 1px solid #C4BFB8; }
+
+/* ── MASTERY CARD ─────────────────────────────────────────── */
+.mastery-card {
+  background: #FFFFFF; border: 1px solid #C4BFB8;
+  border-radius: 20px; padding: 16px; margin-bottom: 10px;
+}
+.mastery-card__head {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+}
+.mastery-card__head--toggle { cursor: pointer; margin-bottom: 0; user-select: none; }
+.mastery-card__emoji { font-size: 1.8rem; line-height: 1; flex-shrink: 0; }
+.mastery-card__title {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 1rem; font-weight: 700; margin-bottom: 3px; color: #1A1714;
+}
+.mastery-card__current-level { font-size: .72rem; color: #8A8480; }
+.mastery-card__caret { margin-left: auto; color: #8A8480; font-size: 1rem; transition: transform 250ms ease; }
+.mastery-card--open .mastery-card__caret { transform: rotate(180deg); }
+.mastery-card--open .mastery-track { display: flex !important; margin-top: 16px; }
+
+/* ── MASTERY TRACK ────────────────────────────────────────── */
+.mastery-track { display: flex; flex-direction: column; gap: 0; }
+.mastery-track--hidden { display: none; }
+
+.mastery-step {
+  display: grid; grid-template-columns: 40px 1fr auto;
+  gap: 12px; align-items: flex-start; position: relative;
+}
+.mastery-step__node { display: flex; flex-direction: column; align-items: center; padding-top: 2px; }
+.mastery-step__icon { font-size: 1.4rem; line-height: 1; z-index: 1; position: relative; }
+.mastery-step__connector { width: 2px; flex: 1; min-height: 28px; margin-top: 6px; border-radius: 1px; }
+.mastery-step__connector--done   { background: #2D7D52; }
+.mastery-step__connector--active { background: #C47D1A; }
+
+.mastery-step__body  { padding: 2px 0 20px; }
+.mastery-step__label { font-family: 'DM Serif Display', Georgia, serif; font-size: .95rem; font-weight: 700; margin-bottom: 3px; }
+.mastery-step__desc  { font-size: .75rem; color: #4A4540; line-height: 1.45; margin-bottom: 6px; }
+.mastery-step__meta  { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.mastery-step__cost    { font-size: .65rem; font-weight: 600; padding: 2px 7px; border-radius: 4px; background: #FDECEA; border: 1px solid rgba(196,53,42,.2); color: #C4352A; }
+.mastery-step__cost--paid { background: #F0EDE7; border-color: #C4BFB8; color: #8A8480; text-decoration: line-through; }
+.mastery-step__reward  { font-size: .65rem; font-weight: 600; padding: 2px 7px; border-radius: 4px; background: #EAF4EE; border: 1px solid rgba(45,125,82,.2); color: #2D7D52; }
+.mastery-step__autonomy { font-size: .65rem; font-weight: 500; padding: 2px 7px; border-radius: 4px; background: #F0EDE7; border: 1px solid #C4BFB8; color: #8A8480; }
+
+.mastery-step--done   .mastery-step__label { color: #2D7D52; }
+.mastery-step--active .mastery-step__label { color: #C47D1A; }
+.mastery-step--locked .mastery-step__label { color: #8A8480; }
+.mastery-step--locked .mastery-step__icon  { filter: grayscale(1); opacity: .4; }
+.mastery-step--locked .mastery-step__desc  { color: #C4BFB8; }
+
+.mastery-step__check { font-size: 1.2rem; color: #2D7D52; padding-top: 2px; }
+.mastery-step__lock  { font-size: 1rem; color: #8A8480; padding-top: 3px; }
+.mastery-step__pulse {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #C47D1A; margin-top: 4px; flex-shrink: 0;
+  animation: pulse-dot 1.8s ease-in-out infinite;
+}
+
+/* ── SCHOLAR CARD ─────────────────────────────────────────── */
+.card--scholar { border-color: rgba(196,125,26,.3); }
+.scholar-avatar { font-size: 1.8rem; line-height: 1; flex-shrink: 0; }
+.scholar-xp-badge {
+  margin-left: auto; font-size: 1rem; font-weight: 700;
+  color: #C47D1A; white-space: nowrap;
+}
+.scholar-briefing-row {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 10px 12px; border-radius: 8px;
+  background: #FDF3E3; border: 1px solid rgba(196,125,26,.2);
+  font-size: .8rem; color: #4A4540; line-height: 1.45; margin-bottom: 4px;
+}
+.scholar-briefing-row i { color: #C47D1A; font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+.scholar-briefing-row strong { color: #C47D1A; }
+
+/* ── BOOK TYPE GRID ───────────────────────────────────────── */
+.book-type-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-top: 10px; }
+.book-type-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 10px 4px; border-radius: 14px;
+  border: 1px solid #C4BFB8; background: #F7F4EF;
+  cursor: pointer; transition: all 200ms ease;
+}
+.book-type-btn:hover { background: #EAE6DF; border-color: #C47D1A; }
+.book-type-btn:active { transform: scale(.95); }
+.book-type-btn--selected { border-color: #C47D1A; background: #FDF3E3; }
+.book-type-btn__icon  { font-size: 1.3rem; line-height: 1; }
+.book-type-btn__label { font-size: .62rem; font-weight: 500; color: #4A4540; text-align: center; }
+.book-type-btn__xp    { font-size: .75rem; font-weight: 700; color: #C47D1A; }
+.book-type-btn__diff  { font-size: .6rem; color: #8A8480; }
+.book-type-btn--selected .book-type-btn__label { color: #1A1714; }
+
+/* ── ACTION PROMPT CHIPS ──────────────────────────────────── */
+.prompt-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+.prompt-chip {
+  font-size: .75rem; font-weight: 600; padding: 5px 12px;
+  border-radius: 20px; background: #F0EDE7;
+  border: 1px solid #C4BFB8; color: #4A4540; letter-spacing: .04em;
+}
+.prompt-chip--special { background: #FDECEA; border-color: rgba(196,53,42,.2); color: #C4352A; }
+.prompt-note { font-size: .75rem; color: #4A4540; line-height: 1.55; padding: 0 2px; }
+
+/* ── SCHOLAR HISTORY ──────────────────────────────────────── */
+.scholar-history { display: flex; flex-direction: column; gap: 6px; }
+.scholar-history__row {
+  display: grid; grid-template-columns: 50px 60px 1fr auto;
+  align-items: center; gap: 8px; padding: 7px 10px;
+  background: #F7F4EF; border-radius: 8px; border: 1px solid #C4BFB8;
+  font-size: .75rem;
+}
+.scholar-history__date   { color: #8A8480; }
+.scholar-history__agent  { color: #4A4540; }
+.scholar-history__book   { color: #1A1714; }
+.scholar-history__xp     { color: #C47D1A; font-weight: 700; white-space: nowrap; }
+
+/* ── LONA PRO TEASER ──────────────────────────────────────── */
+.card--pro-teaser { border-color: #C4BFB8; opacity: .7; }
+.pro-teaser__badge {
+  display: inline-block; font-size: .6rem; font-weight: 700;
+  letter-spacing: .14em; padding: 3px 8px; border-radius: 4px;
+  background: #F0EDE7; border: 1px solid #C4BFB8;
+  color: #8A8480; text-transform: uppercase; margin-bottom: 12px;
+}
+.pro-teaser__list { list-style: none; display: flex; flex-direction: column; gap: 10px; padding-top: 4px; }
+.pro-teaser__list li { display: flex; align-items: center; gap: 10px; font-size: .82rem; color: #4A4540; }
+.pro-teaser__list li i { font-size: 1rem; color: #8A8480; flex-shrink: 0; }
