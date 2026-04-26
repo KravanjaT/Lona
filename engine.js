@@ -876,7 +876,7 @@ function buildMissionBtn(mission, agentId) {
   }
 
   return `<button class="${cls}" data-mission="${mId}"
-    style="background:none;border:none;padding:0">
+    style="background:none;border:none;padding:0;--after-bg:${afterBg}">
     <div class="mission-btn-inner" style="${innerStyle}">
       <span class="mission-btn__icon">${mission.icon || "📋"}</span>
       <div class="mission-btn__info">
@@ -1323,66 +1323,99 @@ function initDoubleXpButton() {
 
 // ── COMMANDER PANEL ─────────────────────────────────────────
 function renderCmdAgents() {
-  // Podpora za oba elementa
   const section = document.getElementById("cmd-panel-section");
-  let el = document.getElementById("cmd-agents");
+  if (!section) return;
 
-  // Če je section brez cmd-agents, ustvari strukturo
-  if (section && !el) {
-    section.innerHTML = `<div class="cmd-panel">
+  const agentId = getCurrentAgent();
+  const a       = LONA_CONFIG.agents.find(x => x.id === agentId);
+  if (!a) return;
+
+  const xp      = getXp(agentId);
+  const maxXp   = getMaxXp(agentId);
+  const rank    = getRank(maxXp);
+  const jokers  = typeof getJokers === "function" ? getJokers(agentId) : 0;
+  const streak  = typeof getStreak === "function" ? getStreak(agentId) : { count: 0 };
+
+  // XP bar
+  const ranks  = LONA_CONFIG.ranks;
+  const ci     = ranks.findIndex(r => r.minXp > maxXp);
+  const lo     = ranks[Math.max(0, ci - 1)]?.minXp ?? 0;
+  const hi     = ranks[ci]?.minXp ?? lo + 300;
+  const pct    = Math.min(100, Math.round(((maxXp - lo) / (hi - lo)) * 100));
+
+  const avatarHtml = a.photo
+    ? `<img src="${a.photo}" alt="${a.name}" style="width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:50%">`
+    : `<span style="font-size:3.5rem">${a.avatar}</span>`;
+
+  const flameCount = Math.min(streak.count || 0, 7);
+  const flames = flameCount > 0 ? "🔥".repeat(flameCount) : "";
+
+  section.innerHTML = `
+    <div class="hero-panel">
+
+      <!-- Streak banner -->
       <div id="streak-display" class="streak-display"></div>
-      <div class="cmd-agents" id="cmd-agents"></div>
-<div class="cmd-bonus">
-        <p class="cmd-bonus__label">Ročni bonus</p>
+
+      <!-- Avatar center -->
+      <div class="hero-avatar-wrap">
+        <div class="hero-avatar-ring">
+          <svg class="hero-ring-svg" viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="8"/>
+            <circle cx="60" cy="60" r="54" fill="none" stroke="#FFD60A" stroke-width="8"
+              stroke-dasharray="${Math.round(339 * pct / 100)} 339"
+              stroke-linecap="round"
+              transform="rotate(-90 60 60)"
+              style="transition:stroke-dasharray .8s ease"/>
+          </svg>
+          <div class="hero-avatar">${avatarHtml}</div>
+        </div>
+        <div class="hero-xp-badge">
+          <span class="hero-xp-num">${xp}</span>
+          <span class="hero-xp-lbl">XP</span>
+        </div>
+      </div>
+
+      <!-- Ime + rang -->
+      <div class="hero-identity">
+        <h2 class="hero-name">${a.name}</h2>
+        <p class="hero-rank">${rank}</p>
+        ${flames ? `<p class="hero-flames">${flames}</p>` : ""}
+      </div>
+
+      <!-- Stats row -->
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat__val">${streak.count || 0}</span>
+          <span class="hero-stat__lbl">Streak</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat__val">${jokers}</span>
+          <span class="hero-stat__lbl">Jokerji</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat__val">${pct}%</span>
+          <span class="hero-stat__lbl">Do ranga</span>
+        </div>
+      </div>
+
+      <!-- Bonus gumbi -->
+      <div class="cmd-bonus" style="margin-top:0">
         <div class="cmd-bonus__btns">
-          <button class="cmd-bonus__btn" onclick="grantManualBonus(10)">+10</button>
-          <button class="cmd-bonus__btn" onclick="grantManualBonus(25)">+25</button>
-          <button class="cmd-bonus__btn cmd-bonus__btn--special" onclick="showSituationPicker()">📍</button>
+          <button class="cmd-bonus__btn" onclick="grantManualBonus(10)">+10 XP</button>
+          <button class="cmd-bonus__btn" onclick="grantManualBonus(25)">+25 XP</button>
+          <button class="cmd-bonus__btn cmd-bonus__btn--special" onclick="showSituationPicker()">📍 Situacija</button>
           <button class="cmd-bonus__btn" onclick="showProposals()">📬</button>
         </div>
       </div>
-    </div>`;
-    el = document.getElementById("cmd-agents");
-  }
-  if (!el) return;
 
-  const currentId = getCurrentAgent();
-  el.innerHTML = LONA_CONFIG.agents.filter(a => a.id === currentId).map(a => {
-    const xp      = getXp(a.id);
-    const maxXp   = getMaxXp(a.id);
-    const rank    = getRank(maxXp);
-    const jokers  = typeof getJokers === "function" ? getJokers(a.id) : 0;
-    const current = getCurrentAgent();
+    </div>
+  `;
 
-    // XP bar
-    const ranks = LONA_CONFIG.ranks;
-    const ci    = ranks.findIndex(r => r.minXp > maxXp);
-    const lo    = ranks[Math.max(0, ci-1)]?.minXp ?? 0;
-    const hi    = ranks[ci]?.minXp ?? lo + 300;
-    const pct   = Math.min(100, Math.round(((maxXp-lo)/(hi-lo))*100));
-
-    const activeCls = a.id === current ? "cmd-agent--active" : "";
-
-    const avatarHtml = a.photo
-      ? `<img src="${a.photo}" alt="${a.name}" style="width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:50%" onerror="this.outerHTML='${a.avatar}'">`
-      : a.avatar;
-    return `<div class="cmd-agent ${activeCls}" data-agent="${a.id}"
-        onclick="switchAgent('${a.id}')">
-      <div class="cmd-agent__top">
-        <span class="cmd-agent__avatar" style="${a.photo ? 'padding:0;overflow:hidden' : ''}">${avatarHtml}</span>
-        <div>
-          <p class="cmd-agent__name">${a.name}</p>
-          <p class="cmd-agent__rank">${rank}</p>
-        </div>
-      </div>
-      <p class="cmd-agent__xp">${xp} <span style="font-size:.7rem;color:#8A8480">XP</span></p>
-      <div class="cmd-agent__bar">
-        <div class="cmd-agent__bar-fill" style="width:${pct}%"></div>
-      </div>
-      <p class="cmd-agent__jokers">🃏 ×${jokers}</p>
-    </div>`;
-  }).join("");
+  // Inicializiraj streak display
+  if (typeof renderStreak === "function") renderStreak(agentId);
+  if (typeof renderAttrsMini === "function") renderAttrsMini(agentId);
 }
+
 
 function switchAgent(agentId) {
   localStorage.setItem("lona_current_agent", agentId);
