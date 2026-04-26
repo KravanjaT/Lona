@@ -701,6 +701,45 @@ function renderMissionsGrid(cat) {
   grid.querySelectorAll(".mission-btn[data-mission]").forEach(btn => {
     btn.addEventListener("click", (e) => { addRipple(btn, e); popBtn(btn); onMissionClick(btn); });
   });
+
+  // Carousel dots
+  initCarouselDots(grid, filtered.length);
+}
+
+function initCarouselDots(grid, total) {
+  // Odstrani stare dots
+  const existing = document.getElementById("carousel-dots");
+  if (existing) existing.remove();
+
+  if (total <= 2) return; // Premalo za dots
+
+  const wrapper = grid.parentElement;
+  const dots = document.createElement("div");
+  dots.className = "carousel-dots";
+  dots.id = "carousel-dots";
+
+  // Max 10 dots
+  const count = Math.min(total, 10);
+  for (let i = 0; i < count; i++) {
+    const dot = document.createElement("div");
+    dot.className = "carousel-dot" + (i === 0 ? " carousel-dot--active" : "");
+    dot.addEventListener("click", () => {
+      const btnWidth = 140 + 12; // width + gap
+      grid.scrollTo({ left: i * btnWidth, behavior: "smooth" });
+    });
+    dots.appendChild(dot);
+  }
+  wrapper.after(dots);
+
+  // Posodobi dots ob scrollu
+  grid.addEventListener("scroll", () => {
+    const btnWidth = 140 + 12;
+    const idx = Math.round(grid.scrollLeft / btnWidth);
+    const dotEl = Math.min(idx, count - 1);
+    dots.querySelectorAll(".carousel-dot").forEach((d, i) => {
+      d.classList.toggle("carousel-dot--active", i === dotEl);
+    });
+  }, { passive: true });
 }
 
 function buildMissionBtn(mission, agentId) {
