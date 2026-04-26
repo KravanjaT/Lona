@@ -1387,3 +1387,106 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   width: 18px;
   border-radius: 3px;
 }
+
+/* ══════════════════════════════════════════════════════════
+   MISSION LIST ITEMS — Spotify/compact stil
+   ══════════════════════════════════════════════════════════ */
+
+/* Carousel postane vertical list */
+#missions-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  overflow-x: unset !important;
+  overflow-y: unset !important;
+  scroll-snap-type: unset !important;
+  padding: 0 !important;
+  gap: 8px !important;
+  cursor: default !important;
+}
+
+/* Vsak gumb — horizontalna kartica */
+#missions-grid .mission-btn {
+  flex: unset !important;
+  width: 100% !important;
+  scroll-snap-align: unset !important;
+  border-radius: 18px !important;
+  padding: 0 !important;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+#missions-grid .mission-btn-inner {
+  width: 100% !important;
+  min-height: unset !important;
+  height: 72px !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  padding: 0 16px 0 12px !important;
+  gap: 12px !important;
+  border-radius: 18px !important;
+  text-align: left !important;
+  justify-content: flex-start !important;
+}
+
+/* Ikona — krog levo */
+#missions-grid .mission-btn-inner .mission-btn__icon {
+  font-size: 1.8rem !important;
+  width: 48px !important;
+  height: 48px !important;
+  flex-shrink: 0 !important;
+  background: rgba(255,255,255,.15) !important;
+  border-radius: 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-bottom: 0 !important;
+}
+
+/* Info — sredina */
+.mission-btn-inner .mission-btn__info {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
+#missions-grid .mission-btn-inner .mission-btn__name {
+  font-size: .88rem !important;
+  font-weight: 900 !important;
+  color: #fff !important;
+  text-align: left !important;
+  line-height: 1.2 !important;
+}
+
+/* XP badge — desno */
+#missions-grid .mission-btn-inner .mission-btn__xp {
+  font-size: .82rem !important;
+  font-weight: 900 !important;
+  color: #FFD60A !important;
+  background: rgba(0,0,0,.2) !important;
+  padding: 4px 10px !important;
+  border-radius: 20px !important;
+  flex-shrink: 0 !important;
+  margin-left: auto !important;
+}
+
+/* Avail dot */
+#missions-grid .mission-btn-inner .mission-btn__avail-dot {
+  position: static !important;
+  width: 8px !important;
+  height: 8px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Hover efekt */
+#missions-grid .mission-btn:hover .mission-btn-inner {
+  transform: translateX(3px) !important;
+  filter: brightness(1.05) !important;
+}
+#missions-grid .mission-btn:active .mission-btn-inner {
+  transform: scale(.98) !important;
+}
+
+/* Skrij dots ker ni več carousel */
+#carousel-dots { display: none !important; }

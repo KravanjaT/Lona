@@ -878,14 +878,13 @@ function buildMissionBtn(mission, agentId) {
   return `<button class="${cls}" data-mission="${mId}"
     style="background:none;border:none;padding:0">
     <div class="mission-btn-inner" style="${innerStyle}">
-      <div class="mission-btn__top">
-        <span class="mission-btn__icon">${mission.icon || "📋"}</span>
-        ${!onCooldown ? '<span class="mission-btn__avail-dot"></span>' : ''}
-        ${onCooldown  ? '<span class="mission-btn__lock">🔒</span>' : ''}
+      <span class="mission-btn__icon">${mission.icon || "📋"}</span>
+      <div class="mission-btn__info">
+        <p class="mission-btn__name">${mission.label}</p>
+        ${cooldownHtml}
       </div>
-      <p class="mission-btn__name">${mission.label}</p>
-      <p class="mission-btn__xp">${xpLabel}</p>
-      ${cooldownHtml}
+      <span class="mission-btn__xp">${xpLabel}</span>
+      ${!onCooldown ? '<span class="mission-btn__avail-dot"></span>' : ''}
     </div>
   </button>`;
 }
