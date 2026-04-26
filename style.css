@@ -683,3 +683,104 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 @keyframes fadeInUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 
 @media(min-width:600px) { :root { --px: 24px; } }
+
+/* ── BANKA LONA ────────────────────────────────────────────── */
+.bank-header { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+.bank-icon   { font-size:1.8rem; }
+.bank-title  { font-family:var(--font-display); font-size:1rem; font-weight:900; color:var(--ink-1); }
+.bank-sub    { font-size:.62rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3); }
+.bank-deposits { display:flex; flex-direction:column; gap:8px; margin-bottom:14px; }
+.bank-deposit-row {
+  display:flex; align-items:center; gap:10px;
+  padding:12px 14px; border-radius:var(--r-lg);
+  background:var(--yellow-bg); border:2.5px solid rgba(255,214,10,.4);
+  box-shadow:0 3px 0 rgba(255,214,10,.2);
+}
+.bank-deposit__icon { font-size:1.2rem; flex-shrink:0; }
+.bank-deposit-form { }
+
+/* ── GLOBALNI HUB ──────────────────────────────────────────── */
+.hub-tabs {
+  display: flex; gap: 6px;
+  background: var(--bg-card);
+  padding: 6px; border-radius: var(--r-xl);
+  border: 2.5px solid rgba(0,0,0,.07);
+  box-shadow: var(--shadow-sm);
+}
+.hub-tab {
+  flex: 1; padding: 10px 6px; border-radius: var(--r-lg);
+  font-family: var(--font-display); font-size: .72rem; font-weight: 900;
+  color: var(--ink-3); transition: all var(--t); text-align: center;
+}
+.hub-tab--active {
+  background: var(--blue); color: white;
+  box-shadow: 0 3px 0 rgba(0,122,255,.35);
+}
+.hub-tab:not(.hub-tab--active):hover { background: var(--bg-subtle); color: var(--ink-1); }
+
+/* Kulturne misije */
+.cultural-sector {
+  background: var(--bg-card); border: 2.5px solid rgba(0,0,0,.07);
+  border-radius: var(--r-xl); padding: 16px;
+  box-shadow: var(--shadow-md);
+}
+.cultural-sector__header {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+}
+.cultural-sector__flag { font-size: 1.8rem; }
+.cultural-sector__name {
+  font-family: var(--font-display); font-size: .95rem; font-weight: 900; color: var(--ink-1);
+}
+.cultural-sector__sub {
+  font-size: .62rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+.cultural-missions { display: flex; flex-direction: column; gap: 8px; }
+.cultural-mission-card {
+  background: var(--bg-subtle); border: 2px solid var(--ink-4);
+  border-radius: var(--r-lg); padding: 12px;
+  transition: all var(--t);
+}
+.cultural-mission-card:hover { border-color: var(--blue); background: var(--blue-bg); }
+.cmc-top { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.cmc-icon { font-size: 1.4rem; flex-shrink: 0; }
+.cmc-info { flex: 1; }
+.cmc-name { font-size: .85rem; font-weight: 800; color: var(--ink-1); }
+.cmc-stars { font-size: .75rem; }
+.cmc-xp { font-family: var(--font-display); font-size: .88rem; font-weight: 900; color: var(--green); white-space: nowrap; }
+.cmc-desc { font-size: .75rem; font-weight: 600; color: var(--ink-2); margin-bottom: 8px; line-height: 1.4; }
+.cmc-add-btn {
+  width: 100%; padding: 9px; border-radius: var(--r-md);
+  background: var(--blue-bg); border: 2px solid rgba(0,122,255,.3);
+  color: var(--blue); font-size: .8rem; font-weight: 800;
+  font-family: var(--font-body); transition: all var(--t);
+  box-shadow: var(--shadow-sm);
+}
+.cmc-add-btn:hover { background: var(--blue); color: white; box-shadow: 0 3px 0 rgba(0,122,255,.35); }
+
+/* Weekly plan */
+.weekly-plan { background: var(--bg-card); border: 2.5px solid rgba(0,0,0,.07); border-radius: var(--r-xl); padding: 18px; box-shadow: var(--shadow-md); }
+.weekly-plan__title { font-family: var(--font-display); font-size:1rem; font-weight:900; color:var(--ink-1); margin-bottom:14px; }
+.day-row { display:flex; align-items:center; gap:8px; padding:8px 0; border-bottom:1px solid var(--bg-subtle); }
+.day-row:last-child { border-bottom:none; }
+.day-row__name { font-size:.7rem; font-weight:900; color:var(--ink-3); width:28px; flex-shrink:0; text-transform:uppercase; }
+.day-row__name--today { color:var(--green); }
+.day-row__missions { display:flex; gap:4px; flex:1; flex-wrap:wrap; }
+.day-mission-chip { font-size:.65rem; font-weight:800; padding:3px 8px; border-radius:var(--r-pill); cursor:pointer; background:var(--green-bg); color:var(--green); border:2px solid rgba(52,199,89,.2); transition:all var(--t); }
+.day-mission-chip:hover { background:var(--red-bg); color:var(--red); border-color:rgba(255,59,48,.2); }
+.day-row__add { font-size:.75rem; font-weight:900; color:var(--ink-4); cursor:pointer; padding:3px 8px; border-radius:var(--r-pill); border:2px dashed var(--ink-4); transition:all var(--t); white-space:nowrap; }
+.day-row__add:hover { border-color:var(--green); color:var(--green); }
+.briefing-btn { display:flex; align-items:center; justify-content:center; gap:10px; padding:14px; border-radius:var(--r-lg); background:var(--ink-1); color:white; font-family:var(--font-display); font-size:1rem; font-weight:900; border:none; cursor:pointer; transition:all var(--t); width:100%; box-shadow:0 4px 0 rgba(0,0,0,.2); }
+.briefing-btn:hover { transform:translateY(-2px); box-shadow:0 6px 0 rgba(0,0,0,.2); }
+.briefing-btn:active { transform:translateY(2px); box-shadow:none; }
+.mission-bank { background:var(--bg-card); border:2.5px solid rgba(0,0,0,.07); border-radius:var(--r-xl); padding:18px; box-shadow:var(--shadow-md); }
+.mission-bank__title { font-family:var(--font-display); font-size:1rem; font-weight:900; color:var(--ink-1); margin-bottom:14px; }
+.bank-grid { display:flex; flex-direction:column; gap:6px; }
+.bank-item { display:flex; align-items:center; gap:12px; padding:10px 12px; border-radius:var(--r-md); border:2px solid var(--ink-4); cursor:pointer; transition:all var(--t); background:var(--bg-subtle); box-shadow:var(--shadow-sm); }
+.bank-item:hover { background:var(--green-bg); border-color:var(--green); transform:translateY(-1px); }
+.bank-item__icon { font-size:1.1rem; flex-shrink:0; }
+.bank-item__info { flex:1; }
+.bank-item__name { font-size:.82rem; font-weight:800; color:var(--ink-1); }
+.bank-item__xp   { font-size:.65rem; font-weight:700; color:var(--green); }
+.bank-item__add  { font-size:.85rem; font-weight:900; color:var(--ink-4); width:24px; height:24px; border-radius:50%; border:2px solid var(--ink-4); display:flex; align-items:center; justify-content:center; transition:all var(--t); }
+.bank-item:hover .bank-item__add { border-color:var(--green); color:var(--green); }

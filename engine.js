@@ -436,6 +436,13 @@ function onMissionClick(btn) {
     return;
   }
 
+  // EQ Operacije — poseben flow
+  if (mission.isEq) {
+    const agentId = getCurrentAgent();
+    if (typeof handleEqMission === "function") handleEqMission(agentId, mission);
+    return;
+  }
+
   // Skrivna misija — najprej agent, potem naključna misija
   // Nič se ne zaklene — skrivna ostane vedno odprta
   if (mission.isHidden || missionId === "skrivna_wc") {
@@ -518,29 +525,33 @@ function updateMissionsBadge() {
 
 // ── INIT ───────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
-  initGatekeeper();
-  initXp();
-  initJokers();
-  initActionPrompt();
-  initCooldownTicker();
+  try {
+    if (typeof initGatekeeper === "function") initGatekeeper();
+    else console.error("initGatekeeper not found");
 
-  document.querySelectorAll(".mission-btn[data-mission]").forEach(btn => {
-    btn.addEventListener("click", (e) => { addRipple(btn, e); onMissionClick(btn); });
-  });
+    if (typeof initXp === "function") initXp();
+    if (typeof initJokers === "function") initJokers();
+    if (typeof initActionPrompt === "function") initActionPrompt();
+    if (typeof initCooldownTicker === "function") initCooldownTicker();
 
-  if (typeof initMastery === "function") initMastery();
-  if (typeof initScholar === "function") initScholar();
+    document.querySelectorAll(".mission-btn[data-mission]").forEach(btn => {
+      btn.addEventListener("click", (e) => { addRipple(btn, e); onMissionClick(btn); });
+    });
 
-  // Nagrade
-  initRewards();
+    if (typeof initMastery === "function") initMastery();
+    if (typeof initScholar === "function") initScholar();
+    if (typeof initRewards === "function") initRewards();
 
-  // Posodobi badge in zakladnico
-  setTimeout(updateMissionsBadge, 100);
-  setTimeout(renderTreasury, 150);
-  initDoubleXpButton();
-  renderCmdAgents();
-  if (typeof initSeason === "function") initSeason();
-  if (typeof initEquipment === "function") initEquipment();
+    setTimeout(updateMissionsBadge, 100);
+    setTimeout(renderTreasury, 150);
+    if (typeof initDoubleXpButton === "function") initDoubleXpButton();
+    if (typeof renderCmdAgents === "function") renderCmdAgents();
+    if (typeof initSeason === "function") initSeason();
+    if (typeof initEquipment === "function") initEquipment();
+    if (typeof initBank === "function") initBank();
+  } catch(e) {
+    console.error("Init error:", e);
+  }
 });
 
 // ── REWARD CLAIMING ────────────────────────────────────────

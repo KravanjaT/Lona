@@ -150,6 +150,45 @@ const LONA_CONFIG = {
       isShared:  true, // Oba agenta dobita XP
       state:     "available",
     },
+    // ── EQ OPERACIJE ──────────────────────────────────────
+    nevtralizator: {
+      id:        "nevtralizator",
+      label:     "Nevtralizator",
+      icon:      "🧘",
+      baseXp:    0,       // Nagrada je Joker, ne XP
+      isEq:      true,
+      eqType:    "nevtralizator",
+      state:     "available",
+    },
+    debriefing: {
+      id:        "debriefing",
+      label:     "Debriefing",
+      icon:      "📋",
+      baseXp:    25,
+      isEq:      true,
+      eqType:    "debriefing",
+      state:     "available",
+    },
+    intel_report: {
+      id:        "intel_report",
+      label:     "Intel Report",
+      icon:      "🤝",
+      baseXp:    20,
+      isEq:      true,
+      eqType:    "intel_report",
+      cooldownHrs: 168, // 1x na teden
+      state:     "available",
+    },
+    advokat: {
+      id:        "advokat",
+      label:     "Advokat",
+      icon:      "⚖️",
+      baseXp:    30,
+      isEq:      true,
+      eqType:    "advokat",
+      state:     "available",
+    },
+
     skrivna_wc: {
       id:       "skrivna_wc",
       label:    "Skrivna Misija",
@@ -352,6 +391,14 @@ const LONA_CONFIG = {
       xpBonus:     0,
     },
   ],
+
+  // ── BANKA LONA ──────────────────────────────────────────────
+  bank: {
+    interestRate:  0.20,   // 20% obresti
+    durationDays:  7,      // po 7 dneh
+    minDeposit:    50,     // minimalni depozit
+    maxDeposit:    500,    // maksimalni depozit
+  },
 
   // ── TEDENSKE SEZONE ────────────────────────────────────────
   season: {

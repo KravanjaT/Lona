@@ -106,6 +106,65 @@
       </div>
     </section>
 
+    <!-- ── BANKA LONA ─────────────────────────────────────── -->
+    <section class="card" style="border-color:rgba(255,214,10,.4)">
+      <div id="bank-panel"><!-- Generira bank.js --></div>
+    </section>
+
+    <!-- ── EQ OPERACIJE ─────────────────────────────────────── -->
+    <section>
+      <div class="section-header">
+        <h3 class="section-header__title">🧠 EQ Operacije</h3>
+      </div>
+      <div class="missions-grid">
+
+        <button class="mission-btn" data-mission="nevtralizator"
+          style="background:#EDFFF3;border-color:#34C759;border-width:3px;box-shadow:0 5px 0 rgba(52,199,89,.3)">
+          <div class="mission-btn__top">
+            <span class="mission-btn__icon">🧘</span>
+            <span class="mission-btn__avail-dot"></span>
+          </div>
+          <p class="mission-btn__name">Nevtralizator</p>
+          <p class="mission-btn__xp" style="color:#34C759">+1 Joker</p>
+          <p class="mission-btn__sub">obvladal jezo</p>
+        </button>
+
+        <button class="mission-btn" data-mission="debriefing"
+          style="background:#EFF6FF;border-color:#007AFF;border-width:3px;box-shadow:0 5px 0 rgba(0,122,255,.25)">
+          <div class="mission-btn__top">
+            <span class="mission-btn__icon">📋</span>
+            <span class="mission-btn__avail-dot"></span>
+          </div>
+          <p class="mission-btn__name">Debriefing</p>
+          <p class="mission-btn__xp" style="color:#007AFF">+25 XP</p>
+          <p class="mission-btn__sub">analiza napake</p>
+        </button>
+
+        <button class="mission-btn" data-mission="intel_report"
+          style="background:#F5EEFF;border-color:#AF52DE;border-width:3px;box-shadow:0 5px 0 rgba(175,82,222,.25)">
+          <div class="mission-btn__top">
+            <span class="mission-btn__icon">🤝</span>
+            <span class="mission-btn__avail-dot"></span>
+          </div>
+          <p class="mission-btn__name">Intel Report</p>
+          <p class="mission-btn__xp" style="color:#AF52DE">+20 XP</p>
+          <p class="mission-btn__sub">1x na teden</p>
+        </button>
+
+        <button class="mission-btn" data-mission="advokat"
+          style="background:#FFF4E6;border-color:#FF9500;border-width:3px;box-shadow:0 5px 0 rgba(255,149,0,.25)">
+          <div class="mission-btn__top">
+            <span class="mission-btn__icon">⚖️</span>
+            <span class="mission-btn__avail-dot"></span>
+          </div>
+          <p class="mission-btn__name">Advokat</p>
+          <p class="mission-btn__xp" style="color:#FF9500">+30 XP</p>
+          <p class="mission-btn__sub">sestanek poveljstva</p>
+        </button>
+
+      </div>
+    </section>
+
     <!-- ── MISSIONS ─────────────────────────────────────── -->
     <section aria-label="Misije">
       <div class="section-header">
@@ -237,6 +296,8 @@
   <script src="engine/mastery.js"></script>
   <script src="engine/season.js"></script>
   <script src="engine/equipment.js"></script>
+  <script src="engine/eq.js"></script>
+  <script src="engine/bank.js"></script>
   <script src="engine/scholar.js"></script>
   <script src="engine.js"></script>
 
