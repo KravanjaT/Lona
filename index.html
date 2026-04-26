@@ -30,6 +30,7 @@
       <span class="status-dot" aria-label="Online"></span>
       <span class="top-bar__title">Poveljniški Center</span>
     </div>
+    <button class="top-bar__alert" onclick="showSituationPicker()" title="Situacijska misija" style="margin-right:4px;background:#FF9500;border-color:#FF9500;color:white">📍</button>
     <button class="top-bar__alert" aria-label="Zamenjaj agenta" onclick="location.href='login.html'" title="Zamenjaj agenta">
       ⇄
     </button>
@@ -44,6 +45,9 @@
       <div class="cmd-agents" id="cmd-agents">
         <!-- Generira JS -->
       </div>
+
+      <!-- Streak + Combo -->
+      <div id="streak-display" class="streak-display"></div>
 
       <!-- Atributi mini -->
       <div class="cmd-attrs">
@@ -169,6 +173,55 @@
         </button>
 
       </div>
+    </section>
+
+    <!-- ── STRAH PROTOKOL ──────────────────────────────────── -->
+    <section>
+      <div class="section-header">
+        <h3 class="section-header__title">🌙 Strah Protokol</h3>
+        <span class="section-header__badge" style="background:#AF52DE">3 stopnje</span>
+      </div>
+      <div id="fear-missions" class="prog-grid"></div>
+    </section>
+
+    <!-- ── SAMOSTOJNOST ──────────────────────────────────────── -->
+    <section>
+      <div class="section-header">
+        <h3 class="section-header__title">🎯 Samostojnost</h3>
+        <span class="section-header__badge" style="background:#007AFF">3 stopnje</span>
+      </div>
+      <div id="independence-missions" class="prog-grid"></div>
+    </section>
+
+    <!-- ── LASTNE MISIJE ───────────────────────────────────── -->
+    <section>
+      <div class="section-header">
+        <h3 class="section-header__title">✏️ Lastne Misije</h3>
+        <div style="display:flex;gap:6px">
+          <button onclick="showProposals()" id="proposals-btn"
+            style="padding:5px 10px;border-radius:20px;background:#FF9500;color:white;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:900;border:none;cursor:pointer;box-shadow:0 2px 0 rgba(255,149,0,.4);display:none">
+            📬 Predlogi
+          </button>
+          <button onclick="showAddMissionDialog('commander')"
+            style="padding:5px 10px;border-radius:20px;background:#AF52DE;color:white;font-family:'Nunito',sans-serif;font-size:.72rem;font-weight:900;border:none;cursor:pointer;box-shadow:0 2px 0 rgba(175,82,222,.4)">
+            + Dodaj
+          </button>
+        </div>
+      </div>
+      <div class="missions-grid" id="custom-missions-grid">
+        <div style="grid-column:1/-1;text-align:center;padding:20px;color:#8E8E93;font-size:.82rem;font-style:italic">Še ni lastnih misij</div>
+      </div>
+
+      <!-- Otrok predlaga -->
+      <button onclick="showAddMissionDialog('agent')"
+        style="width:100%;margin-top:10px;padding:12px;border-radius:16px;
+        background:rgba(175,82,222,.08);border:2px dashed rgba(175,82,222,.3);
+        font-family:'Nunito',sans-serif;font-size:.85rem;font-weight:800;
+        color:#AF52DE;cursor:pointer;transition:all 150ms"
+        onmouseover="this.style.background='rgba(175,82,222,.15)'"
+        onmouseout="this.style.background='rgba(175,82,222,.08)'">
+        💡 Predlagaj misijo (agent)
+      </button>
     </section>
 
     <!-- ── BANKA LONA ─────────────────────────────────────── -->
@@ -388,6 +441,9 @@
   <script src="engine/eq.js"></script>
   <script src="engine/bank.js"></script>
   <script src="engine/attributes.js"></script>
+  <script src="engine/progressive.js"></script>
+  <script src="engine/streak.js"></script>
+  <script src="engine/custom_missions.js"></script>
   <script src="engine/scholar.js"></script>
   <script src="engine.js"></script>
 

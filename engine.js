@@ -340,7 +340,11 @@ function _lockBtn(b) {
 // ── MISSION CLICK — GLAVNI FLOW ────────────────────────────
 function onMissionClick(btn) {
   const missionId = btn.dataset.mission;
-  const mission   = LONA_CONFIG.missions[missionId];
+  // Preveri custom misije
+  let mission = LONA_CONFIG.missions[missionId];
+  if (!mission && typeof customLoad === 'function') {
+    mission = customLoad().find(m => m.id === missionId);
+  }
   if (!mission) return;
 
   // Gatekeeper ni odobren
@@ -467,6 +471,13 @@ function onMissionClick(btn) {
     return;
   }
 
+  // Progressive misije — strah + samostojnost
+  if (mission.isProgressive) {
+    const agentId = getCurrentAgent();
+    if (typeof handleProgressiveMission === "function") handleProgressiveMission(agentId, mission);
+    return;
+  }
+
   // EQ Operacije — poseben flow
   if (mission.isEq) {
     const agentId = getCurrentAgent();
@@ -580,6 +591,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (typeof initSeason === "function") initSeason();
     if (typeof initEquipment === "function") initEquipment();
     if (typeof initBank === "function") initBank();
+    if (typeof initProgressive === "function") initProgressive();
+    if (typeof initStreak === "function") initStreak();
+    checkOnboarding();
+    if (typeof initCustomMissions === 'function') initCustomMissions();
     if (typeof initAttributes === "function") initAttributes();
   } catch(e) {
     console.error("Init error:", e);
@@ -1134,4 +1149,151 @@ function popBtn(btn) {
   void btn.offsetWidth;
   btn.classList.add("mission-btn--pop");
   setTimeout(() => btn.classList.remove("mission-btn--pop"), 400);
+}
+
+// ── SITUACIJSKE MISIJE ─────────────────────────────────────
+function showSituationPicker() {
+  const situations = [
+    { id: "restavracija", label: "Restavracija",   icon: "🍽️", desc: "Čakamo na hrano" },
+    { id: "zdravnik",     label: "Zdravnik",        icon: "🏥", desc: "Čakalna vrsta" },
+    { id: "vrsta",        label: "Vrsta",           icon: "🛒", desc: "V trgovini" },
+    { id: "dolgocas",     label: "Dolgčas",         icon: "🧩", desc: "Nič za početi" },
+    { id: "avto",         label: "Avto",            icon: "🚗", desc: "Dolga vožnja" },
+  ];
+
+  const d = document.createElement("div");
+  d.className = "joker-dialog";
+  const btns = situations.map(s => `
+    <button class="situation-btn" onclick="startSituationMission('${s.id}');this.closest('.joker-dialog').remove()">
+      <span class="situation-btn__icon">${s.icon}</span>
+      <div>
+        <p class="situation-btn__label">${s.label}</p>
+        <p class="situation-btn__desc">${s.desc}</p>
+      </div>
+      <span style="color:#C7C7CC;font-size:1rem">→</span>
+    </button>
+  `).join("");
+
+  d.innerHTML = `<div class="joker-dialog__box" style="width:calc(100% - 32px);max-width:360px">
+    <div class="joker-dialog__icon">📍</div>
+    <p class="joker-dialog__title">Kje ste?</p>
+    <div style="width:100%;display:flex;flex-direction:column;gap:6px">${btns}</div>
+    <button class="joker-dialog__cancel" style="margin-top:4px;width:100%" onclick="this.closest('.joker-dialog').remove()">Prekliči</button>
+  </div>`;
+  document.body.appendChild(d);
+}
+
+function startSituationMission(situationId) {
+  const missions = Object.values(LONA_CONFIG.missions).filter(m => m.situation === situationId);
+  if (!missions.length) { lonaToast("Ni misij za to situacijo", "red"); return; }
+  const mission  = missions[0];
+  const agentId  = getCurrentAgent();
+  const name     = LONA_CONFIG.agents.find(a => a.id === agentId)?.name || agentId;
+
+  // Naključni izziv
+  const challenges = mission.challenges || [];
+  const challenge  = challenges[Math.floor(Math.random() * challenges.length)];
+
+  const d = document.createElement("div");
+  d.className = "joker-dialog";
+  d.innerHTML = `<div class="joker-dialog__box">
+    <div class="joker-dialog__icon">${mission.icon}</div>
+    <p class="joker-dialog__title">${mission.label}</p>
+    <div style="background:#F2F2F7;border-radius:16px;padding:14px 16px;width:100%;text-align:center;margin:4px 0">
+      <p style="font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#8E8E93;margin-bottom:6px">Izziv za ${name}</p>
+      <p style="font-size:.95rem;font-weight:700;color:#1C1C1E;line-height:1.4">${challenge}</p>
+    </div>
+    <p style="font-size:.72rem;color:#8E8E93;text-align:center">Starš potrdi ko je opravljeno.</p>
+    <div class="joker-dialog__btns">
+      <button class="joker-dialog__cancel" onclick="startSituationMission('${situationId}');this.closest('.joker-dialog').remove()">↻ Drug izziv</button>
+      <button class="joker-dialog__confirm">+${mission.baseXp} XP ✓</button>
+    </div>
+  </div>`;
+  document.body.appendChild(d);
+  d.querySelector(".joker-dialog__confirm").addEventListener("click", () => {
+    d.remove();
+    addXp(agentId, mission.baseXp);
+    logMission(agentId, mission.id, mission.baseXp, {label: mission.label}, false);
+    if (typeof addSeasonXp === "function") addSeasonXp(agentId, mission.baseXp);
+    if (typeof addAttrXp === "function") addAttrXp(agentId, mission.id, mission.baseXp);
+    showScrollBurn(mission.label, mission.baseXp);
+    setTimeout(() => showStamp("OPRAVLJENO", "green"), 400);
+    showXpFloat(mission.baseXp);
+    lonaToast(`${name} +${mission.baseXp} XP — ${mission.label}!`, "green");
+  });
+}
+
+// ── SHUFFLE MISIJE ────────────────────────────────────────
+function shuffleMissions() {
+  const grid = document.querySelector(".missions-grid");
+  if (!grid) return;
+  const btns = [...grid.children];
+  // Fisher-Yates shuffle
+  for (let i = btns.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    grid.appendChild(btns[j]);
+    btns.splice(j, 1);
+  }
+  // Animacija
+  grid.querySelectorAll(".mission-btn").forEach((btn, i) => {
+    btn.style.animation = "none";
+    btn.style.opacity = "0";
+    btn.style.transform = "scale(.8)";
+    setTimeout(() => {
+      btn.style.transition = "all .25s ease";
+      btn.style.opacity = "1";
+      btn.style.transform = "scale(1)";
+    }, i * 40);
+  });
+  _playSound("coin");
+}
+
+// ── ONBOARDING ───────────────────────────────────────────────
+function checkOnboarding() {
+  if (localStorage.getItem("lona_onboarded")) return;
+  localStorage.setItem("lona_onboarded", "1");
+
+  const steps = [
+    { icon: "🛡️", title: "Dobrodošel, Poveljnik!",   text: "Lona OS je tvoj taktični terminal.\nLea in Nejc izvajajo misije — ti potrjuješ." },
+    { icon: "📋", title: "Standard 0",                text: "Vsak dan začnite z jutranjo rutino.\nZobje · Pižama · Miza — potem se misije odklenejo." },
+    { icon: "🎯", title: "Misije",                    text: "Izberi misijo, agent jo opravi.\nTi potrdiš kakovost in dodelješ XP." },
+    { icon: "🌙", title: "Strah & Samostojnost",       text: "3 stopnje — od skupaj do sam.\nVsaka stopnja gradi pravo samostojnost." },
+    { icon: "🏆", title: "Podan je ROZKAZ!",          text: "Standard 0 → Misije → XP → Nagrade.\nZačni danes. 🔥" },
+  ];
+
+  let step = 0;
+
+  function showStep() {
+    document.querySelector(".onboarding-dialog")?.remove();
+    if (step >= steps.length) return;
+    const s = steps[step];
+    const d = document.createElement("div");
+    d.className = "joker-dialog onboarding-dialog";
+    d.innerHTML = `<div class="joker-dialog__box" style="text-align:center">
+      <div style="font-size:3rem;margin-bottom:8px">${s.icon}</div>
+      <div style="font-size:.62rem;font-weight:900;letter-spacing:.15em;text-transform:uppercase;color:#8E8E93;margin-bottom:6px">
+        ${step+1} / ${steps.length}
+      </div>
+      <p style="font-family:'Nunito',sans-serif;font-size:1.2rem;font-weight:900;color:#1C1C1E;margin-bottom:10px">${s.title}</p>
+      <p style="font-size:.88rem;font-weight:600;color:#3A3A3C;line-height:1.6;margin-bottom:16px;white-space:pre-line">${s.text}</p>
+      <div style="display:flex;gap:8px">
+        ${step > 0 ? '<button class="joker-dialog__cancel" onclick="document.querySelector(\'.onboarding-dialog\').remove()">Preskoči</button>' : ''}
+        <button class="joker-dialog__confirm" style="flex:2" onclick="onboardNext()">
+          ${step < steps.length-1 ? 'Naprej →' : 'Začnimo! 🚀'}
+        </button>
+      </div>
+    </div>`;
+    document.body.appendChild(d);
+  }
+
+  window.onboardNext = function() {
+    step++;
+    if (step >= steps.length) {
+      document.querySelector(".onboarding-dialog")?.remove();
+    } else {
+      showStep();
+    }
+  };
+
+  setTimeout(showStep, 800);
 }

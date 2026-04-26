@@ -1094,3 +1094,117 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* Cooldown na beli */
 .mission-btn__cooldown { color: rgba(255,255,255,.8) !important; }
 .mission-btn--locked .mission-btn__cooldown { color: rgba(255,255,255,.5) !important; }
+
+/* ── SITUACIJSKE MISIJE ────────────────────────────────────── */
+.situation-btn {
+  display: flex; align-items: center; gap: 12px;
+  width: 100%; padding: 12px 14px;
+  border-radius: var(--r-lg);
+  background: var(--bg-subtle); border: 2.5px solid var(--ink-4);
+  font-family: var(--font-body); cursor: pointer;
+  transition: all var(--t); box-shadow: var(--shadow-sm);
+  text-align: left;
+}
+.situation-btn:hover { background: var(--orange-bg); border-color: var(--orange); transform: translateY(-1px); }
+.situation-btn:active { transform: translateY(1px); }
+.situation-btn__icon  { font-size: 1.6rem; flex-shrink: 0; }
+.situation-btn__label { font-size: .88rem; font-weight: 800; color: var(--ink-1); }
+.situation-btn__desc  { font-size: .68rem; font-weight: 600; color: var(--ink-3); }
+
+/* ── PROGRESSIVE MISIJE ────────────────────────────────────── */
+.prog-grid { display: flex; flex-direction: column; gap: 8px; }
+
+.prog-card {
+  background: var(--bg-card);
+  border: 2.5px solid rgba(0,0,0,.07);
+  border-radius: var(--r-xl);
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all var(--t);
+  box-shadow: var(--shadow-sm);
+}
+.prog-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.prog-card:active { transform: translateY(1px); }
+
+.prog-card__top {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 8px;
+}
+.prog-card__icon { font-size: 1.8rem; flex-shrink: 0; }
+.prog-card__info { flex: 1; }
+.prog-card__name {
+  font-family: var(--font-display); font-size: .95rem;
+  font-weight: 900; color: var(--ink-1); margin-bottom: 2px;
+}
+.prog-card__level {
+  font-size: .65rem; font-weight: 800;
+  letter-spacing: .08em; text-transform: uppercase;
+}
+.prog-card__xp {
+  font-family: var(--font-display); font-size: 1rem;
+  font-weight: 900; flex-shrink: 0;
+}
+.prog-card__task {
+  font-size: .8rem; font-weight: 700; color: var(--ink-2);
+  line-height: 1.4; margin-bottom: 10px;
+  padding: 8px 10px; background: var(--bg-subtle);
+  border-radius: var(--r-md); border: 1px solid var(--ink-4);
+}
+.prog-card__bar {
+  height: 8px; background: var(--bg-subtle);
+  border-radius: var(--r-pill); overflow: hidden;
+  border: 2px solid var(--ink-4);
+}
+.prog-card__bar-fill {
+  height: 100%; border-radius: var(--r-pill);
+  transition: width .8s cubic-bezier(.17,.67,.35,1.1);
+}
+
+/* ── STREAK & COMBO ────────────────────────────────────────── */
+.streak-display {
+  border-radius: var(--r-md);
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+.streak-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px;
+  background: rgba(255,255,255,.06);
+  border-radius: var(--r-md);
+  margin-bottom: 5px;
+}
+.streak-main { display: flex; align-items: center; gap: 10px; }
+.streak-flames { font-size: 1.3rem; letter-spacing: -2px; }
+.streak-count {
+  font-family: var(--font-display); font-size: 1.2rem;
+  font-weight: 900; color: #fff; line-height: 1;
+}
+.streak-days { font-size: .65rem; font-weight: 700; color: rgba(255,255,255,.5); }
+.streak-best { font-size: .6rem; font-weight: 700; color: rgba(255,255,255,.35); margin-top: 2px; }
+.streak-bonus {
+  font-family: var(--font-display); font-size: .88rem;
+  font-weight: 900; color: var(--yellow);
+  background: rgba(255,214,10,.15); padding: 4px 10px;
+  border-radius: var(--r-pill);
+}
+
+.combo-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px;
+  background: rgba(255,149,0,.15);
+  border-radius: var(--r-md);
+  border: 1px solid rgba(255,149,0,.25);
+}
+.combo-row--inactive {
+  background: rgba(255,255,255,.04);
+  border-color: transparent;
+}
+.combo-label {
+  font-family: var(--font-display); font-size: .82rem;
+  font-weight: 900; color: var(--orange); flex: 1;
+}
+.combo-bonus {
+  font-size: .72rem; font-weight: 900; color: var(--yellow);
+  background: rgba(255,214,10,.15); padding: 2px 8px;
+  border-radius: var(--r-pill);
+}
+.combo-count { font-size: .62rem; font-weight: 700; color: rgba(255,255,255,.4); }

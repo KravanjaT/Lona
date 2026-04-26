@@ -355,6 +355,8 @@
 <script src="engine/actionPrompt.js"></script>
 <script src="engine/mastery.js"></script>
 <script src="engine/equipment.js"></script>
+<script src="engine/progressive.js"></script>
+<script src="engine/streak.js"></script>
 <script src="engine/attributes.js"></script>
 <script src="engine.js"></script>
 <script>
@@ -515,6 +517,8 @@ function renderAll() {
   renderMasteryProfile();
   if (typeof initEquipment === 'function') initEquipment();
   if (typeof renderAttributes === 'function') renderAttributes(currentAgentId);
+  if (typeof renderProgressiveMissions === 'function') renderProgressiveMissions(currentAgentId);
+  if (typeof renderStreakProfile === 'function') renderStreakProfile(currentAgentId);
 }
 
 document.addEventListener("DOMContentLoaded", () => {

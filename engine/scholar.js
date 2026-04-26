@@ -17,6 +17,8 @@ function completeSession(agentId, bookTypeId, forYounger) {
   sessions.push({ agentId, bookTypeId, forYounger: !!forYounger, xp, date: new Date().toISOString() });
   localStorage.setItem(LS_SCHOLAR, JSON.stringify(sessions));
   addXp(agentId, xp);
+  // Branje gradi Um atribut
+  if (typeof addAttrXp === 'function') addAttrXp(agentId, 'scholar_reading', xp);
   renderScholarHistory();
   return xp;
 }
