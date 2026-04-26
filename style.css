@@ -945,3 +945,152 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .checklist__cb:checked ~ .checklist__box {
   animation: check-bounce .35s cubic-bezier(.17,.67,.35,1.4);
 }
+
+/* ══════════════════════════════════════════════════════════
+   QUEST KARTICE — Game Depth v3
+   ══════════════════════════════════════════════════════════ */
+
+/* Misije — 3D quest kartica stil */
+.missions-grid {
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 12px !important;
+}
+
+.mission-btn {
+  border-radius: 24px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: none !important;
+  position: relative;
+}
+
+/* Inner wrapper — 3D efekt */
+.mission-btn-inner {
+  width: 100%;
+  padding: 20px 12px 16px;
+  border-radius: 22px;
+  border: 3px solid transparent;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 5px; text-align: center;
+  position: relative; z-index: 1;
+  transition: transform 120ms ease;
+}
+
+/* Spodnja senca — 3D base */
+.mission-btn::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 24px;
+  transform: translateY(5px);
+  z-index: 0;
+  filter: brightness(.65);
+  transition: transform 120ms ease;
+}
+
+.mission-btn:active .mission-btn-inner { transform: translateY(4px); }
+.mission-btn:active::after             { transform: translateY(2px); }
+.mission-btn:hover  .mission-btn-inner { transform: translateY(-2px); }
+
+/* Barve po tipu */
+.mission-btn--available .mission-btn-inner {
+  background: linear-gradient(160deg, #4CD964 0%, #2DB84B 100%);
+  border-color: rgba(255,255,255,.3);
+}
+.mission-btn--available::after { background: #1A8A33; }
+.mission-btn--available .mission-btn__name { color: #fff; }
+.mission-btn--available .mission-btn__xp   { color: #FFD60A; }
+.mission-btn--available .mission-btn__sub  { color: rgba(255,255,255,.7); }
+
+.mission-btn--special .mission-btn-inner {
+  background: linear-gradient(160deg, #5AC8FA 0%, #007AFF 100%);
+  border-color: rgba(255,255,255,.3);
+}
+.mission-btn--special::after { background: #0055CC; }
+.mission-btn--special .mission-btn__name { color: #fff; }
+.mission-btn--special .mission-btn__xp   { color: #FFD60A; }
+.mission-btn--special .mission-btn__sub  { color: rgba(255,255,255,.7); }
+
+.mission-btn--locked .mission-btn-inner {
+  background: linear-gradient(160deg, #C7C7CC 0%, #A8A8B0 100%);
+  border-color: rgba(255,255,255,.2);
+}
+.mission-btn--locked::after { background: #6E6E76; }
+.mission-btn--locked .mission-btn__name { color: rgba(255,255,255,.6); }
+.mission-btn--locked .mission-btn__xp   { color: rgba(255,255,255,.4); }
+
+/* EQ misije */
+.mission-btn[data-mission="nevtralizator"] .mission-btn-inner { background: linear-gradient(160deg, #4CD964, #2DB84B); }
+.mission-btn[data-mission="nevtralizator"]::after { background: #1A8A33; }
+.mission-btn[data-mission="debriefing"] .mission-btn-inner { background: linear-gradient(160deg, #5AC8FA, #007AFF); }
+.mission-btn[data-mission="debriefing"]::after { background: #0055CC; }
+.mission-btn[data-mission="intel_report"] .mission-btn-inner { background: linear-gradient(160deg, #CF8FFF, #AF52DE); }
+.mission-btn[data-mission="intel_report"]::after { background: #7B2BAE; }
+.mission-btn[data-mission="advokat"] .mission-btn-inner { background: linear-gradient(160deg, #FFB340, #FF9500); }
+.mission-btn[data-mission="advokat"]::after { background: #CC7000; }
+
+/* Outdoor misije */
+.mission-btn[data-mission="listi"] .mission-btn-inner,
+.mission-btn[data-mission="vrt"] .mission-btn-inner { background: linear-gradient(160deg, #4CD964, #2DB84B); }
+.mission-btn[data-mission="listi"]::after,
+.mission-btn[data-mission="vrt"]::after { background: #1A8A33; }
+
+.mission-btn[data-mission="pot"] .mission-btn-inner,
+.mission-btn[data-mission="orientacija_out"] .mission-btn-inner { background: linear-gradient(160deg, #FFB340, #FF9500); }
+.mission-btn[data-mission="pot"]::after,
+.mission-btn[data-mission="orientacija_out"]::after { background: #CC7000; }
+
+.mission-btn[data-mission="narava_foto"] .mission-btn-inner { background: linear-gradient(160deg, #5AC8FA, #007AFF); }
+.mission-btn[data-mission="narava_foto"]::after { background: #0055CC; }
+
+.mission-btn[data-mission="taborisce"] .mission-btn-inner { background: linear-gradient(160deg, #FF6B6B, #FF3B30); }
+.mission-btn[data-mission="taborisce"]::after { background: #CC1A10; }
+
+.mission-btn[data-mission="skupna"] .mission-btn-inner { background: linear-gradient(160deg, #CF8FFF, #AF52DE); }
+.mission-btn[data-mission="skupna"]::after { background: #7B2BAE; }
+.mission-btn[data-mission="skupna"] .mission-btn__name { color: #fff; }
+.mission-btn[data-mission="skupna"] .mission-btn__xp { color: #FFD60A; }
+
+.mission-btn[data-mission="izvidnik"] .mission-btn-inner { background: linear-gradient(160deg, #FFE566, #FFD60A); }
+.mission-btn[data-mission="izvidnik"]::after { background: #CCA800; }
+.mission-btn[data-mission="izvidnik"] .mission-btn__name { color: #1C1C1E; }
+.mission-btn[data-mission="izvidnik"] .mission-btn__xp { color: #FF9500; }
+
+.mission-btn[data-mission="skrivna_wc"] .mission-btn-inner { background: linear-gradient(160deg, #FF6B9D, #FF2D55); }
+.mission-btn[data-mission="skrivna_wc"]::after { background: #CC0033; }
+.mission-btn[data-mission="skrivna_wc"] .mission-btn__name { color: #fff; }
+.mission-btn[data-mission="skrivna_wc"] .mission-btn__xp { color: #FFD60A; }
+
+/* Ikona — večja */
+.mission-btn__icon { font-size: 2.8rem !important; line-height: 1; }
+
+/* XP coin badge */
+.mission-btn__xp {
+  font-family: var(--font-display) !important;
+  font-size: 1.1rem !important;
+  font-weight: 900 !important;
+  text-shadow: 0 1px 3px rgba(0,0,0,.2);
+}
+
+/* Avail dot na beli */
+.mission-btn__avail-dot {
+  background: #FFD60A !important;
+  border-color: rgba(255,255,255,.5) !important;
+  width: 10px !important; height: 10px !important;
+}
+
+/* Name bela na vseh */
+.mission-btn__name {
+  font-size: .8rem !important;
+  font-weight: 900 !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.15);
+}
+.mission-btn__sub {
+  font-size: .62rem !important;
+  font-weight: 700 !important;
+}
+
+/* Cooldown na beli */
+.mission-btn__cooldown { color: rgba(255,255,255,.8) !important; }
+.mission-btn--locked .mission-btn__cooldown { color: rgba(255,255,255,.5) !important; }
